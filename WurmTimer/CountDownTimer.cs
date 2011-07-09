@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
@@ -117,7 +116,8 @@ namespace WurmTimer
             TimeSpan elapsed = now - startTime;
             TimeSpan remaining = endTime - now;
 
-            base.Text = String.Format("{0}: {1:hh\\:mm\\:ss}", Label, remaining);
+            //base.Text = String.Format("{0}: {1:hh\\:mm\\:ss}", Label, remaining);
+            base.Text = String.Format("{0}: {1:00}:{2:00}:{3:00}", Label, remaining.Hours, remaining.Minutes, remaining.Seconds);
             this.Value = Math.Min((int)elapsed.TotalSeconds, this.Maximum);
 
             if (now >= endTime)
