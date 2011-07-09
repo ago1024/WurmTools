@@ -10,6 +10,8 @@ namespace WurmTimer
     public class CountDownTimer : LabelProgressBar
     {
         private Timer timer = new Timer();
+        private ToolTip tooltip = new ToolTip();
+
         private DateTime startTime;
         private DateTime endTime;
         private TimeSpan duration;
@@ -56,6 +58,11 @@ namespace WurmTimer
         {
             running = false;
             Style = ProgressBarStyle.Continuous;
+
+            tooltip.AutoPopDelay = 5000;
+            tooltip.InitialDelay = 1000;
+            tooltip.ReshowDelay = 500;
+            tooltip.ShowAlways = true;
         }
 
         protected override void Dispose(bool disposing)
@@ -94,6 +101,8 @@ namespace WurmTimer
         {
             timer.Enabled = false;
             running = false;
+
+            tooltip.SetToolTip(this, "Stopped");
         }
 
         private void Tick(object sender, EventArgs e)
@@ -120,8 +129,11 @@ namespace WurmTimer
             base.Text = String.Format("{0}: {1:00}:{2:00}:{3:00}", Label, remaining.Hours, remaining.Minutes, remaining.Seconds);
             this.Value = Math.Min((int)elapsed.TotalSeconds, this.Maximum);
 
+            tooltip.SetToolTip(this, String.Format("Expiring {0:T}", endTime));
+
             if (now >= endTime)
             {
+                tooltip.SetToolTip(this, String.Format("Expired {0:T}", endTime));
                 SystemSounds.Beep.Play();
                 StartFlash();
                 Expired.Invoke(this, new EventArgs());
