@@ -1,0 +1,17 @@
+<!-- save this file to %localappdata%\WOSUploader.xml -->
+<WOSUploader>
+	<!-- player settings
+  	name: if the player name is not given it will use the one the 
+	      client saved to the registry
+        wurmdir: if the wurm directory is not give it will use the directory 
+	      saved in the registry
+	-->
+	<Player name="ago" wurmdir="d:\wurm">
+		<!-- 
+		   username: default is the player name
+		   password: if none is set WOS Uploader will use the password
+		             as entered in the dialog
+		-->
+		<WurmOnlineSkillCompare username="ago" password="password"/>
+	</Player>
+</WOSUploader>
