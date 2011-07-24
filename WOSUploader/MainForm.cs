@@ -126,13 +126,21 @@ namespace WOSUploader
             }
         }
 
-        private void OnExit(object sender, EventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
+            base.OnClosed(e);
+
+            trayIcon.Visible = false;
             foreach (FileSystemWatcher watcher in watchers)
             {
                 watcher.EnableRaisingEvents = false;
             }
             Application.Exit();
+        }
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void MainForm_DragOver(object sender, DragEventArgs dea)
