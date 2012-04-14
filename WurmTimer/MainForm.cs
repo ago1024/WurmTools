@@ -5,13 +5,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Media;
+using System.Runtime.InteropServices;
 
 namespace WurmTimer
 {
 
     public partial class MainForm : Form
     {
-
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
 
@@ -93,6 +93,7 @@ namespace WurmTimer
             countDown.Click += new EventHandler(countDown_Click);
 
             trayIcon.ShowBalloonTip(5000, "Wurmtimer", String.Format("Countdown {0} expired", countDown.Label), ToolTipIcon.Info);
+            FlashWindow();            
         }
 
         void countDown_Click(object sender, EventArgs e)
@@ -152,6 +153,31 @@ namespace WurmTimer
             foreach (Control control in layoutPanel.Controls) {
                 control.Width = layoutPanel.ClientSize.Width - 8;
             }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct FLASHWINFO
+        {
+            public UInt32 cbSize;
+            public IntPtr hwnd;
+            public Int32 dwFlags;
+            public UInt32 uCount;
+            public Int32 dwTimeout;
+        }
+
+        [DllImport("user32.dll")]
+        static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+
+        public bool FlashWindow()
+        {
+            FLASHWINFO fw = new FLASHWINFO();
+
+            fw.cbSize = Convert.ToUInt32(Marshal.SizeOf(typeof(FLASHWINFO)));
+            fw.hwnd = this.Handle;
+            fw.dwFlags = 0xf;
+            fw.uCount = UInt32.MaxValue;
+
+            return FlashWindowEx(ref fw);
         }
     }
 }
