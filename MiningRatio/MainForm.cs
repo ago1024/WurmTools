@@ -62,7 +62,14 @@ namespace MiningRatio
 
         private void startScan_Click(object sender, EventArgs e)        
         {
-            Start();            
+            try
+            {
+                Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Start() 
