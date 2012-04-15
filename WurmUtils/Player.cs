@@ -110,7 +110,22 @@ namespace WurmUtils
             if (str == null)
                 return null;
 
-            return str.Replace("//", @"\");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == '/' || str[i] == '\\')
+                {
+                    i++;
+                    if (i < str.Length)
+                        builder.Append(str[i]);
+                }
+                else
+                {
+                    builder.Append(str[i]);
+                }
+            }
+
+            return builder.ToString().Replace("/", "\\");
         }
     }
 }
