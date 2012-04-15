@@ -43,7 +43,11 @@ namespace MiningRatio
             playerName.Text = player.PlayerName;
             wurmFolder.Text = player.WurmDir;
 
-            Start();
+            try {
+                Start();
+            } catch (Exception e) {
+            	MessageBox.Show(e.Message);            
+            }
         }
 
         private void playerName_TextChanged(object sender, EventArgs e)
