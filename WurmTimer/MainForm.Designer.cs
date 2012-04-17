@@ -41,6 +41,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSermon = new System.Windows.Forms.Button();
             this.btnAlignment = new System.Windows.Forms.Button();
+            this.checkLog = new System.Windows.Forms.CheckBox();
             this.timerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,10 +106,13 @@
             // 
             // layoutPanel
             // 
+            this.layoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.layoutPanel.AutoScroll = true;
-            this.layoutPanel.Location = new System.Drawing.Point(12, 128);
+            this.layoutPanel.Location = new System.Drawing.Point(12, 152);
             this.layoutPanel.Name = "layoutPanel";
-            this.layoutPanel.Size = new System.Drawing.Size(263, 169);
+            this.layoutPanel.Size = new System.Drawing.Size(263, 192);
             this.layoutPanel.TabIndex = 6;
             this.layoutPanel.ClientSizeChanged += new System.EventHandler(this.layoutPanel_ClientSizeChanged);
             this.layoutPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.layoutPanel_ControlAdded);
@@ -147,11 +151,23 @@
             this.btnAlignment.UseVisualStyleBackColor = true;
             this.btnAlignment.Click += new System.EventHandler(this.btnAlignment_Click);
             // 
+            // checkLog
+            // 
+            this.checkLog.AutoSize = true;
+            this.checkLog.Location = new System.Drawing.Point(12, 129);
+            this.checkLog.Name = "checkLog";
+            this.checkLog.Size = new System.Drawing.Size(95, 17);
+            this.checkLog.TabIndex = 9;
+            this.checkLog.Text = "Check log files";
+            this.checkLog.UseVisualStyleBackColor = true;
+            this.checkLog.CheckedChanged += new System.EventHandler(this.checkLog_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(285, 309);
+            this.ClientSize = new System.Drawing.Size(285, 356);
+            this.Controls.Add(this.checkLog);
             this.Controls.Add(this.btnSermon);
             this.Controls.Add(this.btnAlignment);
             this.Controls.Add(this.layoutPanel);
@@ -165,6 +181,7 @@
             this.Text = "Wurm Timer";
             this.timerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -181,6 +198,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnSermon;
         private System.Windows.Forms.Button btnAlignment;
+        private System.Windows.Forms.CheckBox checkLog;
     }
 }
 
