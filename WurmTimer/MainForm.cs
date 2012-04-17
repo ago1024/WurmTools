@@ -126,6 +126,19 @@ namespace WurmTimer
             startTimer(new TimeSpan(3, 0, 0), control.Text);
         }
 
+        private void btnAlignment_Click(object sender, EventArgs e)
+        {
+            Control control = sender as Control;
+            startTimer(new TimeSpan(0, 30, 0), control.Text);
+
+        }
+
+        private void btnSermon_Click(object sender, EventArgs e)
+        {
+            Control control = sender as Control;
+            startTimer(new TimeSpan(3, 0, 0), control.Text);
+        }
+
         private void btnCustom_Click(object sender, EventArgs e)
         {
             Control control = sender as Control;

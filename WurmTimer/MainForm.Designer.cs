@@ -39,6 +39,8 @@
             this.layoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.timerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSermon = new System.Windows.Forms.Button();
+            this.btnAlignment = new System.Windows.Forms.Button();
             this.timerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,7 +86,7 @@
             // 
             // btnCustom
             // 
-            this.btnCustom.Location = new System.Drawing.Point(12, 70);
+            this.btnCustom.Location = new System.Drawing.Point(12, 99);
             this.btnCustom.Name = "btnCustom";
             this.btnCustom.Size = new System.Drawing.Size(128, 23);
             this.btnCustom.TabIndex = 4;
@@ -95,7 +97,7 @@
             // dtCustom
             // 
             this.dtCustom.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtCustom.Location = new System.Drawing.Point(146, 70);
+            this.dtCustom.Location = new System.Drawing.Point(146, 99);
             this.dtCustom.Name = "dtCustom";
             this.dtCustom.Size = new System.Drawing.Size(129, 20);
             this.dtCustom.TabIndex = 5;
@@ -104,9 +106,9 @@
             // layoutPanel
             // 
             this.layoutPanel.AutoScroll = true;
-            this.layoutPanel.Location = new System.Drawing.Point(12, 100);
+            this.layoutPanel.Location = new System.Drawing.Point(12, 128);
             this.layoutPanel.Name = "layoutPanel";
-            this.layoutPanel.Size = new System.Drawing.Size(263, 197);
+            this.layoutPanel.Size = new System.Drawing.Size(263, 169);
             this.layoutPanel.TabIndex = 6;
             this.layoutPanel.ClientSizeChanged += new System.EventHandler(this.layoutPanel_ClientSizeChanged);
             this.layoutPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.layoutPanel_ControlAdded);
@@ -125,19 +127,41 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // Form1
+            // btnSermon
+            // 
+            this.btnSermon.Location = new System.Drawing.Point(146, 70);
+            this.btnSermon.Name = "btnSermon";
+            this.btnSermon.Size = new System.Drawing.Size(128, 23);
+            this.btnSermon.TabIndex = 8;
+            this.btnSermon.Text = "Sermon";
+            this.btnSermon.UseVisualStyleBackColor = true;
+            this.btnSermon.Click += new System.EventHandler(this.btnSermon_Click);
+            // 
+            // btnAlignment
+            // 
+            this.btnAlignment.Location = new System.Drawing.Point(12, 70);
+            this.btnAlignment.Name = "btnAlignment";
+            this.btnAlignment.Size = new System.Drawing.Size(128, 23);
+            this.btnAlignment.TabIndex = 7;
+            this.btnAlignment.Text = "Alignment gain";
+            this.btnAlignment.UseVisualStyleBackColor = true;
+            this.btnAlignment.Click += new System.EventHandler(this.btnAlignment_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 309);
+            this.Controls.Add(this.btnSermon);
+            this.Controls.Add(this.btnAlignment);
             this.Controls.Add(this.layoutPanel);
+            this.Controls.Add(this.btnSleep);
             this.Controls.Add(this.dtCustom);
             this.Controls.Add(this.btnCustom);
-            this.Controls.Add(this.btnSleep);
             this.Controls.Add(this.btnLongMed);
             this.Controls.Add(this.btnShortMed);
             this.Controls.Add(this.btnPrayer);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Wurm Timer";
             this.timerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -155,6 +179,8 @@
         private System.Windows.Forms.FlowLayoutPanel layoutPanel;
         private System.Windows.Forms.ContextMenuStrip timerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.Button btnSermon;
+        private System.Windows.Forms.Button btnAlignment;
     }
 }
 
