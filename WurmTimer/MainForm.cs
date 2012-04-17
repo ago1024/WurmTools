@@ -88,15 +88,25 @@ namespace WurmTimer
             Application.Exit();
         }
 
+        delegate void startTimerCallback(TimeSpan duration, String label);
+
         private void startTimer(TimeSpan duration, String label)
         {
-            CountDownTimer countDown = new CountDownTimer();
+            if (layoutPanel.InvokeRequired)
+            {
+                startTimerCallback d = new startTimerCallback(startTimer);
+                this.Invoke(d, new object[] { duration, label });
+            }
+            else
+            {
+                CountDownTimer countDown = new CountDownTimer();
 
-            layoutPanel.Controls.Add(countDown);
-            countDown.Duration = duration;
-            countDown.Label = label;
-            countDown.Expired += new EventHandler(countDown_Expired);
-            countDown.Start();
+                layoutPanel.Controls.Add(countDown);
+                countDown.Duration = duration;
+                countDown.Label = label;
+                countDown.Expired += new EventHandler(countDown_Expired);
+                countDown.Start();
+            }
         }
 
         void countDown_Expired(object sender, EventArgs e)
@@ -309,6 +319,8 @@ namespace WurmTimer
                 startTimer(new TimeSpan(3, 0, 0), "Long meditation");
             else if (Regex.IsMatch(line, "You finish this sermon"))
                 startTimer(new TimeSpan(3, 0, 0), "Sermon");
+            else if (Regex.IsMatch(line, "You start using the sleep bonus\\."))
+                startTimer(new TimeSpan(0, 5, 0), "Sleep bonus");
         }
     }
 }
