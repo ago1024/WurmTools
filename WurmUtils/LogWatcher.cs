@@ -32,6 +32,8 @@ namespace WurmUtils
 
         public void Add(String path, String filter)
         {
+            timer.Enabled = false;
+
             FileSystemWatcher watcher = new FileSystemWatcher();
             watcher.Path = path;
             watcher.Filter = filter;
@@ -147,6 +149,7 @@ namespace WurmUtils
 
         public void Close()
         {
+            timer.Enabled = false;
             foreach (FileSystemWatcher watcher in watchers)
             {
                 watcher.EnableRaisingEvents = false;
