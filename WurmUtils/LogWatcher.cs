@@ -11,11 +11,13 @@ namespace WurmUtils
         IList<FileSystemWatcher> watchers;
         IDictionary<String, long> fileSizes;
         Timer timer;
-        
+        Object timerLock = new Object();        
 
         public delegate void NotificationEventHandler(Object sender, String message);
-
         public event NotificationEventHandler Notify;
+
+        public delegate void FileNotificationEventHandler(Object sender, String filename, String message);
+        public event FileNotificationEventHandler FileNotify;
 
         public LogWatcher()
         {
@@ -47,14 +49,18 @@ namespace WurmUtils
             watcher.Error += new ErrorEventHandler(OnError);
 
             watcher.EnableRaisingEvents = true;
-            watchers.Add(watcher);
 
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major > 5)
+            lock (timerLock)
             {
-                timer.AutoReset = true;
-                timer.Interval = 1000;
-                timer.Elapsed += new ElapsedEventHandler(OnTimer);
-                timer.Enabled = true;
+                watchers.Add(watcher);
+
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major > 5)
+                {
+                    timer.AutoReset = true;
+                    timer.Interval = 1000;
+                    timer.Elapsed += new ElapsedEventHandler(OnTimer);
+                    timer.Enabled = true;
+                }
             }
         }
 
@@ -64,22 +70,25 @@ namespace WurmUtils
         // changes to the FSW. 
         void OnTimer(object sender, ElapsedEventArgs e)
         {
-            foreach (FileSystemWatcher watcher in watchers)
+            lock (timerLock)
             {
-                String[] files = Directory.GetFiles(watcher.Path, watcher.Filter, watcher.IncludeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-                foreach (String file in files)
+                foreach (FileSystemWatcher watcher in watchers)
                 {
-                    try
+                    String[] files = Directory.GetFiles(watcher.Path, watcher.Filter, watcher.IncludeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                    foreach (String file in files)
                     {
-                        FileInfo fileInfo = new FileInfo(file);
-                        if (!fileSizes.ContainsKey(file))
-                            fileSizes[file] = fileInfo.Length;
-                        else if (fileSizes[file] != fileInfo.Length)
-                            fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite).Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                        try
+                        {
+                            FileInfo fileInfo = new FileInfo(file);
+                            if (!fileSizes.ContainsKey(file))
+                                fileSizes[file] = fileInfo.Length;
+                            else if (fileSizes[file] != fileInfo.Length)
+                                fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite).Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex.Message);
+                        }
                     }
                 }
             }
@@ -144,17 +153,25 @@ namespace WurmUtils
             message = message.Replace("\r\n", "\n");
 
             if (message.Length > 0)
-                Notify(this, message);
+            {
+                if (FileNotify != null)
+                    FileNotify(this, fullPath, message);
+                if (Notify != null)
+                    Notify(this, message);
+            }
         }
 
         public void Close()
         {
             timer.Enabled = false;
-            foreach (FileSystemWatcher watcher in watchers)
+            lock (timerLock)
             {
-                watcher.EnableRaisingEvents = false;
+                foreach (FileSystemWatcher watcher in watchers)
+                {
+                    watcher.EnableRaisingEvents = false;
+                }
+                watchers.Clear();
             }
-            watchers.Clear();
         }
     }
 }
