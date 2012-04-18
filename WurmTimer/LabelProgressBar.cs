@@ -59,7 +59,7 @@ namespace WurmTimer
                     {
                         buffer = new Bitmap(Width, Height);
                     }
-                    if (buffer.Width != Width || buffer.Height != Height)
+                    if ((buffer.Width != Width || buffer.Height != Height) && Width != 0 && Height != 0)
                     {
                         buffer.Dispose();//!!!
                         buffer = new Bitmap(Width, Height);
