@@ -51,7 +51,9 @@ namespace WurmTimer
 
             players = new List<Player>();
             if (!LoadConfig())
-                players.Add(new Player()); 
+                players.Add(new Player());
+
+            checkLog.Checked = true;
         }
 
         void trayIcon_BalloonTipClicked(object sender, EventArgs e)
@@ -275,9 +277,10 @@ namespace WurmTimer
                     {
                         logWatcher.Add(player.LogDir, "_Event.*.txt");
                         logWatcher.Add(player.LogDir, "_Skills.*.txt");
+                        logWatcher.PollInterval = 5000;
                     }
 
-                    logWatcher.Notify += new LogWatcher.NotificationEventHandler(logWatcher_Notify);
+                    logWatcher.FileNotify += new LogWatcher.FileNotificationEventHandler(logWatcher_FileNotify);
                 }
                 else
                 {
@@ -290,15 +293,28 @@ namespace WurmTimer
             }
         }
 
-        void logWatcher_Notify(object sender, string message)
+        void logWatcher_FileNotify(object sender, string fullpath, string message)
         {
+            String dirname = Path.GetDirectoryName(fullpath);
+            Player player = null;
+
+            foreach (Player p in players)
+            {
+                if (p.LogDir.Equals(dirname))
+                {
+                    player = p;
+                    break;
+                }
+            }
+
+
             StringReader reader = new StringReader(message);
             String line;
             while ((line = reader.ReadLine()) != null)
             {
                 try
                 {
-                    handleLine(line);
+                    handleLine(player, line);
                 }
                 catch (Exception e)
                 {
@@ -307,20 +323,24 @@ namespace WurmTimer
             }            
         }
 
-        private void handleLine(String line)
+        private void handleLine(Player player, String line)
         {
+            String prefix = "";
+            if (player != null && players.Count > 1)
+                prefix = player.PlayerName + ": ";
+
             if (Regex.IsMatch(line, "Alignment increased by"))
-                startTimer(new TimeSpan(0, 30, 0), "Alignment gain");
+                startTimer(new TimeSpan(0, 30, 0), prefix + "Alignment gain");
             else if (Regex.IsMatch(line, "Faith increased by"))
-                startTimer(new TimeSpan(0, 20, 0), "Faith");
+                startTimer(new TimeSpan(0, 20, 0), prefix + "Faith");
             else if (Regex.IsMatch(line, "You finish your meditation"))
-                startTimer(new TimeSpan(0, 28, 0), "Short meditation");
+                startTimer(new TimeSpan(0, 28, 0), prefix + "Short meditation");
             else if (Regex.IsMatch(line, "You feel that it will take you a while before you are ready to meditate again"))
-                startTimer(new TimeSpan(3, 0, 0), "Long meditation");
+                startTimer(new TimeSpan(3, 0, 0), prefix + "Long meditation");
             else if (Regex.IsMatch(line, "You finish this sermon"))
-                startTimer(new TimeSpan(3, 0, 0), "Sermon");
+                startTimer(new TimeSpan(3, 0, 0), prefix + "Sermon");
             else if (Regex.IsMatch(line, "You start using the sleep bonus\\."))
-                startTimer(new TimeSpan(0, 5, 0), "Sleep bonus");
+                startTimer(new TimeSpan(0, 5, 0), prefix + "Sleep bonus");
         }
     }
 }
