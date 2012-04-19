@@ -54,12 +54,15 @@ namespace WurmTimer
             {
                 case WM_ERASEBKGND:
                 case WM_PAINT:
+                    if (Width == 0 || Height == 0)
+                        return;
+
                     //Buffer vorbereiten:
                     if (buffer == null)
                     {
                         buffer = new Bitmap(Width, Height);
                     }
-                    if ((buffer.Width != Width || buffer.Height != Height) && Width != 0 && Height != 0)
+                    if (buffer.Width != Width || buffer.Height != Height)
                     {
                         buffer.Dispose();//!!!
                         buffer = new Bitmap(Width, Height);
