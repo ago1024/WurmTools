@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
 using WurmUtils;
+using CSScriptLibrary;
 
 namespace MiningRatio
 {
@@ -15,10 +16,7 @@ namespace MiningRatio
     {
         Player player;
         LogWatcher logWatcher = null;
-        Regex reMineSome = new Regex("You mine some ore|You mine some rock shards");
-        Regex reStartMine = new Regex("You start to mine");
-        Regex reMiningIncreased = new Regex("Mining increased");
-        IFormatProvider numberParser = new CultureInfo("en-US").NumberFormat;
+        NumberFormatInfo numberFormat;
 
 
         int ticks;
@@ -42,6 +40,11 @@ namespace MiningRatio
             player = new Player();
             playerName.Text = player.PlayerName;
             wurmFolder.Text = player.WurmDir;
+
+            numberFormat = new NumberFormatInfo();
+            numberFormat.CurrencyDecimalSeparator = ".";
+
+            loadMessageParsers();
 
             try {
                 Start();
@@ -151,15 +154,49 @@ namespace MiningRatio
                 Int32.Parse(m.Groups[3].Value);
         }
 
+        public interface IMessageParser
+        {
+            bool isActionStart(String message);
+            bool isActionEnd(String message);
+            bool isSkillGain(String message);
+            String getName();
+        }
+
+        public class MiningMessageParser : IMessageParser
+        {
+            private Regex reMineSome = new Regex("You mine some ore|You mine some rock shards");
+            private Regex reStartMine = new Regex("You start to mine");
+            private Regex reMiningIncreased = new Regex("Mining increased");
+
+            public bool isActionStart(String message)
+            {
+                return reStartMine.IsMatch(message);
+            }
+            public bool isActionEnd(String message)
+            {
+                return reMineSome.IsMatch(message);
+            }
+            public bool isSkillGain(String message)
+            {
+                return reMiningIncreased.IsMatch(message);
+            }
+            public String getName()
+            {
+                return "Mining";
+            }
+        }
+
+        IMessageParser messageParser = new MiningMessageParser();
+
         private void handleLine(String message)
         {
             try
             {
-                if (reStartMine.IsMatch(message))
+                if (messageParser.isActionStart(message))
                 {
                     actionStart = GetMessageStamp(message);
                 }
-                else if (reMineSome.IsMatch(message))
+                else if (messageParser.isActionEnd(message))
                 {
                     actionEnd = GetMessageStamp(message);
 
@@ -189,19 +226,18 @@ namespace MiningRatio
                     }
                     deferred.Clear();
                 }
-                else if (reMiningIncreased.IsMatch(message))
+                else if (messageParser.isSkillGain(message))
                 {
                     int stamp = GetMessageStamp(message);
-                    if (stamp < actionEnd)
+                    if (stamp > actionEnd)
                     {
                         deferred.Add(message);
-                        AddLog(String.Format("Deferring {0}\n", message));
                     }
                     else
                     {
                         /* Get amount of skill gained */
                         Match m = Regex.Match(message, ".*increased by (.*) to.*");
-                        double skill = Double.Parse(m.Groups[1].Value, numberParser);
+                        double skill = Double.Parse(m.Groups[1].Value.Replace(",","."), numberFormat);
 
                         /* Sum up total skill gained */
                         totalSkill += skill;
@@ -242,6 +278,71 @@ namespace MiningRatio
             else
             {
                 logText.AppendText(text);
+            }
+        }
+
+        private class CBWrapper 
+        {
+            private IMessageParser mParser;
+
+            public IMessageParser Parser
+            {
+                get { return mParser; }
+            }
+
+
+            public CBWrapper(IMessageParser parser) {
+                mParser = parser;
+            }
+
+            public override String ToString()
+            {
+                return mParser.getName();
+            }
+        }
+
+        private void loadMessageParsers()
+        {
+            skillParser.Items.Clear();
+            skillParser.Items.Add(new CBWrapper(new MiningMessageParser()));
+            skillParser.SelectedIndex = 0;
+
+            String path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            String dirname = path + "\\" + "WurmSkillRatio";
+
+            if (!Directory.Exists(dirname))
+                return;
+
+            String[] files = Directory.GetFiles(dirname, "*.cs");
+            foreach (String file in files)
+            {
+                try
+                {
+                    CSScript.GlobalSettings.AddSearchDir(dirname);
+                    AsmHelper asmHelper = new AsmHelper(CSScript.Load(file));
+                    asmHelper.ProbingDirs = CSScript.GlobalSettings.SearchDirs.Split(';');
+
+                    IMessageParser handler = asmHelper.CreateObject("*").AlignToInterface<IMessageParser>(true);
+                    int index = skillParser.Items.IndexOf(handler.getName());
+                    if (index != -1)
+                        skillParser.Items[index] = new CBWrapper(handler);
+                    else
+                        skillParser.Items.Add(new CBWrapper(handler));
+                }
+                catch (Exception e)
+                {
+                    AddLog(e.Message + "\n");
+                }
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CBWrapper wrapper = skillParser.SelectedItem as CBWrapper;
+            if (wrapper != null && wrapper.Parser != null)
+            {
+                messageParser = wrapper.Parser;
+                Start();
             }
         }
     }

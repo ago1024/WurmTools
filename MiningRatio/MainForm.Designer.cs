@@ -52,6 +52,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.skillParser = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // playerName
@@ -78,7 +80,7 @@
             this.wurmFolder.CausesValidation = false;
             this.wurmFolder.Location = new System.Drawing.Point(118, 25);
             this.wurmFolder.Name = "wurmFolder";
-            this.wurmFolder.Size = new System.Drawing.Size(391, 20);
+            this.wurmFolder.Size = new System.Drawing.Size(264, 20);
             this.wurmFolder.TabIndex = 2;
             this.wurmFolder.TextChanged += new System.EventHandler(this.wurmFolder_TextChanged);
             // 
@@ -94,7 +96,7 @@
             // startScan
             // 
             this.startScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.startScan.Location = new System.Drawing.Point(515, 23);
+            this.startScan.Location = new System.Drawing.Point(515, 25);
             this.startScan.Name = "startScan";
             this.startScan.Size = new System.Drawing.Size(75, 23);
             this.startScan.TabIndex = 4;
@@ -121,9 +123,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(15, 52);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Mining actions";
+            this.label3.Text = "Actions";
             // 
             // label4
             // 
@@ -278,12 +280,35 @@
             this.label14.TabIndex = 18;
             this.label14.Text = "Skill gain overall";
             // 
+            // skillParser
+            // 
+            this.skillParser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.skillParser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.skillParser.FormattingEnabled = true;
+            this.skillParser.Location = new System.Drawing.Point(388, 25);
+            this.skillParser.Name = "skillParser";
+            this.skillParser.Size = new System.Drawing.Size(121, 21);
+            this.skillParser.TabIndex = 3;
+            this.skillParser.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(388, 8);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Skill";
+            // 
             // MiningRatioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(602, 431);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.skillParser);
             this.Controls.Add(this.lblTotalTime);
             this.Controls.Add(this.lblSkillTime);
             this.Controls.Add(this.lblTotalSkill);
@@ -309,7 +334,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.playerName);
             this.Name = "MiningRatioForm";
-            this.Text = "Wurm Mining Ratio";
+            this.Text = "Wurm Skill Ratio";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,6 +366,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox skillParser;
+        private System.Windows.Forms.Label label9;
     }
 }
 
