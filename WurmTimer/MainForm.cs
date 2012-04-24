@@ -333,6 +333,8 @@ namespace WurmTimer
                 startTimer(new TimeSpan(0, 30, 0), prefix + "Alignment gain");
             else if (Regex.IsMatch(line, "Faith increased by"))
                 startTimer(new TimeSpan(0, 20, 0), prefix + "Faith");
+            else if (Regex.IsMatch(line, "Lock picking increased by"))
+                startTimer(new TimeSpan(0, 10, 0), prefix + "Lock picking");
             else if (Regex.IsMatch(line, "You finish your meditation"))
                 startTimer(new TimeSpan(0, 28, 0), prefix + "Short meditation");
             else if (Regex.IsMatch(line, "You feel that it will take you a while before you are ready to meditate again"))
