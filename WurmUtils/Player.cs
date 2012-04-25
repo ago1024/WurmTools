@@ -97,16 +97,8 @@ namespace WurmUtils
 
         private static String RegistryKey = @"HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\wurmonline\client";
 
-        public static String getWurmUser()
+        private static String unescape(String str)
         {
-            Object wurmUser = Registry.GetValue(RegistryKey, "wurm_user", null);
-            return wurmUser as String;
-        }
-
-        public static String getWurmDir()
-        {
-            Object wurmDir = Registry.GetValue(RegistryKey, "wurm_dir", null);
-            String str = wurmDir as String;
             if (str == null)
                 return null;
 
@@ -124,8 +116,22 @@ namespace WurmUtils
                     builder.Append(str[i]);
                 }
             }
+            return builder.ToString();
+        }
 
-            return builder.ToString().Replace("/", "\\");
+        public static String getWurmUser()
+        {
+            Object wurmUser = Registry.GetValue(RegistryKey, "wurm_user", null);
+            return unescape(wurmUser as String);
+        }
+
+        public static String getWurmDir()
+        {
+            Object wurmDir = Registry.GetValue(RegistryKey, "wurm_dir", null);
+            String str = wurmDir as String;
+            if (str == null)
+                return null;            
+            return unescape(str).Replace("/", "\\");
         }
     }
 }
