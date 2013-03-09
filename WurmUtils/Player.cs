@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
+using NUnit.Framework;
 
 
 namespace WurmUtils
 {
+    [TestFixture]
     public class Player
     {
         public Player() : this(null, null)
@@ -108,7 +111,13 @@ namespace WurmUtils
                 if (str[i] == '/' || str[i] == '\\')
                 {
                     i++;
-                    if (i < str.Length)
+
+                    if (i + 4 < str.Length && str[i] == 'u')
+                    {
+                        String unicode = str.Substring(i + 1, 4);
+                        builder.Append(char.ConvertFromUtf32(Convert.ToInt32(unicode, 16)));
+                        i += 4;
+                    } else if (i < str.Length)
                         builder.Append(str[i]);
                 }
                 else
@@ -132,6 +141,21 @@ namespace WurmUtils
             if (str == null)
                 return null;            
             return unescape(str).Replace("/", "\\");
+        }
+
+        [Test]
+        public void testUnescape()
+        {
+            String[][] teststrings = { 
+                                       new String[] { "/C:///Users///u00c4garen//wurm", "C:/Users/Ägaren/wurm" },
+                                       new String[] { "d://ago//wurm", "d:/ago/wurm" },
+                                       new String[] { "/Jalina", "Jalina" },
+                                     };
+
+            foreach (String[] test in teststrings) 
+            {
+                Assert.AreEqual(test[1], unescape(test[0]));
+            }
         }
     }
 }
