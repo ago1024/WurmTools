@@ -185,20 +185,6 @@ namespace ImproveTool
             }
         }
 
-        /*
-        enum Tools
-        {
-            Pelt,
-            Mallet,
-            Log,
-            Carvingknife,
-            File,
-            Hammer,
-            Water,
-            Lump,
-            Whetstone
-        }*/
-
         class Tools
         {
             public static Tools Pelt = new Tools(Properties.Resources.resource, 2, 6);
@@ -276,14 +262,16 @@ namespace ImproveTool
             new Entry("need to temper .* by dipping it in water while it's hot", Tools.Water),
             new Entry("has some dents that must be flattened by a hammer", Tools.Hammer),
             new Entry("needs to be sharpened with a whetstone", Tools.Whetstone),
-            new Entry("It could be improved with (some more|a) string of cloth", Tools.Strings),
-            new Entry("has some stains that must be washed away", Tools.Water),
             new Entry("A mallet must be used on the", Tools.Mallet),
             new Entry("has some excess leather that needs to be cut away with a leather knife", Tools.Leatherknife),
             new Entry("It could be improved with (some more|a) leather", Tools.Leather),
             new Entry("needs some holes punched with an awl", Tools.Awl),
+            new Entry("It could be improved with (some more|a) string of cloth", Tools.Strings),
+            new Entry("has some stains that must be washed away", Tools.Water),
+            new Entry("has an open seam that must be backstitched with an iron needle to improve", Tools.Needle),
+            new Entry("has a seam that needs to be hidden by slipstitching with an iron needle", Tools.Needle),
+            new Entry("has some excess cloth that needs to be cut away with a scissors", Tools.Scissors),            
         };
-
 
         private void handleLine(Player player, String line)
         {
