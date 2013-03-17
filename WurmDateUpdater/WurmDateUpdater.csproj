@@ -27,8 +27,8 @@
     <InstallUrl>\\meles\WurmTools\WurmDateUpdater\publish\</InstallUrl>
     <ProductName>Wurm Date Updater</ProductName>
     <PublisherName>Wurm Online tools</PublisherName>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
