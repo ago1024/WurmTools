@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningRatio", "MiningRatio\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImproveTool", "ImproveTool\ImproveTool.csproj", "{BE9595A7-C97C-460C-89CA-340E40EA1CE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzeTool", "AnalyzeTool\AnalyzeTool.csproj", "{78C87060-536B-4C19-83BB-AA8AF68D8492}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,16 @@ Global
 		{BE9595A7-C97C-460C-89CA-340E40EA1CE0}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BE9595A7-C97C-460C-89CA-340E40EA1CE0}.Release|x86.ActiveCfg = Release|x86
 		{BE9595A7-C97C-460C-89CA-340E40EA1CE0}.Release|x86.Build.0 = Release|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Debug|x86.ActiveCfg = Debug|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Debug|x86.Build.0 = Debug|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Release|Any CPU.ActiveCfg = Release|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Release|Mixed Platforms.Build.0 = Release|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Release|x86.ActiveCfg = Release|x86
+		{78C87060-536B-4C19-83BB-AA8AF68D8492}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
