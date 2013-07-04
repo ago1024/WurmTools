@@ -489,7 +489,12 @@ namespace AnalyzeTool
                 OnResize(this, newX, newY, dx, dy);
         }
 
-        private Boolean IsValidTile(int x, int y)
+        public bool IsValidTile(Tile tile)
+        {
+            return IsValidTile(tile.X, tile.Y);
+        }
+
+        private bool IsValidTile(int x, int y)
         {
             return x >= 0 && x < SizeX && y >= 0 && y < SizeY;
         }

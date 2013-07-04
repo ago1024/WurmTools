@@ -29,7 +29,7 @@
     <PublisherName>Wurm Online tools</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -81,6 +81,12 @@
   <ItemGroup>
     <Compile Include="AnalyzeMap.cs" />
     <Compile Include="AnalyzeResult.cs" />
+    <Compile Include="QualityInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QualityInputForm.Designer.cs">
+      <DependentUpon>QualityInputForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResizeMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     <Compile Include="LogParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="QualityInputForm.resx">
+      <DependentUpon>QualityInputForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResizeMapForm.resx">
       <DependentUpon>ResizeMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +198,21 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\qualitygood.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\qualitynormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\qualitypoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\qualityutmost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\qualityverygood.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

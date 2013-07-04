@@ -24,8 +24,16 @@ namespace AnalyzeTool
         private List<Player> players = new List<Player>();
         private MapTool activeTool = null;
         private Boolean renderAnalyzerOverlay = true;
+        private Boolean remderQualityOverlay = true;
         private int textureWidth = 32;
         private int textureHeight = 32;
+        private Tile popupTile;
+
+        public Tile PopupTile
+        {
+            get { return popupTile; }
+            set { popupTile = value; }
+        }
 
         private abstract class MapTool
         {
@@ -208,6 +216,16 @@ namespace AnalyzeTool
             }
         }
 
+        private void DrawCellQuality(GridControl.Cell cell, Rectangle area, Graphics graphics)
+        {
+            Image texture = GetTileQualityTexture(CellToTile(cell));
+            if (texture != null)
+            {
+                graphics.DrawImage(texture, area);
+            }
+        }
+       
+
         private void DrawCellAnalyzeLayer(GridControl.Cell cell, Rectangle area, Graphics graphics)
         {
             StringFormat drawFormat = new StringFormat();
@@ -233,10 +251,21 @@ namespace AnalyzeTool
         private void gridControl1_OnCellPaint(object sender, GridControl.Cell cell, PaintEventArgs eventArgs)
         {
             DrawCellBackground(cell, eventArgs.ClipRectangle, eventArgs.Graphics);
+            if (remderQualityOverlay)
+                DrawCellQuality(cell, eventArgs.ClipRectangle, eventArgs.Graphics);
             if (renderAnalyzerOverlay)
-            {
                 DrawCellAnalyzeLayer(cell, eventArgs.ClipRectangle, eventArgs.Graphics);
-            }
+        }
+
+        private void RepaintTile(Tile tile)
+        {
+            GridControl.Cell cell = TileToCell(tile);;
+            gridControl1.PaintCell(cell.X, cell.Y);
+        }
+
+        private GridControl.Cell TileToCell(Tile tile)
+        {
+            return new GridControl.Cell(tile.X, tile.Y);
         }
 
         private Tile CellToTile(GridControl.Cell cell)
@@ -245,7 +274,7 @@ namespace AnalyzeTool
         }
 
         private void gridControl1_CellClick(object sender, GridControl.Cell cell, MouseEventArgs eventArgs)
-        {
+        {          
             if (eventArgs.Button == MouseButtons.Left && (Control.ModifierKeys & Keys.Control) != 0)
             {
                 map[cell.X, cell.Y].SetEmpty();
@@ -260,6 +289,12 @@ namespace AnalyzeTool
                         gridControl1.PaintCell(cell.X, cell.Y);
                     }
                 }
+            }
+            else if (eventArgs.Button == MouseButtons.Right)
+            {
+                PopupTile = CellToTile(cell);
+                Rectangle rect = gridControl1.RectFromCell(cell.X, cell.Y);
+                gridContextMenu.Show(gridControl1, new Point(eventArgs.Location.X + rect.Left, eventArgs.Y + rect.Top));
             }
         }
 
@@ -413,6 +448,28 @@ namespace AnalyzeTool
                     return null;
             }
         }
+
+        private Bitmap GetTileQualityTexture(Tile tile)
+        {
+            Quality quality = map[tile.X, tile.Y].Quality;
+            switch (quality)
+            {
+                case Quality.Poor:
+                case Quality.Acceptable:
+                    return AnalyzeTool.Properties.Resources.qualitypoor;
+                case Quality.Normal:
+                    return AnalyzeTool.Properties.Resources.qualitynormal;
+                case Quality.Good:
+                    return AnalyzeTool.Properties.Resources.qualitygood;
+                case Quality.VeryGood:
+                    return AnalyzeTool.Properties.Resources.qualityverygood;
+                case Quality.Utmost:
+                    return AnalyzeTool.Properties.Resources.qualityutmost;
+                default:
+                    return null;
+            }
+        }
+
 
         private void setCheckedTool(object sender) 
         {
@@ -652,6 +709,145 @@ namespace AnalyzeTool
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error loading the map: " + ex.Message);
+                }
+            }
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            map.Refresh();
+        }
+
+        private void SetTileType(Tile tile, TileType tileType)
+        {
+            if (map.IsValidTile(tile) && map[tile].Type != tileType)
+            {
+                map[tile].Type = tileType;
+                RepaintTile(tile);
+            }            
+        }
+
+        private void SetTileQuality(Tile tile, Quality quality)
+        {
+            if (map.IsValidTile(tile) && map[tile].Quality != quality)
+            {
+                map[tile].Quality = quality;
+                RepaintTile(tile);
+            }
+        }
+
+        private void rockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Rock);
+        }
+
+        private void tunnelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Tunnel);
+        }
+
+        private void copperToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Copper);
+        }
+
+        private void goldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Gold);
+        }
+
+        private void ironToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Iron);
+        }
+
+        private void leadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Lead);
+        }
+
+        private void marbleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Marble);
+        }
+
+        private void silverToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Silver);
+        }
+
+        private void slateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Slate);
+        }
+
+        private void tinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Tin);
+        }
+
+        private void zincToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Zinc);
+        }
+
+        private void poorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.Poor);
+        }
+
+        private void acceptableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.Acceptable);
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.Normal);
+        }
+
+        private void goodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.Good);
+        }
+
+        private void veryGoodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.VeryGood);
+        }
+
+        private void utmostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileQuality(PopupTile, Quality.Utmost);
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (map.IsValidTile(PopupTile))
+            {
+                map[PopupTile].Reset();
+                map[PopupTile].Type = TileType.Unknown;
+                map[PopupTile].Quality = Quality.Unknown;
+                RepaintTile(PopupTile);
+            }
+        }
+
+        private void setToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QualityInputForm dialog = new QualityInputForm();
+            if (map.IsValidTile(PopupTile) && dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    int quality = Int32.Parse(dialog.InputBox.Text);
+                    if (quality < 20 || quality > 100)
+                        throw new Exception("Quality must be between 20 and 100");
+                    map[PopupTile].ExactQuality = quality;
+                    RepaintTile(PopupTile);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to parse number: " + ex.Message);
                 }
             }
         }
