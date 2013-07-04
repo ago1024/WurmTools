@@ -10,11 +10,12 @@ using System.IO;
 using System.Diagnostics;
 using System.Xml;
 using System.Xml.XPath;
+using System.Runtime.InteropServices;
 using WurmUtils;
 
 namespace AnalyzeTool
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMessageFilter
     {
 
         private String mapFileName;
@@ -88,6 +89,65 @@ namespace AnalyzeTool
                 LogParser parser = new LogParser(player);
                 parser.OnAnalyze += new LogParser.AnalyzeEventHandler(parser_OnAnalyze);
                 parser.Start();
+            }
+
+            Application.AddMessageFilter(this);
+            gridControl1.MouseWheel += new MouseEventHandler(gridControl1_MouseWheel);
+        }
+
+        void gridControl1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                Point hotSpot = new Point(e.Location.X, e.Location.Y);
+                hotSpot.Offset(gridControl1.Location);
+                GridControl.Cell cell = gridControl1.CellFromPoint(e.Location.X, e.Location.Y, false);
+                Rectangle cellRect = gridControl1.RectFromCell(cell.X, cell.Y);
+                Point hotSpotInCell = new Point(e.Location.X - cellRect.Left, e.Location.Y - cellRect.Top);
+
+                if (e.Delta < 0)
+                {
+                    if (gridControl1.CellWidth > 4)
+                    {
+                        gridControl1.CellWidth /= 2;
+                        gridControl1.CellHeight /= 2;
+                        hotSpotInCell.X /= 2;
+                        hotSpotInCell.Y /= 2;
+                    }
+                }
+                else
+                {
+                    if (gridControl1.CellWidth < 256)
+                    {
+                        gridControl1.CellWidth *= 2;
+                        gridControl1.CellHeight *= 2;
+                        hotSpotInCell.X *= 2;
+                        hotSpotInCell.Y *= 2;
+                    }
+                }
+                if (gridControl1.CellWidth < 32)
+                    gridControl1.BorderSize = 0;
+                else
+                    gridControl1.BorderSize = 1;
+
+                this.textureWidth = gridControl1.CellWidth;
+                this.textureHeight = gridControl1.CellHeight;
+                this.textureCache.Clear();
+
+                Rectangle newCellRect = gridControl1.RectFromCell(cell.X, cell.Y);
+                Point newHotSpot = new Point(newCellRect.Left + hotSpotInCell.X, newCellRect.Top + hotSpotInCell.Y);
+                Point newLocation = new Point(hotSpot.X - newHotSpot.X, hotSpot.Y - newHotSpot.Y);
+                if (newLocation.X > 0)
+                    newLocation.X = 0;
+                if (newLocation.Y > 0)
+                    newLocation.Y = 0;
+
+                panel1.HorizontalScroll.Value = -newLocation.X;
+                panel1.VerticalScroll.Value = -newLocation.Y;
+                //gridControl1.Location = newLocation;
+                gridControl1.Invalidate();
+
+                ((HandledMouseEventArgs)e).Handled = true;
             }
         }
 
@@ -862,6 +922,45 @@ namespace AnalyzeTool
                 {
                     MessageBox.Show("Failed to parse number: " + ex.Message);
                 }
+            }
+        }
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == 0x20a)
+            {
+                // WM_MOUSEWHEEL, find the control at screen position m.LParam
+                Point pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
+                IntPtr hWnd = WindowFromPoint(pos);
+                if (hWnd != IntPtr.Zero && hWnd != m.HWnd && Control.FromHandle(hWnd) != null)
+                {
+                    SendMessage(hWnd, m.Msg, m.WParam, m.LParam);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // P/Invoke declarations
+        [DllImport("user32.dll")]
+        private static extern IntPtr WindowFromPoint(Point pt);
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+    }
+
+    public class MouseScrollPanel : Panel
+    {
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (this.VScroll && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            {
+                this.VScroll = false;
+                base.OnMouseWheel(e);
+                this.VScroll = true;
+            }
+            else
+            {
+                base.OnMouseWheel(e);
             }
         }
     }

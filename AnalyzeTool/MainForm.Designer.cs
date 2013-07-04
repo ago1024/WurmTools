@@ -30,8 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.resultsBox = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.gridControl1 = new AnalyzeTool.GridControl();
+            this.panel1 = new MouseScrollPanel();
             this.gridContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.rockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tunnelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,7 @@
             this.toolStripSlate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripZinc = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridControl1 = new AnalyzeTool.GridControl();
             this.panel1.SuspendLayout();
             this.gridContextMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -113,28 +113,6 @@
             this.panel1.Size = new System.Drawing.Size(645, 589);
             this.panel1.TabIndex = 1;
             // 
-            // gridControl1
-            // 
-            this.gridControl1.AllowDrop = true;
-            this.gridControl1.BorderSize = 1;
-            this.gridControl1.CellHeight = 32;
-            this.gridControl1.CellWidth = 32;
-            this.gridControl1.GridSizeX = 16;
-            this.gridControl1.GridSizeY = 16;
-            this.gridControl1.Location = new System.Drawing.Point(0, 0);
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(529, 529);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.Text = "gridControl1";
-            this.gridControl1.CellPaint += new AnalyzeTool.GridControl.OnCellPaintHandler(this.gridControl1_OnCellPaint);
-            this.gridControl1.CellMouseClick += new AnalyzeTool.GridControl.OnCellMouseClickHandler(this.gridControl1_CellClick);
-            this.gridControl1.CellMouseMove += new AnalyzeTool.GridControl.OnCellMouseMoveHandler(this.gridControl1_CellMouseMove);
-            this.gridControl1.CellMouseEnter += new AnalyzeTool.GridControl.OnCellMouseEnterHandler(this.gridControl1_CellMouseEnter);
-            this.gridControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragDrop);
-            this.gridControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragEnter);
-            this.gridControl1.DragOver += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragOver);
-            this.gridControl1.MouseLeave += new System.EventHandler(this.gridControl1_MouseLeave);
-            // 
             // gridContextMenu
             // 
             this.gridContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -145,13 +123,13 @@
             this.qualityToolStripMenuItem,
             this.resetToolStripMenuItem});
             this.gridContextMenu.Name = "gridContextMenu";
-            this.gridContextMenu.Size = new System.Drawing.Size(153, 158);
+            this.gridContextMenu.Size = new System.Drawing.Size(127, 136);
             // 
             // rockToolStripMenuItem
             // 
             this.rockToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.rock;
             this.rockToolStripMenuItem.Name = "rockToolStripMenuItem";
-            this.rockToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rockToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.rockToolStripMenuItem.Text = "Rock";
             this.rockToolStripMenuItem.Click += new System.EventHandler(this.rockToolStripMenuItem_Click);
             // 
@@ -159,7 +137,7 @@
             // 
             this.tunnelToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.slab;
             this.tunnelToolStripMenuItem.Name = "tunnelToolStripMenuItem";
-            this.tunnelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tunnelToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.tunnelToolStripMenuItem.Text = "Tunnel";
             this.tunnelToolStripMenuItem.Click += new System.EventHandler(this.tunnelToolStripMenuItem_Click);
             // 
@@ -167,7 +145,7 @@
             // 
             this.reinforcedToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.reinforcedcave;
             this.reinforcedToolStripMenuItem.Name = "reinforcedToolStripMenuItem";
-            this.reinforcedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reinforcedToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.reinforcedToolStripMenuItem.Text = "Reinforced";
             this.reinforcedToolStripMenuItem.Click += new System.EventHandler(this.reinforcedToolStripMenuItem_Click);
             // 
@@ -185,7 +163,7 @@
             this.zincToolStripMenuItem});
             this.oreToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.goldore;
             this.oreToolStripMenuItem.Name = "oreToolStripMenuItem";
-            this.oreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oreToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.oreToolStripMenuItem.Text = "Ore";
             // 
             // copperToolStripMenuItem
@@ -271,7 +249,7 @@
             this.utmostToolStripMenuItem,
             this.setToolStripMenuItem});
             this.qualityToolStripMenuItem.Name = "qualityToolStripMenuItem";
-            this.qualityToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.qualityToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.qualityToolStripMenuItem.Text = "Quality";
             // 
             // poorToolStripMenuItem
@@ -326,7 +304,7 @@
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
@@ -584,6 +562,28 @@
             this.toolStripZinc.Size = new System.Drawing.Size(109, 22);
             this.toolStripZinc.Text = "Zinc";
             this.toolStripZinc.Click += new System.EventHandler(this.toolStripZinc_Click);
+            // 
+            // gridControl1
+            // 
+            this.gridControl1.AllowDrop = true;
+            this.gridControl1.BorderSize = 1;
+            this.gridControl1.CellHeight = 32;
+            this.gridControl1.CellWidth = 32;
+            this.gridControl1.GridSizeX = 16;
+            this.gridControl1.GridSizeY = 16;
+            this.gridControl1.Location = new System.Drawing.Point(0, 0);
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.Size = new System.Drawing.Size(529, 529);
+            this.gridControl1.TabIndex = 0;
+            this.gridControl1.Text = "gridControl1";
+            this.gridControl1.CellPaint += new AnalyzeTool.GridControl.OnCellPaintHandler(this.gridControl1_OnCellPaint);
+            this.gridControl1.CellMouseClick += new AnalyzeTool.GridControl.OnCellMouseClickHandler(this.gridControl1_CellClick);
+            this.gridControl1.CellMouseMove += new AnalyzeTool.GridControl.OnCellMouseMoveHandler(this.gridControl1_CellMouseMove);
+            this.gridControl1.CellMouseEnter += new AnalyzeTool.GridControl.OnCellMouseEnterHandler(this.gridControl1_CellMouseEnter);
+            this.gridControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragDrop);
+            this.gridControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragEnter);
+            this.gridControl1.DragOver += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragOver);
+            this.gridControl1.MouseLeave += new System.EventHandler(this.gridControl1_MouseLeave);
             // 
             // MainForm
             // 

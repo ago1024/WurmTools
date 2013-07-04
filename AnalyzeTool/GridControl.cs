@@ -150,13 +150,17 @@ namespace AnalyzeTool
 
         public Cell CellFromPoint(int x, int y)
         {
+            return CellFromPoint(x, y, true);
+        }
+
+        public Cell CellFromPoint(int x, int y, bool checkRect)
+        {
             Point pt = new Point(x, y);
 
             int cx = CellFromX(x);
             int cy = CellFromY(y);
 
-            Rectangle rect = RectFromCell(cx, cy);
-            if (rect.Contains(pt))
+            if (!checkRect || RectFromCell(cx, cy).Contains(pt))
             {
                 return new Cell(cx, cy);
             }

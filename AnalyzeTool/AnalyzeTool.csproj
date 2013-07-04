@@ -154,9 +154,6 @@
     <None Include="resources\leadore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\ledore.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="resources\marbleshards.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +210,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\qualityverygood.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="resources\reinforcedcave.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\reinforcedcave.png" />
