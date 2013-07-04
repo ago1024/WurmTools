@@ -444,6 +444,8 @@ namespace AnalyzeTool
                     return AnalyzeTool.Properties.Resources.tinore;
                 case TileType.Zinc:
                     return AnalyzeTool.Properties.Resources.zincore;
+                case TileType.Reinforced:
+                    return AnalyzeTool.Properties.Resources.reinforcedcave;
                 default:
                     return null;
             }
@@ -531,6 +533,12 @@ namespace AnalyzeTool
         private void toolStripRock_Click(object sender, EventArgs e)
         {
             setActiveTool(TileType.Rock);
+            setCheckedTool(sender);
+        }
+
+        private void toolStripReinforced_Click(object sender, EventArgs e)
+        {
+            setActiveTool(TileType.Reinforced);
             setCheckedTool(sender);
         }
 
@@ -715,7 +723,7 @@ namespace AnalyzeTool
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            map.Refresh();
+            Recalculate();
         }
 
         private void SetTileType(Tile tile, TileType tileType)
@@ -744,6 +752,11 @@ namespace AnalyzeTool
         private void tunnelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetTileType(PopupTile, TileType.Tunnel);
+        }
+
+        private void reinforcedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Reinforced);
         }
 
         private void copperToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -825,9 +838,9 @@ namespace AnalyzeTool
         {
             if (map.IsValidTile(PopupTile))
             {
-                map[PopupTile].Reset();
                 map[PopupTile].Type = TileType.Unknown;
                 map[PopupTile].Quality = Quality.Unknown;
+                map[PopupTile].Reset();
                 RepaintTile(PopupTile);
             }
         }

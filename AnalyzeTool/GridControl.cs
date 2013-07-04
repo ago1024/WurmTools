@@ -61,6 +61,8 @@ namespace AnalyzeTool
         }
 
         private void UpdateSize() {
+            if (borderSize < 0)
+                borderSize = 0;
             this.gridWidth = gridSizeX * cellWidth + (gridSizeX + 1) * borderSize;
             this.gridHeight = gridSizeY * cellHeight + (gridSizeY + 1) * borderSize;
             this.ClientSize = new Size(gridWidth, gridHeight);
@@ -105,6 +107,16 @@ namespace AnalyzeTool
                 this.cellHeight = value;
                 this.UpdateSize();
             }
+        }
+
+        public int BorderSize
+        {
+            get { return borderSize; }
+            set { 
+                borderSize = value;
+                this.UpdateSize();
+            }
+
         }
 
         public bool IsCell(int x, int y)
