@@ -56,29 +56,38 @@ namespace AnalyzeTool
             StringWriter writer = new StringWriter();
             int distance = 0;
 
-            foreach (AnalyzeMatch match in matches)
+            if (matches.Count == 0)
             {
-                if (match.Type == null)
-                    continue;
+                writer.Write("Nothing");
+            }
+            else
+            {
+                foreach (AnalyzeMatch match in matches)
+                {
+                    if (match.Type == null)
+                        continue;
 
-                if (distance != match.Distance)
-                {
-                    if (distance != 0)
+                    if (distance != match.Distance)
                     {
-                        writer.Write(" ");
+                        if (distance != 0)
+                        {
+                            writer.Write(" ");
+                        }
+                        distance = match.Distance;
+                        writer.Write("{0}: ", distance);
                     }
-                    distance = match.Distance;
-                    writer.Write("{0}: ", distance);
-                } else {
-                    writer.Write(", ");
-                }
-                if (match.Quality != null)
-                {
-                    writer.Write("{0} ({1})", match.Type, match.Quality);
-                }
-                else
-                {
-                    writer.Write("{0}", match.Type);
+                    else
+                    {
+                        writer.Write(", ");
+                    }
+                    if (match.Quality != null)
+                    {
+                        writer.Write("{0} ({1})", match.Type, match.Quality);
+                    }
+                    else
+                    {
+                        writer.Write("{0}", match.Type);
+                    }
                 }
             }
             return writer.ToString();
