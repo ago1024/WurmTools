@@ -390,7 +390,7 @@ namespace AnalyzeTool
                 case "normal":
                     return Quality.Normal;
                 case "good":
-                    return Quality.VeryGood;
+                    return Quality.Good;
                 case "very good":
                     return Quality.VeryGood;
                 case "utmost":
