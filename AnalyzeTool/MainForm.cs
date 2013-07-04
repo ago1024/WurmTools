@@ -175,6 +175,7 @@ namespace AnalyzeTool
             else
             {
                 resultsBox.Items.Add(result);
+                resultsBox.SelectedItem = result;
             }
         }
 
@@ -319,9 +320,9 @@ namespace AnalyzeTool
             String tileType;
             if (map[cell.X, cell.Y].Quality != Quality.Unknown)
             {
-                tileType = String.Format("{0} ({1})", map[cell.X, cell.Y].Type, map[cell.X, cell.Y].Quality);
+                tileType = String.Format("{2},{3} {0} ({1})", map[cell.X, cell.Y].Type, map[cell.X, cell.Y].Quality, cell.X, cell.Y);
             } else {
-                tileType = String.Format("{0}", map[cell.X, cell.Y].Type, map[cell.X, cell.Y].Quality);
+                tileType = String.Format("{2},{3} {0}", map[cell.X, cell.Y].Type, map[cell.X, cell.Y].Quality, cell.X, cell.Y);
             }
 
             if (map[cell.X, cell.Y].IsSet || map[cell.X, cell.Y].IsUndecided)
