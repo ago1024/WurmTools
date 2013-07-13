@@ -11,9 +11,11 @@ namespace AnalyzeTool
     public enum TileType
     {
         Unknown,
-        Rock,
-        Reinforced,
-        Tunnel,
+        Nothing,     // No resource (eg there's tunnel, rock or reinforced) (future use, currently Unknown is used to identify those tiles)
+        Something,   // Some kind of ore or resource
+        Rock,        // Pure rock
+        Reinforced,  // Reinforced rock
+        Tunnel,      // Tile has been mined out
         Copper,
         Gold,
         Iron,
@@ -60,7 +62,6 @@ namespace AnalyzeTool
 
     public class Detected
     {
-
         public Detected(TileType type, Quality quality)
         {
             this.Type = type;
@@ -72,14 +73,43 @@ namespace AnalyzeTool
             this.Type = TileType.Unknown;
             this.Quality = Quality.Unknown;
         }
+
         public TileType Type;
         public Quality Quality;
 
+        public static bool IsOreType(TileType type)
+        {
+            switch (type)
+            {
+                case TileType.Copper:
+                case TileType.Gold:
+                case TileType.Iron:
+                case TileType.Lead:
+                case TileType.Marble:
+                case TileType.Silver:
+                case TileType.Slate:
+                case TileType.Tin:
+                case TileType.Zinc:
+                case TileType.Something:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public bool Matches(Detected d)
         {
-            if (Type == TileType.Unknown)
+            if (Type == TileType.Unknown || d.Type == TileType.Unknown)
             {
-                return d.Type == TileType.Unknown;
+                return Type == d.Type;
+            }
+            else if (Type == TileType.Something && IsOreType(d.Type))
+            {
+                return true;
+            }
+            else if (d.Type == TileType.Something && IsOreType(Type))
+            {
+                return true;
             }
             else if (Type == d.Type)
             {
@@ -208,7 +238,7 @@ namespace AnalyzeTool
                 }
                 else if (Found != null)
                 {
-                    if (Found.Matches(d))
+                    if (Found.Matches(d) && d.Type != TileType.Something)
                     {
                         if (Quality == Quality.Unknown)
                             Set(d);
@@ -258,20 +288,31 @@ namespace AnalyzeTool
             {
                 foreach (Detected e in Estimates)
                 {
-                    if (e.Type.Equals(d.Type))
+                    if (e.Type == TileType.Unknown || d.Type == TileType.Unknown)
+                    {
+                        result.Add(d);
+                    }
+                    else if (e.Type == d.Type || e.Type == TileType.Something || d.Type == TileType.Something)
                     {
                         if (e.Quality != Quality.Unknown && d.Quality != Quality.Unknown)
                         {
                             if (e.Quality.Equals(d.Quality))
                                 result.Add(d);
                         }
-                        else if (e.Quality != Quality.Unknown)
-                        {
-                            result.Add(e);
-                        }
                         else
                         {
-                            result.Add(d);
+                            Detected n = new Detected();
+                            if (e.Quality != Quality.Unknown)
+                                n.Quality = e.Quality;
+                            else
+                                n.Quality = d.Quality;
+
+                            if (e.Type != TileType.Something)
+                                n.Type = e.Type;
+                            else
+                                n.Type = d.Type;
+
+                            result.Add(n);
                         }
                     }
                 }
@@ -426,6 +467,8 @@ namespace AnalyzeTool
                     return TileType.Tin;
                 case "zinc ore":
                     return TileType.Zinc;
+                case "something":
+                    return TileType.Something;
                 default:
                     System.Diagnostics.Debug.Print("Unknown tile type: {0}", type);
                     return TileType.Unknown;
@@ -550,7 +593,14 @@ namespace AnalyzeTool
                 {
                     Tile p = matches[0];
                     if (IsValidTile(p.X, p.Y))
-                        tileStatus[p.X, p.Y].Set(d);
+                    {
+                        Detected n = new Detected(d.Type, d.Quality);
+                        if (tileStatus[p.X, p.Y].Type == d.Type && d.Quality == Quality.Unknown)
+                        {
+                            n.Quality = tileStatus[p.X, p.Y].Quality;
+                        }
+                        tileStatus[p.X, p.Y].Set(n);
+                    }
                 }
             }
         }
@@ -588,8 +638,8 @@ namespace AnalyzeTool
             {
                 int dx = Math.Max(0, maxDistance - x);
                 int dy = Math.Max(0, maxDistance - y);
-                int newX = Math.Max(sizeX, x + maxDistance);
-                int newY = Math.Max(sizeY, y + maxDistance);
+                int newX = Math.Max(sizeX, x + maxDistance + 1);
+                int newY = Math.Max(sizeY, y + maxDistance + 1);
                 ResizeMap(newX + dx, newY + dy, dx, dy);
 
                 x += dx;

@@ -946,6 +946,39 @@ namespace AnalyzeTool
         private static extern IntPtr WindowFromPoint(Point pt);
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+        }
+
+        private int lastItemIndex = -1;
+        private void resultsBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                int itemIndex = -1;
+                if (resultsBox.ItemHeight != 0)
+                {
+                    itemIndex = e.Y / resultsBox.ItemHeight;
+                    itemIndex += resultsBox.TopIndex;
+                }
+                if (itemIndex != lastItemIndex)
+                {
+                    lastItemIndex = itemIndex;
+                    if (itemIndex >= 0 && itemIndex < resultsBox.Items.Count)
+                    {
+                        toolTip1.SetToolTip(resultsBox, resultsBox.Items[itemIndex].ToString());
+                    }
+                    else
+                    {
+                        toolTip1.Hide(resultsBox);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 
     public class MouseScrollPanel : Panel

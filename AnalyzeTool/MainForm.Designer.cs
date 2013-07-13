@@ -30,7 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.resultsBox = new System.Windows.Forms.ListBox();
-            this.panel1 = new MouseScrollPanel();
+            this.panel1 = new AnalyzeTool.MouseScrollPanel();
+            this.gridControl1 = new AnalyzeTool.GridControl();
             this.gridContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.rockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tunnelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +83,7 @@
             this.toolStripSlate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripZinc = new System.Windows.Forms.ToolStripMenuItem();
-            this.gridControl1 = new AnalyzeTool.GridControl();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.gridContextMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -100,6 +101,7 @@
             this.resultsBox.Size = new System.Drawing.Size(159, 589);
             this.resultsBox.TabIndex = 0;
             this.resultsBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resultsBox_MouseDown);
+            this.resultsBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.resultsBox_MouseMove);
             // 
             // panel1
             // 
@@ -112,6 +114,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(645, 589);
             this.panel1.TabIndex = 1;
+            // 
+            // gridControl1
+            // 
+            this.gridControl1.AllowDrop = true;
+            this.gridControl1.BorderSize = 1;
+            this.gridControl1.CellHeight = 32;
+            this.gridControl1.CellWidth = 32;
+            this.gridControl1.GridSizeX = 16;
+            this.gridControl1.GridSizeY = 16;
+            this.gridControl1.Location = new System.Drawing.Point(0, 0);
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.Size = new System.Drawing.Size(529, 529);
+            this.gridControl1.TabIndex = 0;
+            this.gridControl1.Text = "gridControl1";
+            this.gridControl1.CellPaint += new AnalyzeTool.GridControl.OnCellPaintHandler(this.gridControl1_OnCellPaint);
+            this.gridControl1.CellMouseClick += new AnalyzeTool.GridControl.OnCellMouseClickHandler(this.gridControl1_CellClick);
+            this.gridControl1.CellMouseMove += new AnalyzeTool.GridControl.OnCellMouseMoveHandler(this.gridControl1_CellMouseMove);
+            this.gridControl1.CellMouseEnter += new AnalyzeTool.GridControl.OnCellMouseEnterHandler(this.gridControl1_CellMouseEnter);
+            this.gridControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragDrop);
+            this.gridControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragEnter);
+            this.gridControl1.DragOver += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragOver);
+            this.gridControl1.MouseLeave += new System.EventHandler(this.gridControl1_MouseLeave);
             // 
             // gridContextMenu
             // 
@@ -563,27 +587,10 @@
             this.toolStripZinc.Text = "Zinc";
             this.toolStripZinc.Click += new System.EventHandler(this.toolStripZinc_Click);
             // 
-            // gridControl1
+            // toolTip1
             // 
-            this.gridControl1.AllowDrop = true;
-            this.gridControl1.BorderSize = 1;
-            this.gridControl1.CellHeight = 32;
-            this.gridControl1.CellWidth = 32;
-            this.gridControl1.GridSizeX = 16;
-            this.gridControl1.GridSizeY = 16;
-            this.gridControl1.Location = new System.Drawing.Point(0, 0);
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(529, 529);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.Text = "gridControl1";
-            this.gridControl1.CellPaint += new AnalyzeTool.GridControl.OnCellPaintHandler(this.gridControl1_OnCellPaint);
-            this.gridControl1.CellMouseClick += new AnalyzeTool.GridControl.OnCellMouseClickHandler(this.gridControl1_CellClick);
-            this.gridControl1.CellMouseMove += new AnalyzeTool.GridControl.OnCellMouseMoveHandler(this.gridControl1_CellMouseMove);
-            this.gridControl1.CellMouseEnter += new AnalyzeTool.GridControl.OnCellMouseEnterHandler(this.gridControl1_CellMouseEnter);
-            this.gridControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragDrop);
-            this.gridControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragEnter);
-            this.gridControl1.DragOver += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragOver);
-            this.gridControl1.MouseLeave += new System.EventHandler(this.gridControl1_MouseLeave);
+            this.toolTip1.ShowAlways = true;
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // MainForm
             // 
@@ -614,7 +621,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox resultsBox;
-        private System.Windows.Forms.Panel panel1;
         private GridControl gridControl1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
@@ -667,6 +673,8 @@
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripReinforced;
         private System.Windows.Forms.ToolStripMenuItem reinforcedToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private MouseScrollPanel panel1;
     }
 }
 
