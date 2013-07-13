@@ -281,8 +281,46 @@ namespace AnalyzeTool
             return false;
         }
 
+        private HashSet<TileType> GetSomethingTypes(List<Detected> detected)
+        {
+            HashSet<TileType> types = new HashSet<TileType>();
+            foreach (TileType type in Enum.GetValues(typeof(TileType)))
+            {
+                if (Detected.IsOreType(type) && type != TileType.Something)
+                    types.Add(type);
+            }
+
+            foreach (Detected d in detected)
+            {
+                TileType type = d.Type;
+                if (Detected.IsOreType(type) && type != TileType.Something)
+                    types.Remove(type);
+            }
+
+            return types;
+        }
+
         private int Merge(List<Detected> detected)
         {
+            HashSet<TileType> somethingTypesD = null;
+            HashSet<TileType> somethingTypesE = null;
+            foreach (Detected d in detected) 
+            {
+                if (d.Type == TileType.Something)
+                {
+                    somethingTypesD = GetSomethingTypes(detected);
+                    break;
+                }
+            }
+            foreach (Detected e in Estimates)
+            {
+                if (e.Type == TileType.Something)
+                {
+                    somethingTypesE = GetSomethingTypes(Estimates);
+                    break;
+                }
+            }
+
             List<Detected> result = new List<Detected>();
             foreach (Detected d in detected)
             {
@@ -292,27 +330,28 @@ namespace AnalyzeTool
                     {
                         result.Add(d);
                     }
-                    else if (e.Type == d.Type || e.Type == TileType.Something || d.Type == TileType.Something)
+                    else if (e.Type == TileType.Something && somethingTypesE.Contains(d.Type))
+                    {
+                        result.Add(d);
+                    }
+                    else if (d.Type == TileType.Something && somethingTypesD.Contains(e.Type))
+                    {
+                        result.Add(e);
+                    }
+                    else if (e.Type == d.Type)
                     {
                         if (e.Quality != Quality.Unknown && d.Quality != Quality.Unknown)
                         {
                             if (e.Quality.Equals(d.Quality))
                                 result.Add(d);
                         }
+                        else if (e.Quality != Quality.Unknown)
+                        {
+                            result.Add(e);
+                        }
                         else
                         {
-                            Detected n = new Detected();
-                            if (e.Quality != Quality.Unknown)
-                                n.Quality = e.Quality;
-                            else
-                                n.Quality = d.Quality;
-
-                            if (e.Type != TileType.Something)
-                                n.Type = e.Type;
-                            else
-                                n.Type = d.Type;
-
-                            result.Add(n);
+                            result.Add(d);
                         }
                     }
                 }

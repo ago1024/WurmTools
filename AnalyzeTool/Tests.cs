@@ -92,5 +92,106 @@ namespace AnalyzeTool
                 }
             }
         }
+
+        [Test]
+        public void testAdd()
+        {
+            // Setting a list of detected ores should set the estimates of the tile to exactly this list
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Silver, Quality.Unknown) }));
+
+            Assert.IsNotNull(map[tile].Estimates);
+            Assert.AreEqual(2, map[tile].Estimates.Count);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[0].Type);
+            Assert.AreEqual(TileType.Silver, map[tile].Estimates[1].Type);
+        }
+
+        [Test]
+        public void testAddUnknown()
+        {
+            // If nothing has been detected on the tile mark this as result. Estimates is empty and found is set
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Unknown, Quality.Unknown) }));
+
+            Assert.IsNull(map[tile].Estimates);
+            Assert.IsNotNull(map[tile].Found);
+            Assert.AreEqual(TileType.Unknown, map[tile].Found.Type);
+        }
+
+        [Test]
+        public void testMerge()
+        {
+            // Setting a list of detected ores and adding another list should leave the union of the two lists
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Silver, Quality.Unknown)}));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
+
+            Assert.IsNotNull(map[tile].Estimates);
+            Assert.AreEqual(1, map[tile].Estimates.Count);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[0].Type);
+            Assert.AreEqual(Quality.Good, map[tile].Estimates[0].Quality);
+        }
+
+        [Test]
+        public void testMergeUnknown()
+        {
+            // Setting Nothing and adding another detected ore should leave the tile at Nothing.
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Unknown, Quality.Unknown) }));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
+
+            Assert.IsNull(map[tile].Estimates);
+            Assert.IsNotNull(map[tile].Found);
+            Assert.AreEqual(TileType.Unknown, map[tile].Found.Type);
+        }
+
+        [Test]
+        public void testMergeSomething()
+        {
+            // Setting Iron and Something (eg iron and silver) and adding Iron later on should leave only Iron 
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Something, Quality.Unknown) }));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
+
+            Assert.IsNotNull(map[tile].Estimates);
+            Assert.AreEqual(1, map[tile].Estimates.Count);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[0].Type);
+            Assert.AreEqual(Quality.Good, map[tile].Estimates[0].Quality);
+        }
+
+        [Test]
+        public void testMergeComplex()
+        {
+            // Complex test
+            // First "Something" is detected
+            // Getting closer we detect "Iron, Zinc and something else
+            // A 3rd analyze detects 2 iron of different quality and a zinc
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Something, Quality.Unknown) }));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Zinc, Quality.Unknown), new Detected(TileType.Something, Quality.Unknown) }));
+
+            Assert.IsNotNull(map[tile].Estimates);
+            Assert.AreEqual(3, map[tile].Estimates.Count);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[0].Type);
+            Assert.AreEqual(TileType.Zinc, map[tile].Estimates[1].Type);
+            Assert.AreEqual(TileType.Something, map[tile].Estimates[2].Type);          
+            
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good), new Detected(TileType.Iron, Quality.Acceptable), new Detected(TileType.Zinc, Quality.Unknown) }));
+
+            Assert.IsNotNull(map[tile].Estimates);
+            Assert.AreEqual(3, map[tile].Estimates.Count);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[0].Type);
+            Assert.AreEqual(TileType.Iron, map[tile].Estimates[1].Type);
+            Assert.AreEqual(TileType.Zinc, map[tile].Estimates[2].Type);
+            Assert.AreEqual(Quality.Good, map[tile].Estimates[0].Quality);
+            Assert.AreEqual(Quality.Acceptable, map[tile].Estimates[1].Quality);
+            Assert.AreEqual(Quality.Unknown, map[tile].Estimates[2].Quality);
+        }
     }
 }
