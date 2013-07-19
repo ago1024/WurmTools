@@ -46,7 +46,7 @@ namespace AnalyzeTool
         private Regex reStop = new Regex("You stop analysing");
         private Regex reEnd = new Regex("You finish analysing");
         private Regex reFail = new Regex("You cannot|You do not");
-        private Regex reNextDistance = new Regex("You study it|You take a closer look|You peer at it");
+        private Regex reNextDistance = new Regex("You study it|You take a closer look|You peer at it|You go cross-eyed studying it");
         private List<AnalyzeMatch> matches = null;
         private List<Matcher> matchers = null;
         int distance = 0;
@@ -96,6 +96,7 @@ namespace AnalyzeTool
         private void InitializeMatchers()
         {
             this.matchers = new List<Matcher>();
+            this.matchers.Add(new Matcher(@"indistinct trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 6));
             this.matchers.Add(new Matcher(@"vague trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 5));
             this.matchers.Add(new Matcher(@"minuscule trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 4));
             this.matchers.Add(new Matcher(@"faint trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 3));
