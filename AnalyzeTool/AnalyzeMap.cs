@@ -11,7 +11,7 @@ namespace AnalyzeTool
     public enum TileType
     {
         Unknown,
-        Nothing,     // No resource (eg there's tunnel, rock or reinforced) (future use, currently Unknown is used to identify those tiles)
+        Nothing,     // No resource (eg there's tunnel, rock or reinforced)
         Something,   // Some kind of ore or resource
         Rock,        // Pure rock
         Reinforced,  // Reinforced rock
@@ -99,7 +99,7 @@ namespace AnalyzeTool
 
         public bool Matches(Detected d)
         {
-            if (Type == TileType.Unknown || d.Type == TileType.Unknown)
+            if (Type == TileType.Nothing || d.Type == TileType.Nothing)
             {
                 return Type == d.Type;
             }
@@ -130,8 +130,10 @@ namespace AnalyzeTool
 
         public override string ToString()
         {
-            if (Type == TileType.Unknown)
+            if (Type == TileType.Unknown || Type == TileType.Nothing)
                 return "Rock";
+            else if (Type == TileType.Something)
+                return "Something";
             else if (Quality == Quality.Unknown)
                 return Type.ToString();
             else
@@ -149,7 +151,7 @@ namespace AnalyzeTool
         public TileType Type
         {
             get {
-                if (Found != null && Found.Type != TileType.Unknown)
+                if (Found != null && Found.Type != TileType.Nothing)
                     return Found.Type;
                 return type;
             }
@@ -227,39 +229,48 @@ namespace AnalyzeTool
             this.Estimates = null;
         }
 
+        /**
+         * Add a list of detected ores to the tile.
+         * # It checks if nothing has been detected so the tile can be marked empty.
+         * # If the tile already has an ore set which matches any of the detected ores the quality is updated
+         * # If the tile already has some results the results are merged.
+         * # Otherwise the list is set.
+         */
         public int Add(List<Detected> detected)
         {
             foreach (Detected d in detected)
             {
-                if (d.Type == TileType.Unknown)
+                if (d.Type == TileType.Nothing)
                 {
+                    // Nothing has been detected. Mark the tile as empty.
                     Set(d);
                     return 0;
                 }
                 else if (Found != null)
                 {
-                    if (Found.Matches(d) && d.Type != TileType.Something)
+                    // The detected ore matches what's already there
+                    if (Found.Matches(d))
                     {
-                        if (Quality == Quality.Unknown)
-                            Set(d);
+                        // Update the quality
+                        if (Quality == Quality.Unknown && d.Quality != Quality.Unknown)
+                            Found.Quality = d.Quality;
                         return 1;
-                    }
-                    else
-                    {
-                        return 0;
                     }
                 }
             }
 
+            // We already have something set for this tile but none of the detected ores matched it.
+            // This should not happen so we just bail out here.
+            if (Found != null)
+                return 0;
+
+            // Merge with an already existing list
             if (Estimates != null)
                 return Merge(detected);
             else 
             {
-                Estimates = new List<Detected>();
-                foreach (Detected d in detected)
-                {
-                    Estimates.Add(d);
-                }
+                // Set the list.
+                Estimates = new List<Detected>(detected);
                 return 1;
             }
         }
@@ -281,15 +292,22 @@ namespace AnalyzeTool
             return false;
         }
 
+        /**
+         * Get the TileTypes which are covered by "Something". 
+         * Iron and Something effectively rules out Iron since it has been 
+         * detected on its own.
+         */
         private HashSet<TileType> GetSomethingTypes(List<Detected> detected)
         {
             HashSet<TileType> types = new HashSet<TileType>();
+            // Add all possible ore types
             foreach (TileType type in Enum.GetValues(typeof(TileType)))
             {
                 if (Detected.IsOreType(type) && type != TileType.Something)
                     types.Add(type);
             }
 
+            // Remove anything that has been detected already
             foreach (Detected d in detected)
             {
                 TileType type = d.Type;
@@ -326,7 +344,7 @@ namespace AnalyzeTool
             {
                 foreach (Detected e in Estimates)
                 {
-                    if (e.Type == TileType.Unknown || d.Type == TileType.Unknown)
+                    if (e.Type == TileType.Nothing || d.Type == TileType.Nothing)
                     {
                         result.Add(d);
                     }
@@ -370,7 +388,7 @@ namespace AnalyzeTool
 
         public void SetEmpty()
         {
-            Set(new Detected(TileType.Unknown, Quality.Unknown));
+            Set(new Detected(TileType.Nothing, Quality.Unknown));
         }
 
         public void Set(Detected detected)
@@ -378,7 +396,7 @@ namespace AnalyzeTool
             Found = new Detected(detected.Type, detected.Quality); ;
             if (Estimates != null)
                 Estimates = null;
-            if (Found.Type != TileType.Unknown)
+            if (Found.Type != TileType.Nothing)
                 type = Found.Type;
         }
 
@@ -389,12 +407,12 @@ namespace AnalyzeTool
 
         public Boolean IsEmpty
         {
-            get { return (this.Found != null && this.Found.Type == TileType.Unknown); }
+            get { return (this.Found != null && this.Found.Type == TileType.Nothing); }
         }
 
         public Boolean IsSet
         {
-            get { return (this.Found != null && this.Found.Type != TileType.Unknown); }
+            get { return (this.Found != null && this.Found.Type != TileType.Nothing); }
         }
 
         public override string ToString()
@@ -485,7 +503,7 @@ namespace AnalyzeTool
         private TileType GetTileType(String type)
         {
             if (type == null || type.Length == 0)
-                return TileType.Unknown;
+                return TileType.Nothing;
             switch (type)
             {
                 case "copper ore":
@@ -644,35 +662,68 @@ namespace AnalyzeTool
             }
         }
 
-        public void SetResult(int x, int y, AnalyzeResult result)
+        public void Remove(AnalyzeResult result)
         {
-            if (tileStatus[x, y].Result != null && tileStatus[x, y].Result != result)
-            {
-                results.Remove(tileStatus[x, y].Result);
-                Reset();
-                Refresh();
-            }
             if (results.Contains(result))
             {
                 results.Remove(result);
-                Reset();
+                if (!result.PositionSet)
+                {
+                    // Should not happen
+                    System.Diagnostics.Debug.Print("AnalyzeResult to be removed has no position set");
+                    Reset();
+                }
+                else if (tileStatus[result.X, result.Y].Result != result)
+                {
+                    // Should not happen either
+                    System.Diagnostics.Debug.Print("AnalyzeResult to be removed is not where it's supposed to be");
+                    Reset();
+                }
+                else
+                {
+                    // Reset all tiles that are affected by the Result
+                    tileStatus[result.X, result.Y].Result = null;
+                    Dictionary<int, List<Detected>> matches = GetMatches(result);
+                    foreach (int distance in matches.Keys)
+                    {
+                        foreach (Tile p in SelectTiles(result.X, result.Y, distance))
+                        {
+                            tileStatus[p.X, p.Y].Reset();
+                        }                        
+                    }
+                }
                 Refresh();
             }
+        }
 
-            Dictionary<int, List<Detected>> matches = new Dictionary<int,List<Detected>>();
+        private Dictionary<int, List<Detected>> GetMatches(AnalyzeResult result)
+        {
+            Dictionary<int, List<Detected>> matches = new Dictionary<int, List<Detected>>();
             foreach (AnalyzeMatch match in result.Matches)
             {
                 if (!matches.ContainsKey(match.Distance))
                     matches.Add(match.Distance, new List<Detected>());
                 matches[match.Distance].Add(new Detected(GetTileType(match.Type), GetQuality(match.Quality)));
             }
+            return matches;
+        }
 
-            int maxDistance = 0;
-            foreach (int distance in matches.Keys)
+        public void SetResult(int x, int y, AnalyzeResult result)
+        {
+            if (tileStatus[x, y].Result != null && tileStatus[x, y].Result != result)
             {
-                maxDistance = Math.Max(distance, maxDistance);
+                Remove(tileStatus[x, y].Result);
+                Refresh();
+            }
+            if (results.Contains(result))
+            {
+                Remove(result);
+                Refresh();
             }
 
+            Dictionary<int, List<Detected>> matches = GetMatches(result);
+
+            int maxDistance = matches.Keys.Max();
             if (x - maxDistance < 0 || y - maxDistance < 0 || x + maxDistance >= sizeX || y + maxDistance >= sizeY)
             {
                 int dx = Math.Max(0, maxDistance - x);
@@ -746,7 +797,7 @@ namespace AnalyzeTool
                 for (int y = 0; y < sizeY; y++)
                 {
                     TileStatus status = tileStatus[x, y];
-                    if (status.Type != TileType.Unknown)
+                    if (status.Type != TileType.Nothing && status.Type != TileType.Unknown)
                     {
                         XmlElement element = doc.CreateElement("Tile", namespaceUri);
                         element.SetAttribute("x", x.ToString());

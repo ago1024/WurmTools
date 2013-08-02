@@ -57,8 +57,8 @@ namespace AnalyzeTool
                 Assert.IsTrue(Matches(type, type), "{0} matches {1}", type, type);
                 Assert.IsTrue(Matches(type, TileType.Something), "{0} matches {1}", type, TileType.Something);
                 Assert.IsTrue(Matches(TileType.Something, type), "{0} matches {1}", TileType.Something, type);
-                Assert.IsFalse(Matches(type, TileType.Unknown), "{0} matches {1}", type, TileType.Unknown);
-                Assert.IsFalse(Matches(TileType.Unknown, type), "{0} matches {1}", TileType.Unknown, type);
+                Assert.IsFalse(Matches(type, TileType.Nothing), "{0} matches {1}", type, TileType.Nothing);
+                Assert.IsFalse(Matches(TileType.Nothing, type), "{0} matches {1}", TileType.Nothing, type);
                 Assert.IsTrue(Detected.IsOreType(type));
 
                 foreach (TileType type2 in oreTypes)
@@ -77,8 +77,8 @@ namespace AnalyzeTool
                 Assert.IsTrue(Matches(type, type), "{0} matches {1}", type, type);
                 Assert.IsFalse(Matches(type, TileType.Something), "{0} matches {1}", type, TileType.Something);
                 Assert.IsFalse(Matches(TileType.Something, type), "{0} matches {1}", TileType.Something, type);
-                Assert.IsFalse(Matches(type, TileType.Unknown), "{0} matches {1}", type, TileType.Unknown);
-                Assert.IsFalse(Matches(TileType.Unknown, type), "{0} matches {1}", TileType.Unknown, type);
+                Assert.IsFalse(Matches(type, TileType.Nothing), "{0} matches {1}", type, TileType.Nothing);
+                Assert.IsFalse(Matches(TileType.Nothing, type), "{0} matches {1}", TileType.Nothing, type);
                 Assert.IsFalse(Detected.IsOreType(type));
 
                 foreach (TileType type2 in oreTypes)
@@ -113,11 +113,11 @@ namespace AnalyzeTool
             // If nothing has been detected on the tile mark this as result. Estimates is empty and found is set
             AnalyzeMap map = new AnalyzeMap(1, 1);
             Tile tile = new Tile(0, 0);
-            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Unknown, Quality.Unknown) }));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Nothing, Quality.Unknown) }));
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Unknown, map[tile].Found.Type);
+            Assert.AreEqual(TileType.Nothing, map[tile].Found.Type);
         }
 
         [Test]
@@ -141,12 +141,12 @@ namespace AnalyzeTool
             // Setting Nothing and adding another detected ore should leave the tile at Nothing.
             AnalyzeMap map = new AnalyzeMap(1, 1);
             Tile tile = new Tile(0, 0);
-            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Unknown, Quality.Unknown) }));
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Nothing, Quality.Unknown) }));
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Unknown, map[tile].Found.Type);
+            Assert.AreEqual(TileType.Nothing, map[tile].Found.Type);
         }
 
         [Test]
@@ -192,6 +192,27 @@ namespace AnalyzeTool
             Assert.AreEqual(Quality.Good, map[tile].Estimates[0].Quality);
             Assert.AreEqual(Quality.Acceptable, map[tile].Estimates[1].Quality);
             Assert.AreEqual(Quality.Unknown, map[tile].Estimates[2].Quality);
+        }
+
+        [Test]
+        public void testMergeUpdate()
+        {
+            // Setting Iron and Something (eg iron and silver) and adding Iron later on should leave only Iron 
+            AnalyzeMap map = new AnalyzeMap(1, 1);
+            Tile tile = new Tile(0, 0);
+            map[tile].Set(new Detected(TileType.Zinc, Quality.Unknown));
+
+            Assert.IsNull(map[tile].Estimates);
+            Assert.IsNotNull(map[tile].Found);
+            Assert.AreEqual(TileType.Zinc, map[tile].Found.Type);
+            Assert.AreEqual(Quality.Unknown, map[tile].Found.Quality);
+
+            map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good), new Detected(TileType.Zinc, Quality.Good) }));
+
+            Assert.IsNull(map[tile].Estimates);
+            Assert.IsNotNull(map[tile].Found);
+            Assert.AreEqual(TileType.Zinc, map[tile].Found.Type);
+            Assert.AreEqual(Quality.Good, map[tile].Found.Quality);
         }
     }
 }

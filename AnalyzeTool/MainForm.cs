@@ -483,6 +483,7 @@ namespace AnalyzeTool
             {
                 case TileType.Tunnel:
                     return AnalyzeTool.Properties.Resources.slab;
+                case TileType.Nothing:
                 case TileType.Unknown:
                 case TileType.Rock:
                     return AnalyzeTool.Properties.Resources.rock;
