@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
+#if NUNIT
 using NUnit.Framework;
+#endif
 
 
 namespace WurmUtils
 {
+#if NUNIT
     [TestFixture]
+#endif
     public class Player
     {
         public Player() : this(null, null)
@@ -143,6 +147,7 @@ namespace WurmUtils
             return unescape(str).Replace("/", "\\");
         }
 
+#if NUNIT
         [Test]
         public void testUnescape()
         {
@@ -157,5 +162,6 @@ namespace WurmUtils
                 Assert.AreEqual(test[1], unescape(test[0]));
             }
         }
+#endif
     }
 }
