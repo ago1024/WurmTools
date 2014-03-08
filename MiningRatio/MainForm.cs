@@ -164,7 +164,7 @@ namespace MiningRatio
 
         public class MiningMessageParser : IMessageParser
         {
-            private Regex reMineSome = new Regex("You mine some ore|You mine some rock shards");
+            private Regex reMineSome = new Regex("You mine some ore|You mine some (rock|marble|slate) shards|You mine some shards");
             private Regex reStartMine = new Regex("You start to mine");
             private Regex reMiningIncreased = new Regex("Mining increased");
 
