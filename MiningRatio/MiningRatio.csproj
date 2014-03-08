@@ -58,10 +58,10 @@
     <StartupObject>MiningRatio.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1E2D5479C8485FFB7CF1BF45C9009D34D6D0166C</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>420501E9E65EFAB96FF8EBE2FC4BD3D87E186C93</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>MiningRatio_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>MiningRatio_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -103,6 +103,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="MiningRatio_1_TemporaryKey.pfx" />
     <None Include="MiningRatio_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
