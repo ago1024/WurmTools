@@ -1,0 +1,45 @@
+<html>
+<head>
+<script type="text/javascript" src="timestamp.js"></script>
+<script type="text/javascript" src="wurmtime.js"></script>
+<script type="text/javascript" src="seasons.js"></script>
+</head>
+<body>
+<p class="fact">Current game time: <span id="currentGameTime"></span></p>
+<p class="fact">Last reference time: <span id="referenceGameTime"></span> at <span id="referenceTime"></span>.</p>
+<p class="fact">Current Seasons: <span id="currentSeasons"/></p>
+<p class="fact">Upcoming Seasons: <span id="upcomingSeasons"/></p>
+<p class="note">All dates are for the 1st day of the 2nd week of a starfall. Fruits may be ripe a earlier.</p>
+<script type="text/javascript">
+var gametime = WurmTime.approximateTime(new Date(), timestamp);
+document.getElementById("currentGameTime").innerHTML = gametime.text; 
+document.getElementById("referenceGameTime").innerHTML = timestamp.wurm.text;
+document.getElementById("referenceTime").innerHTML = new Date(timestamp.real);
+
+var seasons = Seasons.getCurrent(gametime);
+var upcoming = Seasons.getUpcoming(gametime);
+
+if (seasons.length == 0) {
+    document.getElementById("currentSeasons").innerHTML = "none"; 
+} else {
+    var text = "";
+    for (var i = 0; i < seasons.length; i++)
+    {
+        text += (i > 0 ? ", " : "") + seasons[i].name;
+    }
+    document.getElementById("currentSeasons").innerHTML = text; 
+}
+
+if (upcoming.length == 0) {
+    document.getElementById("upcomingSeasons").innerHTML = "none"; 
+} else {
+    var text = "";
+    for (var i = 0; i < upcoming.length; i++)
+    {
+        text += "<br>" + upcoming[i].season.name + " in " + upcoming[i].text + " (" + upcoming[i].start + ")";
+    }
+    document.getElementById("upcomingSeasons").innerHTML = text; 
+}
+</script>
+</body>
+</html>
