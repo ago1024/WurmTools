@@ -15,23 +15,25 @@ Seasons.seasons = [
 { "name" : "Olive", "starfall" : Starfalls.Leaf, "week" : 2, "duration" : 1 },
 { "name" : "Grape", "starfall" : Starfalls.Raven, "week" : 1, "duration" : 4 },
 { "name" : "Apple", "starfall" : Starfalls.Raven, "week" : 1, "duration" : 4 },
-{ "name" : "Lemon", "starfall" : Starfalls.Omens, "week" : 2, "duration" : 3 }
+{ "name" : "Lemon", "starfall" : Starfalls.Omens, "week" : 2, "duration" : 3 },
+{ "name" : "Walnut", "starfall" : Starfalls.Omens, "week" : 2, "duration" : 3 },
+{ "name" : "Chestnut", "starfall" : Starfalls.Silence, "week" : 2, "duration" : 3 },
 ];
 
-Seasons.getCurrent = function(gametime) 
+Seasons.getCurrent = function(gametime)
 {
     var current = [];
     for (var i = 0; i < Seasons.seasons.length; i++) {
         if (gametime.starfall == Seasons.seasons[i].starfall) {
             current.push(Seasons.seasons[i]);
-        } 
+        }
     }
     return current;
 }
 
-Seasons.truncate = function(val) 
+Seasons.truncate = function(val)
 {
-    if (val < 0) 
+    if (val < 0)
         return Math.ceil(val);
     else
         return Math.floor(val);
@@ -44,7 +46,7 @@ Seasons.formatSpan = function(days, resolution)
     var hours = days * 24;
     var text = "";
     var filler = "";
-    
+
     if (resolution == "days" && days < 1) {
         return "0 days";
     } else if (resolution == "hours" && hours < 1) {
@@ -58,7 +60,7 @@ Seasons.formatSpan = function(days, resolution)
     if (days >= 2) {
         var d = Seasons.truncate(days);
         text = d + " days";
-        days -= d; 
+        days -= d;
         filler = ", ";
     } else if (days >= 1) {
         text = "1 day";
@@ -72,8 +74,8 @@ Seasons.formatSpan = function(days, resolution)
 
     var hours = days * 24;
     if (hours >= 2) {
-        text += filler + Seasons.truncate(hours) + " hours"; 
-        hours -= Seasons.truncate(hours); 
+        text += filler + Seasons.truncate(hours) + " hours";
+        hours -= Seasons.truncate(hours);
         filler = " ";
     } else if (hours >= 1) {
         text += filler + "1 hour";
@@ -131,9 +133,9 @@ Seasons.getUpcoming = function(gametime)
         var seconds = remaining * 3 * 3600;
         var start = new Date(now.getTime() + seconds * 1000);
 
-        upcoming.push({ 
-                "season" : Seasons.seasons[i], 
-                "remaining": remaining / 8, 
+        upcoming.push({
+                "season" : Seasons.seasons[i],
+                "remaining": remaining / 8,
                 "start": start,
                 "text": Seasons.formatSpan(remaining / 8, "hours")
                 });
