@@ -50,6 +50,8 @@
 		</div>
 		<script type="text/javascript">
 
+			var timestamp = undefined;
+			var gametime = undefined;
 
 			var updateTime = function() {
 				var data = {};
@@ -63,17 +65,28 @@
 						data[key] = value;
 						});
 
-				var timestamp = WurmTime.parse(data['Wurm Time']);
+				timestamp = WurmTime.parse(data['Wurm Time']);
 				if ($('#data').contents().get(0).lastModified) {
 					timestamp.real = new Date($('#data').contents().get(0).lastModified) || new Date();
 				}
 
-				var gametime = WurmTime.approximateTime(new Date(), timestamp);
+				gametime = WurmTime.approximateTime(new Date(), timestamp);
+
+				updateGameTime();
+				updateSeasons();
+			}
+
+			var updateGameTime = function() {
+				gametime = WurmTime.approximateTime(new Date(), timestamp);
 
 				$('#currentGameTime').html(gametime.text);
 				$('#referenceGameTime').html(timestamp.wurm.text);
 				$('#referenceTime').html(new Date(timestamp.real).toLocaleString());
 
+				setTimeout(updateGameTime, 1000);
+			}
+
+			var updateSeasons = function() {
 				var seasons = Seasons.getCurrent(gametime);
 				var upcoming = Seasons.getUpcoming(gametime);
 
@@ -96,8 +109,11 @@
 					{
 						elements.push($('<li/>').text(upcoming[i].season.name + " in " + upcoming[i].text + " (" + new Date(upcoming[i].start).toLocaleString() + ")"));
 					}
+					$("#upcomingSeasons").empty();
 					$("#upcomingSeasons").append(elements);
 				}
+
+				setTimeout(updateSeasons, 60 * 1000);
 			};
 
 			$('#data').load(updateTime);
