@@ -53,10 +53,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A015A20F51D07E6B65D04CA071C7260703808C3F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8E240893E7546FE45E4104AE26EBD9874495709B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WurmDateUpdater_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -110,7 +110,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="WurmDateUpdater_TemporaryKey.pfx" />
+    <None Include="Wurm_Online_Tools.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WurmUtils\WurmUtils.csproj">

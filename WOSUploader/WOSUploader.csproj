@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://gotti.no-ip.org/wurm/wosuploader/</InstallUrl>
     <PublisherName>Wurm Online tools</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -68,10 +68,16 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>156E9FABC7F447D6787CB920E21357191A378D96</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8E240893E7546FE45E4104AE26EBD9874495709B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WOSUploader_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Wurm_Online_Tools.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -116,7 +122,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="WOSUploader_TemporaryKey.pfx" />
+    <None Include="Wurm_Online_Tools.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\wurm_icon.ico" />
