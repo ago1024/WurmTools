@@ -7,7 +7,7 @@ using WurmUtils;
 public class DAVUpload {
     public void HandleWurmTimeStamp(WurmDateTimeStamp stamp) 
 	{
-        string URL = @"http://gotti.dnsalias.org/wurm/timestamp.js";
+        string URL = @"http://gotti.no-ip.org/wurm/timestamp.js";
         String message = String.Format("var timestamp = {0}", stamp.toJSON());
         byte[] bytes = Encoding.UTF8.GetBytes(message);
 

@@ -23,7 +23,7 @@ public class SSHUpload {
             }
             
 
-            Sftp sftp = new Sftp("gotti.dnsalias.org", "gotti-ftp", "");
+            Sftp sftp = new Sftp("gotti.no-ip.org", "gotti-ftp", "");
             sftp.AddIdentityFile("id_dsa");
             sftp.Connect();
             sftp.Put(tempfile, "/srv/gotti.org/httpdocs/wurm/timestamp.js");

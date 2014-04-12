@@ -31,7 +31,7 @@ foreach ($seasons as $season) {
 	printf("CLASS:PUBLIC\n");
 	printf("DTSTART:%s\n", date($dtformat, $season["start"]));
 	printf("DTEND:%s\n", date($dtformat, $season["start"] + (3*7*24*3600/8)));
-	printf("URL:%s\n", 'http://gotti.dnsalias.org/wurm/seasons');
+	printf("URL:%s\n", 'http://gotti.no-ip.org/wurm/seasons');
 	printf("END:VEVENT\n");
 	printf("\n");
 }

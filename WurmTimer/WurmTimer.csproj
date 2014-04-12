@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://gotti.dnsalias.org/wurm/wurmtimer/</InstallUrl>
+    <InstallUrl>http://gotti.no-ip.org/wurm/wurmtimer/</InstallUrl>
     <TargetCulture>en</TargetCulture>
     <PublisherName>Wurm Online tools</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>

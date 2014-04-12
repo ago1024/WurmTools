@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://gotti.dnsalias.org/wurm/wosuploader/</InstallUrl>
+    <InstallUrl>http://gotti.no-ip.org/wurm/wosuploader/</InstallUrl>
     <PublisherName>Wurm Online tools</PublisherName>
     <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
