@@ -670,6 +670,10 @@ namespace AnalyzeTool
                     if (IsValidTile(p.X, p.Y))
                     {
                         Detected n = new Detected(d.Type, d.Quality);
+                        if (n.Type == TileType.Something)
+                        {
+                            n.Type = tileStatus[p.X, p.Y].Type;
+                        }
                         if (tileStatus[p.X, p.Y].Type == d.Type && d.Quality == Quality.Unknown)
                         {
                             n.Quality = tileStatus[p.X, p.Y].Quality;
@@ -727,6 +731,14 @@ namespace AnalyzeTool
                     matches[match.Distance].Add(detected);
                 }
             }
+            foreach (List<Detected> match in matches.Values)
+            {
+                if (match.Count == 0)
+                {
+                    match.Add(new Detected(TileType.Nothing, Quality.Unknown));
+                }
+            }
+
             return matches;
         }
 
