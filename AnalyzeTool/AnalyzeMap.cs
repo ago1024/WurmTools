@@ -25,6 +25,8 @@ namespace AnalyzeTool
         Slate,
         Tin,
         Zinc,
+        Flint,      // Flint can be present in addition to any of the other types
+        Salt        // Salt can be present in addition to any of the other types
     }
 
     public enum Quality
@@ -76,6 +78,18 @@ namespace AnalyzeTool
 
         public TileType Type;
         public Quality Quality;
+
+        public static bool isSpecialType(TileType type)
+        {
+            switch (type)
+            {
+                case TileType.Flint:
+                case TileType.Salt:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         public static bool IsOreType(TileType type)
         {
@@ -524,6 +538,10 @@ namespace AnalyzeTool
                     return TileType.Tin;
                 case "zinc ore":
                     return TileType.Zinc;
+                case "flint":
+                    return TileType.Flint;
+                case "salt":
+                    return TileType.Salt;
                 case "something":
                     return TileType.Something;
                 default:
@@ -703,7 +721,11 @@ namespace AnalyzeTool
             {
                 if (!matches.ContainsKey(match.Distance))
                     matches.Add(match.Distance, new List<Detected>());
-                matches[match.Distance].Add(new Detected(GetTileType(match.Type), GetQuality(match.Quality)));
+                Detected detected = new Detected(GetTileType(match.Type), GetQuality(match.Quality));
+                if (!Detected.isSpecialType(detected.Type))
+                {
+                    matches[match.Distance].Add(detected);
+                }
             }
             return matches;
         }
