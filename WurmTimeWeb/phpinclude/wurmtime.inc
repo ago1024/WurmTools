@@ -49,6 +49,7 @@ function wurmtime_parse($text)
 		return array(
 			"real" =>  "",
 			"wurm" => array(
+				"year" => $year,
 				"starfall" => $starfall,
 				"day" => $day + 7 * $week - 7,
 				"hour" => $hour,

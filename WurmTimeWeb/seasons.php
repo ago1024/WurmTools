@@ -15,6 +15,8 @@ header('Content-Type: text/calendar; charset="utf-8"');
 
 $seasons = Seasons_getUpcoming($timestamp["wurm"]);
 
+$hostname = gethostname();
+
 $dtformat = 'Ymd\THis\Z';
 $now = time();
 printf("BEGIN:VCALENDAR\n");
@@ -32,6 +34,7 @@ foreach ($seasons as $season) {
 	printf("DTSTART:%s\n", date($dtformat, $season["start"]));
 	printf("DTEND:%s\n", date($dtformat, $season["start"] + (3*7*24*3600/8)));
 	printf("URL:%s\n", 'http://gotti.no-ip.org/wurm/seasons');
+	printf("UID:%s-%s-%s-%s@wurmseasons.%s\n", $season["season"]["name"], $season["year"], $season["season"]["starfall"], $season["season"]["week"], $hostname);
 	printf("END:VEVENT\n");
 	printf("\n");
 }

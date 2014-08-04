@@ -154,6 +154,7 @@ function Seasons_getUpcoming($gametime)
 
 		array_push($upcoming, 
 			Array(
+				"year" => $gametime["year"],
 				"season" => $season,
 				"remaining" => $remaining / 8,
 				"start" => $start,
