@@ -40,6 +40,27 @@ namespace AnalyzeTool
         Utmost,
     }
 
+    public enum Direction
+    {
+        Unknown,
+        N,
+        NNE,
+        NE,
+        ENE,
+        E,
+        ESE,
+        SE,
+        SSE,
+        S,
+        SSW,
+        SW,
+        WSW,
+        W,
+        WNW,
+        NW,
+        NNW
+    }
+
     public struct Tile
     {
         private int x;
@@ -822,7 +843,7 @@ namespace AnalyzeTool
             doc.AppendChild(root);
 
             root.SetAttribute("xmlns", namespaceUri);
-            root.SetAttribute("version", "1.1");
+            root.SetAttribute("version", "1.2");
             root.SetAttribute("width", this.SizeX.ToString());
             root.SetAttribute("height", this.SizeY.ToString());
 
@@ -860,6 +881,8 @@ namespace AnalyzeTool
                         node.SetAttribute("type", match.Type);
                     if (match.Quality != null)
                         node.SetAttribute("quality", match.Quality);
+                    if (match.Direction != null)
+                        node.SetAttribute("direction", match.Direction);
                     element.AppendChild(node);
                 }
 
@@ -875,7 +898,7 @@ namespace AnalyzeTool
             doc.Save(stream);
         }
 
-        public static AnalyzeMap Load_1_1(XPathNavigator nav)
+        public static AnalyzeMap Load_1_2(XPathNavigator nav)
         {
             IXmlNamespaceResolver resolver = new MyNamespaceResolver();
             XPathNavigator root = nav.SelectSingleNode("//atm:AnalyzeMap", resolver);
@@ -978,9 +1001,9 @@ namespace AnalyzeTool
             doc.Load(stream);
             XPathNavigator nav = doc.CreateNavigator();     
             String version = nav.Evaluate("string(//atm:AnalyzeMap/@version)", new MyNamespaceResolver()) as String;
-            if ("1.0".Equals(version) || "1.1".Equals(version))
+            if ("1.0".Equals(version) || "1.1".Equals(version) || "1.2".Equals(version))
             {
-                return Load_1_1(nav);
+                return Load_1_2(nav);
             }
             else
             {
