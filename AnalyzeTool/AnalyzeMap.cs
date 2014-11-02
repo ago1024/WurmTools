@@ -89,16 +89,26 @@ namespace AnalyzeTool
         {
             this.Type = type;
             this.Quality = quality;
+            this.Direction = Direction.Unknown;
+        }
+
+        public Detected(TileType type, Quality quality, Direction direction)
+        {
+            this.Type = type;
+            this.Quality = quality;
+            this.Direction = direction;
         }
 
         public Detected()
         {
             this.Type = TileType.Unknown;
             this.Quality = Quality.Unknown;
+            this.Direction = Direction.Unknown;
         }
 
         public TileType Type;
         public Quality Quality;
+        public Direction Direction;
 
         public static bool isSpecialType(TileType type)
         {
@@ -571,6 +581,50 @@ namespace AnalyzeTool
             }
         }
 
+        private Direction GetDirection(String direction)
+        {
+            if (direction == null || direction.Length == 0)
+                return Direction.Unknown;
+            switch (direction)
+            {
+                case "north":
+                    return Direction.N;
+                case "east of north":
+                    return Direction.NNE;
+                case "northeast":
+                    return Direction.NE;
+                case "north of east":
+                    return Direction.ENE;
+                case "east":
+                    return Direction.E;
+                case "south of east":
+                    return Direction.ESE;
+                case "southeast":
+                    return Direction.SE;
+                case "east of south":
+                    return Direction.SSE;
+                case "south":
+                    return Direction.S;
+                case "west of south":
+                    return Direction.SSW;
+                case "southwest":
+                    return Direction.SW;
+                case "south of west":
+                    return Direction.WSW;
+                case "west":
+                    return Direction.W;
+                case "north of west":
+                    return Direction.WNW;
+                case "northwest":
+                    return Direction.NW;
+                case "west of north":
+                    return Direction.NNW;
+                default:
+                    System.Diagnostics.Debug.Print("Unknown direction: {0}", direction);
+                    return Direction.Unknown;
+            }
+        }
+
         public AnalyzeMap(int sizeX, int sizeY)
         {
             this.sizeX = sizeX;
@@ -671,17 +725,101 @@ namespace AnalyzeTool
             return ret;
         }
 
+        private Direction GetTileDirection(Tile p, int x, int y)
+        {
+            int dx = p.X - x;
+            int dy = p.Y - y;
+            int dc = Math.Abs(dx) - Math.Abs(dy);
+
+            if (dx == 0 && dy == 0)
+                return Direction.Unknown;
+            else if (dx == 0 && dy > 0)
+                return Direction.S;
+            else if (dx == 0 && dy < 0)
+                return Direction.N;
+            else if (dx > 0 && dy == 0)
+                return Direction.E;
+            else if (dx < 0 && dy == 0)
+                return Direction.W;
+            else if (dx < 0 && dy < 0)
+            {
+                if (dc == 0)
+                    return Direction.NW;
+                else if (dc < 0)
+                    return Direction.NNW;
+                else
+                    return Direction.WNW;
+            }
+            else if (dx < 0 && dy > 0)
+            {
+                if (dc == 0)
+                    return Direction.SW;
+                else if (dc < 0)
+                    return Direction.SSW;
+                else
+                    return Direction.WSW;
+            }
+            else if (dx > 0 && dy < 0)
+            {
+                if (dc == 0)
+                    return Direction.NE;
+                else if (dc < 0)
+                    return Direction.NNE;
+                else
+                    return Direction.ENE;
+            }
+            else if (dx > 0 && dy > 0)
+            {
+                if (dc == 0)
+                    return Direction.SE;
+                else if (dc < 0)
+                    return Direction.SSE;
+                else
+                    return Direction.ESE;
+            }
+            return Direction.Unknown;
+        }
+
+        private List<Detected> FilterDetected(List<Detected> detected, Direction dir)
+        {
+            if (detected == null || detected.Count == 0 || dir == Direction.Unknown)
+                return detected;
+
+            List<Detected> ret = new List<Detected>();
+            foreach (Detected d in detected) {
+                if (d.Direction == Direction.Unknown || d.Direction == dir)
+                    ret.Add(d);
+            }
+            if (ret.Count == detected.Count)
+            {
+                return detected;
+            }
+            else if (ret.Count == 0)
+            {
+                ret.Add(new Detected(TileType.Nothing, Quality.Unknown));
+                return ret;
+            }
+            else
+            {
+                return ret;
+            }
+        }
+
         private void SetDetected(int x, int y, int distance, List<Detected> detected)
         {
             foreach (Tile p in SelectTiles(x, y, distance))
             {
-                SetDetected(p.X, p.Y, detected);
+                Direction dir = GetTileDirection(p, x, y);
+                List<Detected> dirDetected = FilterDetected(detected, dir);
+                SetDetected(p.X, p.Y, dirDetected);
             }
             foreach (Detected d in detected)
             {
                 List<Tile> matches = new List<Tile>();
                 foreach (Tile p in SelectTiles(x, y, distance))
                 {
+                    if (d.Direction != Direction.Unknown && d.Direction != GetTileDirection(p, x, y))
+                        continue;
                     if (!IsValidTile(p.X, p.Y) || tileStatus[p.X, p.Y].Matches(d))
                         matches.Add(p);
                 }
@@ -746,7 +884,7 @@ namespace AnalyzeTool
             {
                 if (!matches.ContainsKey(match.Distance))
                     matches.Add(match.Distance, new List<Detected>());
-                Detected detected = new Detected(GetTileType(match.Type), GetQuality(match.Quality));
+                Detected detected = new Detected(GetTileType(match.Type), GetQuality(match.Quality), GetDirection(match.Direction));
                 if (!Detected.isSpecialType(detected.Type))
                 {
                     matches[match.Distance].Add(detected);
