@@ -82,6 +82,10 @@ namespace AnalyzeTool
                 {
                     writer.Write("{0}", match.Type);
                 }
+                if (match.Direction != null)
+                {
+                    writer.Write(" {0}", match.Direction);
+                }
             }
 
             String result = writer.ToString();
