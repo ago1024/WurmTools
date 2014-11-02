@@ -13,12 +13,14 @@ namespace AnalyzeTool
         private int distance;
         private String type;
         private String quality;
+        private String direction;
 
-        public AnalyzeMatch(int distance, String type, String quality)
+        public AnalyzeMatch(int distance, String type, String quality, String direction)
         {
             this.distance = distance;
             this.type = type;
             this.quality = quality;
+            this.direction = direction;
         }
 
         public int Distance
@@ -34,6 +36,11 @@ namespace AnalyzeTool
         public String Quality
         {
             get { return quality; }
+        }
+
+        public String Direction
+        {
+            get { return direction; }
         }
     }
 
@@ -72,9 +79,12 @@ namespace AnalyzeTool
                 {
                     String quality = match.Groups["quality"].Value.Trim();
                     String type = match.Groups["type"].Value.Trim();
+                    String direction = match.Groups["direction"].Value.Trim();
                     if (quality != null && quality.Length == 0)
                         quality = null;
-                    return new AnalyzeMatch(distance, type, quality);
+                    if (direction != null && direction.Length == 0)
+                        direction = null;
+                    return new AnalyzeMatch(distance, type, quality, direction);
                 }
                 else
                 {
@@ -96,12 +106,12 @@ namespace AnalyzeTool
         private void InitializeMatchers()
         {
             this.matchers = new List<Matcher>();
-            this.matchers.Add(new Matcher(@"indistinct trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 6));
-            this.matchers.Add(new Matcher(@"vague trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 5));
-            this.matchers.Add(new Matcher(@"minuscule trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 4));
-            this.matchers.Add(new Matcher(@"faint trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 3));
-            this.matchers.Add(new Matcher(@"slight trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 2));
-            this.matchers.Add(new Matcher(@"trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)?\.", 1));
+            this.matchers.Add(new Matcher(@"indistinct trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 6));
+            this.matchers.Add(new Matcher(@"vague trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 5));
+            this.matchers.Add(new Matcher(@"minuscule trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 4));
+            this.matchers.Add(new Matcher(@"faint trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 3));
+            this.matchers.Add(new Matcher(@"slight trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 2));
+            this.matchers.Add(new Matcher(@"trace of ((?<quality>.*) quality )?(?<type>.*?)(, but cannot quite make it out)? \((?<direction>.*)\)\.", 1));
         }
 
         public void Start()
@@ -152,7 +162,7 @@ namespace AnalyzeTool
             }
             else if (this.reFail.IsMatch(line))
             {
-                matches.Add(new AnalyzeMatch(distance, null, null));
+                matches.Add(new AnalyzeMatch(distance, null, null, null));
             }
             else
             {

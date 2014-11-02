@@ -926,14 +926,17 @@ namespace AnalyzeTool
                 {
                     String type = (String)entry.Current.Evaluate("string(@type)");
                     String quality = (String)entry.Current.Evaluate("string(@quality)");
+                    String direction = (String)entry.Current.Evaluate("string(@direction)");
                     int distance = (int)(Double)entry.Current.Evaluate("number(@distance)");
 
                     if (type != null && type.Length == 0)
                         type = null;
                     if (quality != null && quality.Length == 0)
                         quality = null;
+                    if (direction != null && direction.Length == 0)
+                        direction = null;
 
-                    matches.Add(new AnalyzeMatch(distance, type, quality));
+                    matches.Add(new AnalyzeMatch(distance, type, quality, direction));
                 }
 
                 AnalyzeResult result = new AnalyzeResult(matches);
