@@ -192,8 +192,7 @@ namespace AnalyzeTool
         private int? qualityExact;
         private TileType type;
         private Quality quality;
-        private bool? hasSalt;
-        private bool? hasFlint;
+        private HashSet<TileType> specialTypes;
         public Detected Found;
         TileEstimate TileEstimate;
 
@@ -226,13 +225,13 @@ namespace AnalyzeTool
         }
         public bool HasSalt
         {
-            get { return hasSalt != null ? (bool)hasSalt : false; }
-            set { hasSalt = value; }
+            get { return specialTypes != null && specialTypes.Contains(TileType.Salt); }
+            set { AddSpecial(TileType.Salt);  }
         }
         public bool HasFlint
         {
-            get { return hasFlint != null ? (bool)hasFlint : false; }
-            set { hasFlint = value; }
+            get { return specialTypes != null && specialTypes.Contains(TileType.Flint); }
+            set { AddSpecial(TileType.Flint); }
         }
         public Quality Quality
         {
@@ -288,8 +287,16 @@ namespace AnalyzeTool
             this.Result = null;
             this.Found = null;
             this.TileEstimate = null;
-            this.hasSalt = null;
-            this.hasFlint = null;
+            this.specialTypes = null;
+        }
+
+        public void AddSpecial(TileType tileType)
+        {
+            if (specialTypes == null)
+            {
+                specialTypes = new HashSet<TileType>();
+            }
+            specialTypes.Add(tileType);
         }
 
         /**
@@ -339,13 +346,9 @@ namespace AnalyzeTool
 
         public bool Matches(Detected d)
         {
-            if (d.Type == TileType.Salt)
+            if (Detected.isSpecialType(d.Type))
             {
-                return hasSalt == null || (bool)hasSalt == true;
-            }
-            else if (d.Type == TileType.Flint)
-            {
-                return hasFlint == null || (bool)hasFlint == true;
+                return specialTypes == null || specialTypes.Contains(d.Type);
             }
             else if (Found != null)
             {
@@ -784,6 +787,8 @@ namespace AnalyzeTool
                 List<Detected> dirDetected = FilterDetected(detected, dir);
                 SetDetected(p.X, p.Y, dirDetected);
             }
+
+            List<Tuple<Detected, List<Tile>>> matchesList = new List<Tuple<Detected, List<Tile>>>();
             foreach (Detected d in detected)
             {
                 List<Tile> matches = new List<Tile>();
@@ -794,18 +799,21 @@ namespace AnalyzeTool
                     if (!IsValidTile(p.X, p.Y) || tileStatus[p.X, p.Y].Matches(d))
                         matches.Add(p);
                 }
+                matchesList.Add(new Tuple<Detected,List<Tile>>(d, matches));
+            }
+
+            foreach (Tuple<Detected,List<Tile>> tuple in matchesList)
+            {
+                Detected d = tuple.Item1;
+                List<Tile> matches = tuple.Item2;
                 if (matches.Count == 1)
                 {
                     Tile p = matches[0];
                     if (IsValidTile(p.X, p.Y))
                     {
-                        if (d.Type == TileType.Salt)
+                        if (Detected.isSpecialType(d.Type))
                         {
-                            tileStatus[p.X, p.Y].HasSalt = true;
-                        }
-                        else if (d.Type == TileType.Flint)
-                        {
-                            tileStatus[p.X, p.Y].HasFlint = true;
+                            tileStatus[p.X, p.Y].AddSpecial(d.Type);
                         }
                         else
                         {

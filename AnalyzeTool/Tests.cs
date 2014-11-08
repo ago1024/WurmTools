@@ -252,6 +252,25 @@ namespace AnalyzeTool
             String text = status.ToString();
         }
 
+        [Test]
+        public void testSaltIronFlint()
+        {
+            AnalyzeMap map = new AnalyzeMap(3, 3);
+            AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(1, "iron ore", "utmost", "southeast"), new AnalyzeMatch(1, "salt", null, "southeast"), new AnalyzeMatch(1, "flint", null, "southeast") }));
+            map.SetResult(1, 1, result);
+
+            Tile tile = new Tile(2, 2);
+            Assert.IsNull(map[tile].Estimates);
+            Assert.IsNotNull(map[tile].Found);
+            Assert.IsTrue(map[tile].HasSalt);
+            Assert.IsTrue(map[tile].HasFlint);
+            Assert.AreEqual(TileType.Iron, map[tile].Found.Type);
+            Assert.AreEqual(Quality.Utmost, map[tile].Found.Quality);
+            TileStatus status = map[tile];
+            String text = status.ToString();
+        }
+
+
     }
 #endif
 }
