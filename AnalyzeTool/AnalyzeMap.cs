@@ -192,6 +192,10 @@ namespace AnalyzeTool
         private int? qualityExact;
         private TileType type;
         private Quality quality;
+        private bool? hasSalt;
+        private bool? hasFlint;
+        public Detected Found;
+        TileEstimate TileEstimate;
 
         public TileType Type
         {
@@ -219,6 +223,16 @@ namespace AnalyzeTool
                 qualityExact = value;
                 Quality = ConvertExactQuality(value);
             }
+        }
+        public bool HasSalt
+        {
+            get { return hasSalt != null ? (bool)hasSalt : false; }
+            set { hasSalt = value; }
+        }
+        public bool HasFlint
+        {
+            get { return hasFlint != null ? (bool)hasFlint : false; }
+            set { hasFlint = value; }
         }
         public Quality Quality
         {
@@ -255,8 +269,10 @@ namespace AnalyzeTool
             get { return result; }
             set { result = value; }
         }
-        public Detected Found;
-        public List<Detected> Estimates;
+        public HashSet<Detected> Estimates
+        {
+            get { return TileEstimate == null ? null : TileEstimate.Estimates; }
+        }
 
         public TileStatus()
         {
@@ -264,14 +280,16 @@ namespace AnalyzeTool
             this.quality = Quality.Unknown;
             this.Result = null;
             this.Found = null;
-            this.Estimates = null;
+            this.TileEstimate = null;
         }
 
         public void Reset()
         {
             this.Result = null;
             this.Found = null;
-            this.Estimates = null;
+            this.TileEstimate = null;
+            this.hasSalt = null;
+            this.hasFlint = null;
         }
 
         /**
@@ -309,26 +327,33 @@ namespace AnalyzeTool
             if (Found != null)
                 return 0;
 
-            // Merge with an already existing list
-            if (Estimates != null)
-                return Merge(detected);
-            else 
-            {
-                // Set the list.
-                Estimates = new List<Detected>(detected);
+            if (TileEstimate == null)
+                TileEstimate = new TileEstimate();
+
+            TileEstimate.Add(detected);
+            if (TileEstimate.Estimates.Count == 0)
+                return 0;
+            else
                 return 1;
-            }
         }
 
         public bool Matches(Detected d)
         {
-            if (Found != null)
+            if (d.Type == TileType.Salt)
+            {
+                return hasSalt == null || (bool)hasSalt == true;
+            }
+            else if (d.Type == TileType.Flint)
+            {
+                return hasFlint == null || (bool)hasFlint == true;
+            }
+            else if (Found != null)
             {
                 return Found.Matches(d);
             }
-            else if (Estimates != null)
+            else if (TileEstimate != null)
             {
-                foreach (Detected e in Estimates)
+                foreach (Detected e in TileEstimate.Estimates)
                 {
                     if (e.Matches(d))
                         return true;
@@ -363,74 +388,6 @@ namespace AnalyzeTool
             return types;
         }
 
-        private int Merge(List<Detected> detected)
-        {
-            HashSet<TileType> somethingTypesD = null;
-            HashSet<TileType> somethingTypesE = null;
-            foreach (Detected d in detected) 
-            {
-                if (d.Type == TileType.Something)
-                {
-                    somethingTypesD = GetSomethingTypes(detected);
-                    break;
-                }
-            }
-            foreach (Detected e in Estimates)
-            {
-                if (e.Type == TileType.Something)
-                {
-                    somethingTypesE = GetSomethingTypes(Estimates);
-                    break;
-                }
-            }
-
-            List<Detected> result = new List<Detected>();
-            foreach (Detected d in detected)
-            {
-                foreach (Detected e in Estimates)
-                {
-                    if (e.Type == TileType.Nothing || d.Type == TileType.Nothing)
-                    {
-                        result.Add(d);
-                    }
-                    else if (e.Type == TileType.Something && somethingTypesE.Contains(d.Type))
-                    {
-                        result.Add(d);
-                    }
-                    else if (d.Type == TileType.Something && somethingTypesD.Contains(e.Type))
-                    {
-                        result.Add(e);
-                    }
-                    else if (e.Type == d.Type)
-                    {
-                        if (e.Quality != Quality.Unknown && d.Quality != Quality.Unknown)
-                        {
-                            if (e.Quality.Equals(d.Quality))
-                                result.Add(d);
-                        }
-                        else if (e.Quality != Quality.Unknown)
-                        {
-                            result.Add(e);
-                        }
-                        else
-                        {
-                            result.Add(d);
-                        }
-                    }
-                }
-            }
-            if (result.Count > 0)
-            {
-                Estimates = result;
-                return 1;
-            }
-            else
-            {
-                SetEmpty();
-                return 0;
-            }
-        }
-
         public void SetEmpty()
         {
             Set(new Detected(TileType.Nothing, Quality.Unknown));
@@ -439,15 +396,15 @@ namespace AnalyzeTool
         public void Set(Detected detected)
         {
             Found = new Detected(detected.Type, detected.Quality); ;
-            if (Estimates != null)
-                Estimates = null;
+            if (TileEstimate != null)
+                TileEstimate = null;
             if (Found.Type != TileType.Nothing)
                 type = Found.Type;
         }
 
         public Boolean IsUndecided
         {
-            get { return (this.Found == null && this.Estimates != null); }
+            get { return (this.Found == null && this.TileEstimate != null); }
         }
 
         public Boolean IsEmpty
@@ -462,15 +419,23 @@ namespace AnalyzeTool
 
         public override string ToString()
         {
-            if (IsSet)
+            StringBuilder builder = new StringBuilder();
+            if (IsSet || HasSalt || HasFlint)
             {
-                return Found.ToString();
+                builder.Append(Found.ToString());
+                if (HasSalt)
+                {
+                    builder.Append(", Salt");
+                }
+                if (HasFlint)
+                {
+                    builder.Append(", Flint");
+                }
             }
             else if (IsUndecided)
             {
-                StringBuilder builder = new StringBuilder();
                 bool first = true;
-                foreach (Detected d in Estimates)
+                foreach (Detected d in TileEstimate.Estimates)
                 {
                     if (first)
                         first = false;
@@ -478,12 +443,11 @@ namespace AnalyzeTool
                         builder.Append(", ");
                     builder.Append(d);
                 }
-                return builder.ToString();
             }
             else
             {
-                return "";
             }
+            return builder.ToString();
         }
     }
 
@@ -782,19 +746,26 @@ namespace AnalyzeTool
 
         private List<Detected> FilterDetected(List<Detected> detected, Direction dir)
         {
+            int specialCount = 0;
             if (detected == null || detected.Count == 0 || dir == Direction.Unknown)
                 return detected;
 
             List<Detected> ret = new List<Detected>();
             foreach (Detected d in detected) {
                 if (d.Direction == Direction.Unknown || d.Direction == dir)
+                {
                     ret.Add(d);
+                    if (Detected.isSpecialType(d.Type))
+                    {
+                        specialCount++;
+                    }
+                }
             }
             if (ret.Count == detected.Count)
             {
                 return detected;
             }
-            else if (ret.Count == 0)
+            else if (ret.Count == specialCount)
             {
                 ret.Add(new Detected(TileType.Nothing, Quality.Unknown));
                 return ret;
@@ -828,16 +799,27 @@ namespace AnalyzeTool
                     Tile p = matches[0];
                     if (IsValidTile(p.X, p.Y))
                     {
-                        Detected n = new Detected(d.Type, d.Quality);
-                        if (n.Type == TileType.Something)
+                        if (d.Type == TileType.Salt)
                         {
-                            n.Type = tileStatus[p.X, p.Y].Type;
+                            tileStatus[p.X, p.Y].HasSalt = true;
                         }
-                        if (tileStatus[p.X, p.Y].Type == d.Type && d.Quality == Quality.Unknown)
+                        else if (d.Type == TileType.Flint)
                         {
-                            n.Quality = tileStatus[p.X, p.Y].Quality;
+                            tileStatus[p.X, p.Y].HasFlint = true;
                         }
-                        tileStatus[p.X, p.Y].Set(n);
+                        else
+                        {
+                            Detected n = new Detected(d.Type, d.Quality);
+                            if (n.Type == TileType.Something)
+                            {
+                                n.Type = tileStatus[p.X, p.Y].Type;
+                            }
+                            if (tileStatus[p.X, p.Y].Type == d.Type && d.Quality == Quality.Unknown)
+                            {
+                                n.Quality = tileStatus[p.X, p.Y].Quality;
+                            }
+                            tileStatus[p.X, p.Y].Set(n);
+                        }
                     }
                 }
             }
@@ -885,14 +867,19 @@ namespace AnalyzeTool
                 if (!matches.ContainsKey(match.Distance))
                     matches.Add(match.Distance, new List<Detected>());
                 Detected detected = new Detected(GetTileType(match.Type), GetQuality(match.Quality), GetDirection(match.Direction));
-                if (!Detected.isSpecialType(detected.Type))
-                {
-                    matches[match.Distance].Add(detected);
-                }
+                matches[match.Distance].Add(detected);
             }
             foreach (List<Detected> match in matches.Values)
             {
-                if (match.Count == 0)
+                int specialCount = 0;
+                foreach (Detected d in match)
+                {
+                    if (Detected.isSpecialType(d.Type))
+                    {
+                        specialCount++;
+                    }
+                }
+                if (match.Count == specialCount)
                 {
                     match.Add(new Detected(TileType.Nothing, Quality.Unknown));
                 }

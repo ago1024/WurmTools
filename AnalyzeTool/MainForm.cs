@@ -274,6 +274,16 @@ namespace AnalyzeTool
             {
                 graphics.DrawImage(texture, area);
             }
+            texture = GetSaltTexture(CellToTile(cell));
+            if (texture != null)
+            {
+                graphics.DrawImage(texture, area);
+            }
+            texture = GetFlintTexture(CellToTile(cell));
+            if (texture != null)
+            {
+                graphics.DrawImage(texture, area);
+            }
         }
 
         private void DrawCellQuality(GridControl.Cell cell, Rectangle area, Graphics graphics)
@@ -420,7 +430,7 @@ namespace AnalyzeTool
                 tileType = String.Format("{2},{3} {0}", map[cell.X, cell.Y].Type, map[cell.X, cell.Y].Quality, cell.X, cell.Y);
             }
 
-            if (map[cell.X, cell.Y].IsSet || map[cell.X, cell.Y].IsUndecided)
+            if (map[cell.X, cell.Y].IsSet || map[cell.X, cell.Y].IsUndecided || map[cell.X, cell.Y].HasSalt || map[cell.X, cell.Y].HasFlint)
             {
                 toolStripStatusLabel1.Text = String.Format("{0}; {1}", tileType, map[cell.X, cell.Y].ToString());
             }
@@ -533,6 +543,29 @@ namespace AnalyzeTool
             }
         }
 
+        private Bitmap GetSaltTexture(Tile tile)
+        {
+            if (map[tile.X, tile.Y].HasSalt)
+            {
+                return AnalyzeTool.Properties.Resources.salt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private Bitmap GetFlintTexture(Tile tile)
+        {
+            if (map[tile.X, tile.Y].HasFlint)
+            {
+                return AnalyzeTool.Properties.Resources.flint;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         private void setCheckedTool(object sender) 
         {
