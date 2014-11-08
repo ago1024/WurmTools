@@ -119,6 +119,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
+    <Compile Include="TileEstimate.cs" />
     <EmbeddedResource Include="QualityInputForm.resx">
       <DependentUpon>QualityInputForm.cs</DependentUpon>
     </EmbeddedResource>
