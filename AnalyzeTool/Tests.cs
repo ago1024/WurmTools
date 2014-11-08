@@ -23,6 +23,10 @@ namespace AnalyzeTool
                                     TileType.Tin,
                                     TileType.Zinc
                                 };
+        TileType[] resourceTypes = {
+                                       TileType.Flint,
+                                       TileType.Salt
+                                };
         TileType[] plainTypes = {
                                     TileType.Rock,
                                     TileType.Reinforced,
@@ -48,7 +52,7 @@ namespace AnalyzeTool
         {
             foreach (TileType type in allTypes)
             {
-                Assert.IsTrue(oreTypes.Contains(type) || plainTypes.Contains(type) || specialTypes.Contains(type), "{0} is not listed", type);
+                Assert.IsTrue(oreTypes.Contains(type) || resourceTypes.Contains(type) || plainTypes.Contains(type) || specialTypes.Contains(type), "{0} is not listed", type);
             }
         }
 
