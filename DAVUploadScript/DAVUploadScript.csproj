@@ -33,6 +33,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Debug|x86'">
+    <OutputPath>bin\x86\NUnit-Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Release|x86'">
+    <OutputPath>bin\x86\NUnit-Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="dav-upload.cs" />
     <Compile Include="Program.cs" />

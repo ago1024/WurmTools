@@ -64,6 +64,12 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Debug|x86'">
+    <OutputPath>bin\x86\NUnit-Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Release|x86'">
+    <OutputPath>bin\x86\NUnit-Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSScriptLibrary">
       <HintPath>lib\CSScriptLibrary.dll</HintPath>

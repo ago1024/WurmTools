@@ -58,6 +58,12 @@
   <PropertyGroup>
     <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Debug|x86'">
+    <OutputPath>bin\x86\NUnit-Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Release|x86'">
+    <OutputPath>bin\x86\NUnit-Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiffieHellman">
       <HintPath>.\DiffieHellman.dll</HintPath>
