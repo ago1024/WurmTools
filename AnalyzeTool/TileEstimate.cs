@@ -56,8 +56,6 @@ namespace AnalyzeTool
 
             if (estimates.Count == 0)
                 estimates = emptySet;
-
-            System.Console.WriteLine(this.ToString());
         }
 
         private HashSet<Detected> MakeSet(List<Detected> detected)
@@ -88,7 +86,6 @@ namespace AnalyzeTool
                         set.Add(d);
                 }
             }
-            System.Console.WriteLine(ToString(set));
             return set;
         }
 
