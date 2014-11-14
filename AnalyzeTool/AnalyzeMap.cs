@@ -217,7 +217,7 @@ namespace AnalyzeTool
         public int ExactQuality
         {
             get { return (int)qualityExact; }
-            set 
+            set
             { 
                 qualityExact = value;
                 Quality = ConvertExactQuality(value);
@@ -226,12 +226,24 @@ namespace AnalyzeTool
         public bool HasSalt
         {
             get { return specialTypes != null && specialTypes.Contains(TileType.Salt); }
-            set { AddSpecial(TileType.Salt);  }
+            set
+            {
+                if (value)
+                    AddSpecial(TileType.Salt);
+                else
+                    RemoveSpecial(TileType.Salt);
+            }
         }
         public bool HasFlint
         {
             get { return specialTypes != null && specialTypes.Contains(TileType.Flint); }
-            set { AddSpecial(TileType.Flint); }
+            set
+            {
+                if (value)
+                    AddSpecial(TileType.Flint);
+                else
+                    RemoveSpecial(TileType.Flint);
+            }
         }
         public Quality Quality
         {
@@ -297,6 +309,30 @@ namespace AnalyzeTool
                 specialTypes = new HashSet<TileType>();
             }
             specialTypes.Add(tileType);
+            if (TileEstimate != null)
+            {
+                TileEstimate.Estimates.Remove(new Detected(tileType, Quality.Unknown));
+                if (TileEstimate.Estimates.Count == 0)
+                {
+                    TileEstimate = null;
+                }
+            }
+        }
+
+        public void RemoveSpecial(TileType tileType)
+        {
+            if (specialTypes != null)
+            {
+                specialTypes.Remove(tileType);
+            }
+            if (TileEstimate != null)
+            {
+                TileEstimate.Estimates.Remove(new Detected(tileType, Quality.Unknown));
+                if (TileEstimate.Estimates.Count == 0)
+                {
+                    TileEstimate = null;
+                }
+            }
         }
 
         /**
@@ -398,9 +434,23 @@ namespace AnalyzeTool
 
         public void Set(Detected detected)
         {
-            Found = new Detected(detected.Type, detected.Quality); ;
+            Found = new Detected(detected.Type, detected.Quality);
             if (TileEstimate != null)
-                TileEstimate = null;
+            {
+                List<Detected> list = new List<Detected>();
+                foreach (Detected d in TileEstimate.Estimates)
+                {
+                    if (Detected.isSpecialType(d.Type))
+                    {
+                        list.Add(d);
+                    }
+                }
+                TileEstimate.Add(list);
+                if (TileEstimate.Estimates.Count == 0)
+                {
+                    TileEstimate = null;
+                }
+            }
             if (Found.Type != TileType.Nothing)
                 type = Found.Type;
         }
@@ -815,7 +865,7 @@ namespace AnalyzeTool
                         {
                             tileStatus[p.X, p.Y].AddSpecial(d.Type);
                         }
-                        else
+                        else if (Detected.IsOreType(d.Type) && d.Type != TileType.Something)
                         {
                             Detected n = new Detected(d.Type, d.Quality);
                             if (n.Type == TileType.Something)
@@ -860,6 +910,8 @@ namespace AnalyzeTool
                         foreach (Tile p in SelectTiles(result.X, result.Y, distance))
                         {
                             tileStatus[p.X, p.Y].Reset();
+                            if (tileStatus[p.X, p.Y].Type == TileType.Tunnel)
+                                tileStatus[p.X, p.Y].Set(new Detected(TileType.Nothing, Quality.Unknown));
                         }                        
                     }
                 }
@@ -991,6 +1043,10 @@ namespace AnalyzeTool
                         element.SetAttribute("x", x.ToString());
                         element.SetAttribute("y", y.ToString());
                         element.SetAttribute("type", status.Type.ToString());
+                        if (status.HasSalt)
+                            element.SetAttribute("salt", "true");
+                        if (status.HasFlint)
+                            element.SetAttribute("flint", "true");
                         if (status.HasExactQuality)
                             element.SetAttribute("quality", status.ExactQuality.ToString());
                         else if (status.Quality != Quality.Unknown)
@@ -1048,6 +1104,8 @@ namespace AnalyzeTool
                 int y = (int)(Double)iter.Current.Evaluate("number(@y)");
                 String type = (String)iter.Current.Evaluate("string(@type)");
                 String quality = (String)iter.Current.Evaluate("string(@quality)");
+                Boolean hasSalt = (Boolean)iter.Current.Evaluate("@salt = 'true'");
+                Boolean hasFlint = (Boolean)iter.Current.Evaluate("@flint = 'true'");
                 if (map.IsValidTile(x, y))
                 {
                     map[x, y].Type = (TileType)Enum.Parse(typeof(TileType), type);
@@ -1063,6 +1121,10 @@ namespace AnalyzeTool
                             map[x, y].Quality = (Quality)Enum.Parse(typeof(Quality), quality);
                         }
                     }
+                    if (hasSalt)
+                        map[x, y].HasSalt = true;
+                    if (hasFlint)
+                        map[x, y].HasFlint = true;
                 }
                 else
                 {

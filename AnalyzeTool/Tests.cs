@@ -271,6 +271,106 @@ namespace AnalyzeTool
         }
 
 
+        [Test]
+        public void testTunnel()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "iron ore", "utmost", "west of north") }));
+            map.SetResult(3, 3, result);
+
+            Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+            Assert.IsNotNull(map[new Tile(2, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+
+            map[new Tile(1, 0)].Set(new Detected(TileType.Tunnel, Quality.Unknown));
+            map.SetResult(3, 3, result);
+
+            Assert.IsNull(map[new Tile(2, 0)].Estimates);
+            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
+            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.IsNull(map[new Tile(1, 0)].Estimates);
+            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+        }
+
+        [Test]
+        public void testTunnel2()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "iron ore", "utmost", "west of north") }));
+            map.SetResult(3, 3, result);
+
+            Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+            Assert.IsNotNull(map[new Tile(2, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+
+            map[new Tile(1, 0)].Set(new Detected(TileType.Tunnel, Quality.Unknown));
+            Assert.IsNull(map[new Tile(1, 0)].Estimates);
+            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+
+            map.Refresh();
+
+            Assert.IsNull(map[new Tile(2, 0)].Estimates);
+            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
+            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.IsNull(map[new Tile(1, 0)].Estimates);
+            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+        }
+
+        [Test]
+        public void testTunnelFlint()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "iron ore", "utmost", "west of north"), new AnalyzeMatch(3, "flint", null, "west of north"), new AnalyzeMatch(3, "salt", null, "west of north") }));
+            map.SetResult(3, 3, result);
+
+            Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
+            Assert.IsNotNull(map[new Tile(2, 0)].Estimates);
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Iron, Quality.Utmost)));
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
+
+            map[new Tile(1, 0)].Set(new Detected(TileType.Tunnel, Quality.Unknown));
+            Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
+            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
+
+            map.Refresh();
+
+            Assert.IsNotNull(map[new Tile(2, 0)].Estimates);
+            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
+            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
+            Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
+            Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
+            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
+            Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
+        }
+
+        [Test]
+        public void testSetSomething()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "something", null, "northwest") }));
+            map.SetResult(3, 3, result);
+
+            Assert.IsNotNull(map[new Tile(0, 0)].Estimates);
+            foreach (TileType tileType in resourceTypes)
+            {
+                Assert.IsTrue(map[new Tile(0, 0)].Estimates.Contains(new Detected(tileType, Quality.Unknown)), "Expected " + tileType);
+            }
+            foreach (TileType tileType in oreTypes)
+            {
+                Assert.IsTrue(map[new Tile(0, 0)].Estimates.Contains(new Detected(tileType, Quality.Unknown)), "Expected " + tileType);
+            }
+            Assert.IsNull(map[new Tile(0, 0)].Found);
+        }
     }
 #endif
 }
