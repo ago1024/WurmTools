@@ -67,6 +67,19 @@ namespace WurmUtils
             }
         }
 
+        private bool testServer_ = false;
+        public bool TestServer
+        {
+            get
+            {
+                return testServer_;
+            }
+            set
+            {
+                testServer_ = value;
+            }
+        }
+
         public String PlayerDir
         {
             get
@@ -87,7 +100,10 @@ namespace WurmUtils
                 String playerDir = PlayerDir;
                 if (playerDir == null)
                     return null;
-                return playerDir + @"\logs";
+                if (testServer_)
+                    return playerDir + @"\test_logs";
+                else
+                    return playerDir + @"\logs";
             }
         }
 
@@ -98,7 +114,10 @@ namespace WurmUtils
                 String playerDir = PlayerDir;
                 if (playerDir == null)
                     return null;
-                return playerDir + @"\dumps";
+                if (testServer_)
+                    return playerDir + @"\test_dumps";
+                else
+                    return playerDir + @"\dumps";
             }
         }
 

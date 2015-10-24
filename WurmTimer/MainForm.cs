@@ -217,6 +217,8 @@ namespace WurmTimer
                     Player player = new Player();
                     player.PlayerName = iter.Current.Evaluate("string(@name)") as String;
                     player.WurmDir = iter.Current.Evaluate("string(@wurmdir)") as String;
+                    String testServer = iter.Current.Evaluate("string(@testserver)") as String;
+                    player.TestServer = bool.TrueString.Equals(testServer, StringComparison.InvariantCultureIgnoreCase);
 
                     System.Diagnostics.Debug.WriteLine(String.Format("Configured player {0} in {1}", player.PlayerName, player.WurmDir));
                     this.players.Add(player);
