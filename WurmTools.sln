@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WOSUploader", "WOSUploader\WOSUploader.csproj", "{058772A0-FCE2-4960-9C18-E6B1311B7D89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WurmUtils", "WurmUtils\WurmUtils.csproj", "{0DB81851-3679-4D56-85D3-F695514A32C4}"
