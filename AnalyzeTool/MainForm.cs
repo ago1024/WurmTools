@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -274,7 +275,35 @@ namespace AnalyzeTool
             }
             else
             {
-                graphics.DrawImage(texture, area);
+                TileStatus tile = map[cell.X, cell.Y];
+                if (tile.Estimates == null && tile.Found == null)
+                {
+                    float b = 0.7f;
+                    ColorMatrix cm = new ColorMatrix(new float[][]
+                            {
+                                new float[] {b, 0, 0, 0, 0},
+                                new float[] {0, b, 0, 0, 0},
+                                new float[] {0, 0, b, 0, 0},
+                                new float[] {0, 0, 0, 1, 0},
+                                new float[] {0, 0, 0, 0, 1},
+                            });
+                    ImageAttributes imgAttr = new ImageAttributes();
+                    imgAttr.SetColorMatrix(cm);
+
+                    Point[] points =
+                    {
+                        new Point(area.Left, area.Top),
+                        new Point(area.Right, area.Top),
+                        new Point(area.Left, area.Bottom),
+                    };
+                    Rectangle srcRect = new Rectangle(0, 0, area.Width, area.Height);
+
+                    graphics.DrawImage(texture, points, srcRect, GraphicsUnit.Pixel, imgAttr);
+                }
+                else
+                {
+                    graphics.DrawImage(texture, area);
+                }
             }
             texture = GetSaltTexture(CellToTile(cell));
             if (texture != null)
