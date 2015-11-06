@@ -272,6 +272,7 @@ namespace ImproveTool
             new Entry("has some stains that must be washed away", Tools.Water),
             new Entry("has an open seam that must be backstitched with an iron needle to improve", Tools.Needle),
             new Entry("has a seam that needs to be hidden by slipstitching with an iron needle", Tools.Needle),
+            new Entry("has some holes and must be tailored with an iron needle", Tools.Needle),
             new Entry("has some excess cloth that needs to be cut away with a scissors", Tools.Scissors),            
         };
 
