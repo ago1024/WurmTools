@@ -541,13 +541,21 @@ namespace AnalyzeTool
                 case TileType.Silver:
                     return AnalyzeTool.Properties.Resources.silverore;
                 case TileType.Slate:
-                    return AnalyzeTool.Properties.Resources.slateshards;
+                    return AnalyzeTool.Properties.Resources.slatevein;
                 case TileType.Tin:
                     return AnalyzeTool.Properties.Resources.tinore;
                 case TileType.Zinc:
                     return AnalyzeTool.Properties.Resources.zincore;
                 case TileType.Reinforced:
                     return AnalyzeTool.Properties.Resources.reinforcedcave;
+                case TileType.Adamantine:
+                    return AnalyzeTool.Properties.Resources.adamatinevein;
+                case TileType.Glimmersteel:
+                    return AnalyzeTool.Properties.Resources.glimmersteelvein;
+                case TileType.RockSalt:
+                    return AnalyzeTool.Properties.Resources.rocksalt;
+                case TileType.SandStone:
+                    return AnalyzeTool.Properties.Resources.sandstonevein;
                 default:
                     return null;
             }
@@ -1043,6 +1051,46 @@ namespace AnalyzeTool
             catch (Exception)
             {
             }
+        }
+
+        private void adamantineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Adamantine);
+        }
+
+        private void glimmersteelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Glimmersteel);
+        }
+
+        private void rocksaltToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.RockSalt);
+        }
+
+        private void sandstoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.SandStone);
+        }
+
+        private void adamantineToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Adamantine);
+        }
+
+        private void glimmersteelToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.Glimmersteel);
+        }
+
+        private void rocksaltToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.RockSalt);
+        }
+
+        private void sandstoneToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SetTileType(PopupTile, TileType.SandStone);
         }
     }
 

@@ -200,9 +200,6 @@
     <None Include="resources\silverore.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\slateshards.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="resources\tinore.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +256,24 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\adamatinevein_512.dds" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\adamatinevein_512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\glimmersteelvein_512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\sandstonevein.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\rocksalt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\slatevein_512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

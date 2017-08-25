@@ -118,11 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="adamatinevein" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\adamatinevein_512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="copperore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\copperore.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="flint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\flint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="glimmersteelvein" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\glimmersteelvein_512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="goldore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\goldore.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,8 +163,14 @@
   <data name="rock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\rock.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="rocksalt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rocksalt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="salt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\salt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sandstonevein" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\sandstonevein.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="silverore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\silverore.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,8 +178,8 @@
   <data name="slab" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\slab.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="slateshards" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\slateshards.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="slatevein" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\slatevein_512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tinore" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\tinore.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

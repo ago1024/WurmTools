@@ -26,7 +26,11 @@ namespace AnalyzeTool
         Tin,
         Zinc,
         Flint,      // Flint can be present in addition to any of the other types
-        Salt        // Salt can be present in addition to any of the other types
+        Salt,        // Salt can be present in addition to any of the other types
+        Adamantine,
+        Glimmersteel,
+        RockSalt,
+        SandStone
     }
 
     public enum Quality
@@ -135,6 +139,10 @@ namespace AnalyzeTool
                 case TileType.Slate:
                 case TileType.Tin:
                 case TileType.Zinc:
+                case TileType.Adamantine:
+                case TileType.Glimmersteel:
+                case TileType.RockSalt:
+                case TileType.SandStone:
                 case TileType.Something:
                     return true;
                 default:
@@ -568,28 +576,47 @@ namespace AnalyzeTool
                 return TileType.Nothing;
             switch (type)
             {
+                case "copper":
                 case "copper ore":
                     return TileType.Copper;
+                case "gold":
                 case "gold ore":
                     return TileType.Gold;
+                case "iron":
                 case "iron ore":
                     return TileType.Iron;
+                case "lead":
                 case "lead ore":
                     return TileType.Lead;
+                case "marble":
                 case "marble shards":
                     return TileType.Marble;
+                case "silver":
                 case "silver ore":
                     return TileType.Silver;
+                case "slate":
                 case "slate shards":
                     return TileType.Slate;
+                case "tin":
                 case "tin ore":
                     return TileType.Tin;
+                case "zinc":
                 case "zinc ore":
                     return TileType.Zinc;
                 case "flint":
                     return TileType.Flint;
                 case "salt":
                     return TileType.Salt;
+                case "adamantine":
+                case "adamantine ore":
+                    return TileType.Adamantine;
+                case "glimmersteel":
+                case "glimmersteel ore":
+                    return TileType.Glimmersteel;
+                case "rock salt":
+                    return TileType.RockSalt;
+                case "sandstone":
+                    return TileType.SandStone;
                 case "something":
                     return TileType.Something;
                 default:
