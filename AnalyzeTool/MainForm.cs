@@ -45,6 +45,9 @@ namespace AnalyzeTool
         private class TileTypeTool : MapTool
         {
             private TileType tileType;
+
+            public TileType TileType { get { return tileType; } }
+
             public TileTypeTool(TileType tileType)
             {
                 this.tileType = tileType;
@@ -604,7 +607,7 @@ namespace AnalyzeTool
 
         private void setCheckedTool(object sender) 
         {
-            if (sender == null)
+            if (sender == null || activeTool == null)
             {
                 setCheckedToolButton(null);
                 setCheckedToolMenuItem(null);
@@ -650,7 +653,12 @@ namespace AnalyzeTool
 
         private void setActiveTool(TileType tileType)
         {
-            this.activeTool = new TileTypeTool(tileType);
+            TileTypeTool active = activeTool as TileTypeTool;
+            if (active != null && active.TileType == tileType) {
+                activeTool = null;
+            } else {
+                activeTool = new TileTypeTool(tileType);
+            }
         }
 
         private void toolStripTunnel_Click(object sender, EventArgs e)
