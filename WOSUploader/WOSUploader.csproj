@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
     <PublishDir>$(PublishRoot)\wosuploader\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/wosuploader/</InstallUrl>
     <ApplicationRevision>4</ApplicationRevision>
@@ -14,6 +14,7 @@
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugType>portable</DebugType>
@@ -34,8 +35,6 @@
     <StartupObject>WOSUploader.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Windows.Forms" />
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>

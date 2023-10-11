@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
     <PublishDir>$(PublishRoot)\improvetool\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/improvetool/</InstallUrl>
     <ApplicationRevision>1</ApplicationRevision>
@@ -12,6 +12,7 @@
     <Product>RepairTool</Product>
     <Copyright>Copyright ©  2013</Copyright>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugType>portable</DebugType>
@@ -28,8 +29,6 @@
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Windows.Forms" />
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>

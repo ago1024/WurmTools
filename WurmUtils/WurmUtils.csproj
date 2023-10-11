@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProductVersion>8.0.30703</ProductVersion>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
     <AssemblyTitle>WurmUtils</AssemblyTitle>
     <Product>WurmUtils</Product>
-    <Copyright>Copyright ©  2011</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

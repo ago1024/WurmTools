@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
     <DefineConstants>NUNIT</DefineConstants>
   </PropertyGroup>
 

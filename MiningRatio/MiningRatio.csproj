@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net481</TargetFramework>
+    <TargetFrameworks>net481</TargetFrameworks>
     <PublishDir>$(PublishRoot)\miningratio\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/miningratio/</InstallUrl>
     <ProductName>Wurm skill ratio</ProductName>
@@ -12,7 +12,7 @@
     <ApplicationVersion>1.1.5.%2a</ApplicationVersion>
     <AssemblyTitle>MiningRatio</AssemblyTitle>
     <Product>MiningRatio</Product>
-    <Copyright>Copyright ©  2012</Copyright>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugType>portable</DebugType>
@@ -28,10 +28,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
