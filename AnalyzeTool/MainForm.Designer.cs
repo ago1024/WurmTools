@@ -79,15 +79,16 @@
             this.toolStripIron = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLead = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMarble = new System.Windows.Forms.ToolStripMenuItem();
+            this.rocksaltToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sandstoneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSilver = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSlate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripZinc = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.rocksaltToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.sandstoneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new AnalyzeTool.MouseScrollPanel();
             this.gridControl1 = new AnalyzeTool.GridControl();
+            this.removeAnalyzeInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridContextMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -115,15 +116,16 @@
             this.reinforcedToolStripMenuItem,
             this.oreToolStripMenuItem,
             this.qualityToolStripMenuItem,
-            this.resetToolStripMenuItem});
+            this.resetToolStripMenuItem,
+            this.removeAnalyzeInfoToolStripMenuItem});
             this.gridContextMenu.Name = "gridContextMenu";
-            this.gridContextMenu.Size = new System.Drawing.Size(132, 136);
+            this.gridContextMenu.Size = new System.Drawing.Size(184, 180);
             // 
             // rockToolStripMenuItem
             // 
             this.rockToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.rock;
             this.rockToolStripMenuItem.Name = "rockToolStripMenuItem";
-            this.rockToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.rockToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.rockToolStripMenuItem.Text = "Rock";
             this.rockToolStripMenuItem.Click += new System.EventHandler(this.rockToolStripMenuItem_Click);
             // 
@@ -131,7 +133,7 @@
             // 
             this.tunnelToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.slab;
             this.tunnelToolStripMenuItem.Name = "tunnelToolStripMenuItem";
-            this.tunnelToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.tunnelToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.tunnelToolStripMenuItem.Text = "Tunnel";
             this.tunnelToolStripMenuItem.Click += new System.EventHandler(this.tunnelToolStripMenuItem_Click);
             // 
@@ -139,7 +141,7 @@
             // 
             this.reinforcedToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.reinforcedcave;
             this.reinforcedToolStripMenuItem.Name = "reinforcedToolStripMenuItem";
-            this.reinforcedToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.reinforcedToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.reinforcedToolStripMenuItem.Text = "Reinforced";
             this.reinforcedToolStripMenuItem.Click += new System.EventHandler(this.reinforcedToolStripMenuItem_Click);
             // 
@@ -159,14 +161,14 @@
             this.zincToolStripMenuItem});
             this.oreToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.goldore;
             this.oreToolStripMenuItem.Name = "oreToolStripMenuItem";
-            this.oreToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.oreToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.oreToolStripMenuItem.Text = "Ore";
             // 
             // copperToolStripMenuItem
             // 
             this.copperToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.copperore;
             this.copperToolStripMenuItem.Name = "copperToolStripMenuItem";
-            this.copperToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.copperToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.copperToolStripMenuItem.Text = "Copper";
             this.copperToolStripMenuItem.Click += new System.EventHandler(this.copperToolStripMenuItem_Click_1);
             // 
@@ -174,7 +176,7 @@
             // 
             this.goldToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.goldore;
             this.goldToolStripMenuItem.Name = "goldToolStripMenuItem";
-            this.goldToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.goldToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.goldToolStripMenuItem.Text = "Gold";
             this.goldToolStripMenuItem.Click += new System.EventHandler(this.goldToolStripMenuItem_Click);
             // 
@@ -182,7 +184,7 @@
             // 
             this.ironToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.ironore;
             this.ironToolStripMenuItem.Name = "ironToolStripMenuItem";
-            this.ironToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.ironToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.ironToolStripMenuItem.Text = "Iron";
             this.ironToolStripMenuItem.Click += new System.EventHandler(this.ironToolStripMenuItem_Click);
             // 
@@ -190,7 +192,7 @@
             // 
             this.leadToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.leadore;
             this.leadToolStripMenuItem.Name = "leadToolStripMenuItem";
-            this.leadToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.leadToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.leadToolStripMenuItem.Text = "Lead";
             this.leadToolStripMenuItem.Click += new System.EventHandler(this.leadToolStripMenuItem_Click);
             // 
@@ -198,7 +200,7 @@
             // 
             this.marbleToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.marbleshards;
             this.marbleToolStripMenuItem.Name = "marbleToolStripMenuItem";
-            this.marbleToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.marbleToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.marbleToolStripMenuItem.Text = "Marble";
             this.marbleToolStripMenuItem.Click += new System.EventHandler(this.marbleToolStripMenuItem_Click);
             // 
@@ -206,7 +208,7 @@
             // 
             this.rocksaltToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.rocksalt;
             this.rocksaltToolStripMenuItem.Name = "rocksaltToolStripMenuItem";
-            this.rocksaltToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.rocksaltToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.rocksaltToolStripMenuItem.Text = "Rocksalt";
             this.rocksaltToolStripMenuItem.Click += new System.EventHandler(this.rocksaltToolStripMenuItem_Click);
             // 
@@ -214,7 +216,7 @@
             // 
             this.sandstoneToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.sandstonevein;
             this.sandstoneToolStripMenuItem.Name = "sandstoneToolStripMenuItem";
-            this.sandstoneToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.sandstoneToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.sandstoneToolStripMenuItem.Text = "Sandstone";
             this.sandstoneToolStripMenuItem.Click += new System.EventHandler(this.sandstoneToolStripMenuItem_Click);
             // 
@@ -222,7 +224,7 @@
             // 
             this.silverToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.silverore;
             this.silverToolStripMenuItem.Name = "silverToolStripMenuItem";
-            this.silverToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.silverToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.silverToolStripMenuItem.Text = "Silver";
             this.silverToolStripMenuItem.Click += new System.EventHandler(this.silverToolStripMenuItem_Click);
             // 
@@ -230,7 +232,7 @@
             // 
             this.slateToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.slatevein;
             this.slateToolStripMenuItem.Name = "slateToolStripMenuItem";
-            this.slateToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.slateToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.slateToolStripMenuItem.Text = "Slate";
             this.slateToolStripMenuItem.Click += new System.EventHandler(this.slateToolStripMenuItem_Click);
             // 
@@ -238,7 +240,7 @@
             // 
             this.tinToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.tinore;
             this.tinToolStripMenuItem.Name = "tinToolStripMenuItem";
-            this.tinToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.tinToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.tinToolStripMenuItem.Text = "Tin";
             this.tinToolStripMenuItem.Click += new System.EventHandler(this.tinToolStripMenuItem_Click);
             // 
@@ -246,7 +248,7 @@
             // 
             this.zincToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.zincore;
             this.zincToolStripMenuItem.Name = "zincToolStripMenuItem";
-            this.zincToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.zincToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.zincToolStripMenuItem.Text = "Zinc";
             this.zincToolStripMenuItem.Click += new System.EventHandler(this.zincToolStripMenuItem_Click);
             // 
@@ -261,7 +263,7 @@
             this.utmostToolStripMenuItem,
             this.setToolStripMenuItem});
             this.qualityToolStripMenuItem.Name = "qualityToolStripMenuItem";
-            this.qualityToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.qualityToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.qualityToolStripMenuItem.Text = "Quality";
             // 
             // poorToolStripMenuItem
@@ -316,7 +318,7 @@
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
@@ -362,7 +364,7 @@
             // 
             this.analyzeFileToolStripMenuItem.Name = "analyzeFileToolStripMenuItem";
             this.analyzeFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.analyzeFileToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.analyzeFileToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.analyzeFileToolStripMenuItem.Text = "&Analyze File";
             this.analyzeFileToolStripMenuItem.Click += new System.EventHandler(this.analyzeFileToolStripMenuItem_Click);
             // 
@@ -370,7 +372,7 @@
             // 
             this.openMapToolStripMenuItem.Name = "openMapToolStripMenuItem";
             this.openMapToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.openMapToolStripMenuItem.Text = "&Open map";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
@@ -378,7 +380,7 @@
             // 
             this.saveMapToolStripMenuItem.Name = "saveMapToolStripMenuItem";
             this.saveMapToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.saveMapToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.saveMapToolStripMenuItem.Text = "&Save map";
             this.saveMapToolStripMenuItem.Click += new System.EventHandler(this.saveMapToolStripMenuItem_Click);
             // 
@@ -386,7 +388,7 @@
             // 
             this.exportBackgroundToolStripMenuItem.Name = "exportBackgroundToolStripMenuItem";
             this.exportBackgroundToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exportBackgroundToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.exportBackgroundToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.exportBackgroundToolStripMenuItem.Text = "E&xport background";
             this.exportBackgroundToolStripMenuItem.Click += new System.EventHandler(this.exportBackgroundToolStripMenuItem_Click);
             // 
@@ -394,7 +396,7 @@
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.quitToolStripMenuItem.Text = "&Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -509,7 +511,7 @@
             // 
             this.toolStripCopper.Image = global::AnalyzeTool.Properties.Resources.copperore;
             this.toolStripCopper.Name = "toolStripCopper";
-            this.toolStripCopper.Size = new System.Drawing.Size(152, 22);
+            this.toolStripCopper.Size = new System.Drawing.Size(129, 22);
             this.toolStripCopper.Text = "Copper";
             this.toolStripCopper.Click += new System.EventHandler(this.copperToolStripMenuItem_Click);
             // 
@@ -517,7 +519,7 @@
             // 
             this.toolStripGold.Image = global::AnalyzeTool.Properties.Resources.goldore;
             this.toolStripGold.Name = "toolStripGold";
-            this.toolStripGold.Size = new System.Drawing.Size(152, 22);
+            this.toolStripGold.Size = new System.Drawing.Size(129, 22);
             this.toolStripGold.Text = "Gold";
             this.toolStripGold.Click += new System.EventHandler(this.toolStripGold_Click);
             // 
@@ -525,7 +527,7 @@
             // 
             this.toolStripIron.Image = global::AnalyzeTool.Properties.Resources.ironore;
             this.toolStripIron.Name = "toolStripIron";
-            this.toolStripIron.Size = new System.Drawing.Size(152, 22);
+            this.toolStripIron.Size = new System.Drawing.Size(129, 22);
             this.toolStripIron.Text = "Iron";
             this.toolStripIron.Click += new System.EventHandler(this.toolStripIron_Click);
             // 
@@ -533,7 +535,7 @@
             // 
             this.toolStripLead.Image = global::AnalyzeTool.Properties.Resources.leadore;
             this.toolStripLead.Name = "toolStripLead";
-            this.toolStripLead.Size = new System.Drawing.Size(152, 22);
+            this.toolStripLead.Size = new System.Drawing.Size(129, 22);
             this.toolStripLead.Text = "Lead";
             this.toolStripLead.Click += new System.EventHandler(this.toolStripLead_Click);
             // 
@@ -541,52 +543,15 @@
             // 
             this.toolStripMarble.Image = global::AnalyzeTool.Properties.Resources.marbleshards;
             this.toolStripMarble.Name = "toolStripMarble";
-            this.toolStripMarble.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMarble.Size = new System.Drawing.Size(129, 22);
             this.toolStripMarble.Text = "Marble";
             this.toolStripMarble.Click += new System.EventHandler(this.toolStripMarble_Click);
-            // 
-            // toolStripSilver
-            // 
-            this.toolStripSilver.Image = global::AnalyzeTool.Properties.Resources.silverore;
-            this.toolStripSilver.Name = "toolStripSilver";
-            this.toolStripSilver.Size = new System.Drawing.Size(152, 22);
-            this.toolStripSilver.Text = "Silver";
-            this.toolStripSilver.Click += new System.EventHandler(this.toolStripSilver_Click);
-            // 
-            // toolStripSlate
-            // 
-            this.toolStripSlate.Image = global::AnalyzeTool.Properties.Resources.slatevein;
-            this.toolStripSlate.Name = "toolStripSlate";
-            this.toolStripSlate.Size = new System.Drawing.Size(152, 22);
-            this.toolStripSlate.Text = "Slate";
-            this.toolStripSlate.Click += new System.EventHandler(this.toolStripSlate_Click);
-            // 
-            // toolStripTip
-            // 
-            this.toolStripTip.Image = global::AnalyzeTool.Properties.Resources.tinore;
-            this.toolStripTip.Name = "toolStripTip";
-            this.toolStripTip.Size = new System.Drawing.Size(152, 22);
-            this.toolStripTip.Text = "Tin";
-            this.toolStripTip.Click += new System.EventHandler(this.toolStripTip_Click);
-            // 
-            // toolStripZinc
-            // 
-            this.toolStripZinc.Image = global::AnalyzeTool.Properties.Resources.zincore;
-            this.toolStripZinc.Name = "toolStripZinc";
-            this.toolStripZinc.Size = new System.Drawing.Size(152, 22);
-            this.toolStripZinc.Text = "Zinc";
-            this.toolStripZinc.Click += new System.EventHandler(this.toolStripZinc_Click);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.ShowAlways = true;
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // rocksaltToolStripMenuItem1
             // 
             this.rocksaltToolStripMenuItem1.Image = global::AnalyzeTool.Properties.Resources.rocksalt;
             this.rocksaltToolStripMenuItem1.Name = "rocksaltToolStripMenuItem1";
-            this.rocksaltToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.rocksaltToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.rocksaltToolStripMenuItem1.Text = "Rocksalt";
             this.rocksaltToolStripMenuItem1.Click += new System.EventHandler(this.rocksaltToolStripMenuItem1_Click);
             // 
@@ -594,9 +559,46 @@
             // 
             this.sandstoneToolStripMenuItem1.Image = global::AnalyzeTool.Properties.Resources.sandstonevein;
             this.sandstoneToolStripMenuItem1.Name = "sandstoneToolStripMenuItem1";
-            this.sandstoneToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.sandstoneToolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
             this.sandstoneToolStripMenuItem1.Text = "Sandstone";
             this.sandstoneToolStripMenuItem1.Click += new System.EventHandler(this.sandstoneToolStripMenuItem1_Click);
+            // 
+            // toolStripSilver
+            // 
+            this.toolStripSilver.Image = global::AnalyzeTool.Properties.Resources.silverore;
+            this.toolStripSilver.Name = "toolStripSilver";
+            this.toolStripSilver.Size = new System.Drawing.Size(129, 22);
+            this.toolStripSilver.Text = "Silver";
+            this.toolStripSilver.Click += new System.EventHandler(this.toolStripSilver_Click);
+            // 
+            // toolStripSlate
+            // 
+            this.toolStripSlate.Image = global::AnalyzeTool.Properties.Resources.slatevein;
+            this.toolStripSlate.Name = "toolStripSlate";
+            this.toolStripSlate.Size = new System.Drawing.Size(129, 22);
+            this.toolStripSlate.Text = "Slate";
+            this.toolStripSlate.Click += new System.EventHandler(this.toolStripSlate_Click);
+            // 
+            // toolStripTip
+            // 
+            this.toolStripTip.Image = global::AnalyzeTool.Properties.Resources.tinore;
+            this.toolStripTip.Name = "toolStripTip";
+            this.toolStripTip.Size = new System.Drawing.Size(129, 22);
+            this.toolStripTip.Text = "Tin";
+            this.toolStripTip.Click += new System.EventHandler(this.toolStripTip_Click);
+            // 
+            // toolStripZinc
+            // 
+            this.toolStripZinc.Image = global::AnalyzeTool.Properties.Resources.zincore;
+            this.toolStripZinc.Name = "toolStripZinc";
+            this.toolStripZinc.Size = new System.Drawing.Size(129, 22);
+            this.toolStripZinc.Text = "Zinc";
+            this.toolStripZinc.Click += new System.EventHandler(this.toolStripZinc_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ShowAlways = true;
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // panel1
             // 
@@ -631,6 +633,13 @@
             this.gridControl1.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragEnter);
             this.gridControl1.DragOver += new System.Windows.Forms.DragEventHandler(this.gridControl1_DragOver);
             this.gridControl1.MouseLeave += new System.EventHandler(this.gridControl1_MouseLeave);
+            // 
+            // removeAnalyzeInfoToolStripMenuItem
+            // 
+            this.removeAnalyzeInfoToolStripMenuItem.Name = "removeAnalyzeInfoToolStripMenuItem";
+            this.removeAnalyzeInfoToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.removeAnalyzeInfoToolStripMenuItem.Text = "Remove analyze info";
+            this.removeAnalyzeInfoToolStripMenuItem.Click += new System.EventHandler(this.removeAnalyzeInfoToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -719,6 +728,7 @@
         private System.Windows.Forms.ToolStripMenuItem sandstoneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rocksaltToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sandstoneToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem removeAnalyzeInfoToolStripMenuItem;
     }
 }
 
