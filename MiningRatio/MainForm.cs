@@ -12,6 +12,14 @@ using CSScriptLibrary;
 
 namespace MiningRatio
 {
+    public interface IMessageParser
+    {
+        bool isActionStart(string message);
+        bool isActionEnd(string message);
+        bool isSkillGain(string message);
+        string getName();
+    }
+
     public partial class MiningRatioForm : Form
     {
         Player player;
@@ -152,14 +160,6 @@ namespace MiningRatio
             return Int32.Parse(m.Groups[1].Value) * 3600 +
                 Int32.Parse(m.Groups[2].Value) * 60 +
                 Int32.Parse(m.Groups[3].Value);
-        }
-
-        public interface IMessageParser
-        {
-            bool isActionStart(String message);
-            bool isActionEnd(String message);
-            bool isSkillGain(String message);
-            String getName();
         }
 
         public class MiningMessageParser : IMessageParser
@@ -319,7 +319,7 @@ namespace MiningRatio
                 try
                 {
                     CSScript.GlobalSettings.AddSearchDir(dirname);
-                    AsmHelper asmHelper = new AsmHelper(CSScript.Load(file));
+                    AsmHelper asmHelper = new AsmHelper(CSScript.LoadFile(file));
                     asmHelper.ProbingDirs = CSScript.GlobalSettings.SearchDirs.Split(';');
 
                     IMessageParser handler = asmHelper.CreateObject("*").AlignToInterface<IMessageParser>(true);

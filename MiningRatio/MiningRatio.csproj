@@ -29,9 +29,6 @@
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary.v3.5">
-      <HintPath>lib\CSScriptLibrary.v3.5.dll</HintPath>
-    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
@@ -68,5 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WurmUtils\WurmUtils.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <PackageReference Include="CS-Script" Version="4.8.3" /> -->
+    <PackageReference Include="CS-Script.lib" Version="3.30.5.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="4.7.0" />
   </ItemGroup>
 </Project>
