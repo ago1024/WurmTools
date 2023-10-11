@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
-#if NUNIT
-using NUnit.Framework;
-#endif
 
 
 namespace WurmUtils
 {
-#if NUNIT
-    [TestFixture]
-#endif
     public class Player
     {
         public Player() : this(null, null)
@@ -123,7 +117,7 @@ namespace WurmUtils
 
         private static String RegistryKey = @"HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\wurmonline\client";
 
-        private static String unescape(String str)
+        public static String unescape(String str)
         {
             if (str == null)
                 return null;
@@ -165,22 +159,5 @@ namespace WurmUtils
                 return null;            
             return unescape(str).Replace("/", "\\");
         }
-
-#if NUNIT
-        [Test]
-        public void testUnescape()
-        {
-            String[][] teststrings = { 
-                                       new String[] { "/C:///Users///u00c4garen//wurm", "C:/Users/Ägaren/wurm" },
-                                       new String[] { "d://ago//wurm", "d:/ago/wurm" },
-                                       new String[] { "/Jalina", "Jalina" },
-                                     };
-
-            foreach (String[] test in teststrings) 
-            {
-                Assert.AreEqual(test[1], unescape(test[0]));
-            }
-        }
-#endif
     }
 }

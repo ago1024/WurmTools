@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if NUNIT
 using NUnit.Framework;
-#endif
 
 namespace AnalyzeTool
 {
-#if NUNIT
     [TestFixture]
     public class DetectedTest
     {
@@ -376,5 +373,4 @@ namespace AnalyzeTool
             Assert.IsNull(map[new Tile(0, 0)].Found);
         }
     }
-#endif
 }
