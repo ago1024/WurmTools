@@ -139,8 +139,6 @@ namespace AnalyzeTool
                 case TileType.Slate:
                 case TileType.Tin:
                 case TileType.Zinc:
-                case TileType.Adamantine:
-                case TileType.Glimmersteel:
                 case TileType.RockSalt:
                 case TileType.SandStone:
                 case TileType.Something:
@@ -607,12 +605,6 @@ namespace AnalyzeTool
                     return TileType.Flint;
                 case "salt":
                     return TileType.Salt;
-                case "adamantine":
-                case "adamantine ore":
-                    return TileType.Adamantine;
-                case "glimmersteel":
-                case "glimmersteel ore":
-                    return TileType.Glimmersteel;
                 case "rock salt":
                     return TileType.RockSalt;
                 case "sandstone":

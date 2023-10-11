@@ -548,10 +548,6 @@ namespace AnalyzeTool
                     return AnalyzeTool.Properties.Resources.zincore;
                 case TileType.Reinforced:
                     return AnalyzeTool.Properties.Resources.reinforcedcave;
-                case TileType.Adamantine:
-                    return AnalyzeTool.Properties.Resources.adamatinevein;
-                case TileType.Glimmersteel:
-                    return AnalyzeTool.Properties.Resources.glimmersteelvein;
                 case TileType.RockSalt:
                     return AnalyzeTool.Properties.Resources.rocksalt;
                 case TileType.SandStone:
@@ -1053,16 +1049,6 @@ namespace AnalyzeTool
             }
         }
 
-        private void adamantineToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SetTileType(PopupTile, TileType.Adamantine);
-        }
-
-        private void glimmersteelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SetTileType(PopupTile, TileType.Glimmersteel);
-        }
-
         private void rocksaltToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetTileType(PopupTile, TileType.RockSalt);
@@ -1071,16 +1057,6 @@ namespace AnalyzeTool
         private void sandstoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetTileType(PopupTile, TileType.SandStone);
-        }
-
-        private void adamantineToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            SetTileType(PopupTile, TileType.Adamantine);
-        }
-
-        private void glimmersteelToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            SetTileType(PopupTile, TileType.Glimmersteel);
         }
 
         private void rocksaltToolStripMenuItem1_Click(object sender, EventArgs e)

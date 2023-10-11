@@ -21,7 +21,9 @@ namespace AnalyzeTool
                                     TileType.Silver,
                                     TileType.Slate,
                                     TileType.Tin,
-                                    TileType.Zinc
+                                    TileType.Zinc,
+                                    TileType.RockSalt,
+                                    TileType.SandStone,
                                 };
         TileType[] resourceTypes = {
                                        TileType.Flint,
@@ -35,7 +37,9 @@ namespace AnalyzeTool
         TileType[] specialTypes = {
                                         TileType.Unknown,
                                         TileType.Nothing,
-                                        TileType.Something
+                                        TileType.Something,
+                                        TileType.Adamantine,
+                                        TileType.Glimmersteel,
                                     };
 
         TileType[] allTypes = (TileType[])Enum.GetValues(typeof(TileType));
@@ -182,7 +186,7 @@ namespace AnalyzeTool
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Zinc, Quality.Unknown), new Detected(TileType.Something, Quality.Unknown) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(11, map[tile].Estimates.Count);
+            Assert.AreEqual(oreTypes.Length + resourceTypes.Length, map[tile].Estimates.Count);
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Does not contain Iron-Unknown");
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Zinc, Quality.Unknown)), "Does not contain Zinc-Unknown");
             

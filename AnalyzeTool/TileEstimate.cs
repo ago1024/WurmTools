@@ -140,7 +140,9 @@ namespace AnalyzeTool
                                     TileType.Silver,
                                     TileType.Slate,
                                     TileType.Tin,
-                                    TileType.Zinc
+                                    TileType.Zinc,
+                                    TileType.RockSalt,
+                                    TileType.SandStone,
                                 };
         TileType[] resourceTypes = {
                                        TileType.Flint,
@@ -157,7 +159,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Something, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(11, estimate.Estimates.Count, "Expected 11 estimates");
+            Assert.AreEqual(oreTypes.Length + resourceTypes.Length, estimate.Estimates.Count, "Expected estimates");
 
             detected.Clear();
             detected.Add(new Detected(TileType.Iron, Quality.Unknown));

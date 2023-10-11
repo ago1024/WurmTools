@@ -35,9 +35,7 @@
             this.tunnelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reinforcedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adamantineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.glimmersteelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ironToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,8 +84,6 @@
             this.toolStripTip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripZinc = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.adamantineToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.glimmersteelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rocksaltToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sandstoneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new AnalyzeTool.MouseScrollPanel();
@@ -150,9 +146,7 @@
             // oreToolStripMenuItem
             // 
             this.oreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.adamantineToolStripMenuItem,
             this.copperToolStripMenuItem,
-            this.glimmersteelToolStripMenuItem,
             this.goldToolStripMenuItem,
             this.ironToolStripMenuItem,
             this.leadToolStripMenuItem,
@@ -168,14 +162,6 @@
             this.oreToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.oreToolStripMenuItem.Text = "Ore";
             // 
-            // adamantineToolStripMenuItem
-            // 
-            this.adamantineToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.adamatinevein;
-            this.adamantineToolStripMenuItem.Name = "adamantineToolStripMenuItem";
-            this.adamantineToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.adamantineToolStripMenuItem.Text = "Adamantine";
-            this.adamantineToolStripMenuItem.Click += new System.EventHandler(this.adamantineToolStripMenuItem_Click);
-            // 
             // copperToolStripMenuItem
             // 
             this.copperToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.copperore;
@@ -183,14 +169,6 @@
             this.copperToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.copperToolStripMenuItem.Text = "Copper";
             this.copperToolStripMenuItem.Click += new System.EventHandler(this.copperToolStripMenuItem_Click_1);
-            // 
-            // glimmersteelToolStripMenuItem
-            // 
-            this.glimmersteelToolStripMenuItem.Image = global::AnalyzeTool.Properties.Resources.glimmersteelvein;
-            this.glimmersteelToolStripMenuItem.Name = "glimmersteelToolStripMenuItem";
-            this.glimmersteelToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.glimmersteelToolStripMenuItem.Text = "Glimmersteel";
-            this.glimmersteelToolStripMenuItem.Click += new System.EventHandler(this.glimmersteelToolStripMenuItem_Click);
             // 
             // goldToolStripMenuItem
             // 
@@ -509,9 +487,7 @@
             // 
             this.toolStripOre.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripOre.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.adamantineToolStripMenuItem1,
             this.toolStripCopper,
-            this.glimmersteelToolStripMenuItem1,
             this.toolStripGold,
             this.toolStripIron,
             this.toolStripLead,
@@ -605,22 +581,6 @@
             // 
             this.toolTip1.ShowAlways = true;
             this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
-            // 
-            // adamantineToolStripMenuItem1
-            // 
-            this.adamantineToolStripMenuItem1.Image = global::AnalyzeTool.Properties.Resources.adamatinevein;
-            this.adamantineToolStripMenuItem1.Name = "adamantineToolStripMenuItem1";
-            this.adamantineToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.adamantineToolStripMenuItem1.Text = "Adamantine";
-            this.adamantineToolStripMenuItem1.Click += new System.EventHandler(this.adamantineToolStripMenuItem1_Click);
-            // 
-            // glimmersteelToolStripMenuItem1
-            // 
-            this.glimmersteelToolStripMenuItem1.Image = global::AnalyzeTool.Properties.Resources.glimmersteelvein;
-            this.glimmersteelToolStripMenuItem1.Name = "glimmersteelToolStripMenuItem1";
-            this.glimmersteelToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.glimmersteelToolStripMenuItem1.Text = "Glimmersteel";
-            this.glimmersteelToolStripMenuItem1.Click += new System.EventHandler(this.glimmersteelToolStripMenuItem1_Click);
             // 
             // rocksaltToolStripMenuItem1
             // 
@@ -755,12 +715,8 @@
         private System.Windows.Forms.ToolStripMenuItem reinforcedToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
         private MouseScrollPanel panel1;
-        private System.Windows.Forms.ToolStripMenuItem adamantineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem glimmersteelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rocksaltToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sandstoneToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem adamantineToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem glimmersteelToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem rocksaltToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sandstoneToolStripMenuItem1;
     }
