@@ -38,14 +38,14 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Something, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(oreTypes.Length + resourceTypes.Length, estimate.Estimates.Count, "Expected estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(oreTypes.Length + resourceTypes.Length));
 
             detected.Clear();
             detected.Add(new Detected(TileType.Iron, Quality.Unknown));
             detected.Add(new Detected(TileType.Flint, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(2, estimate.Estimates.Count, "Expected 2 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(2));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)), "Expected estimates to contain flint");
@@ -54,7 +54,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.VeryGood));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates not to contain good iron");
         }
@@ -69,7 +69,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates to contain very good iron");
@@ -78,7 +78,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.Good));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates not to contain very good iron");
@@ -94,7 +94,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates to contain very good iron");
@@ -103,7 +103,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Marble, Quality.Good));
             estimate.Add(detected);
 
-            Assert.AreEqual(0, estimate.Estimates.Count, "Expected 0 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(0));
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates not to contain iron");
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Marble, Quality.Unknown)), "Expected estimates not to contain marble");
         }
@@ -119,7 +119,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Marble, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(2, estimate.Estimates.Count, "Expected 2 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(2));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates to contain very good iron");
@@ -129,7 +129,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Marble, Quality.Good));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates not to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Marble, Quality.Unknown)), "Expected estimates to contain marble");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Marble, Quality.Good)), "Expected estimates to contain good marble");
@@ -146,7 +146,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates to contain very good iron");
@@ -157,7 +157,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.VeryGood));
             estimate.Add(detected);
 
-            Assert.AreEqual(2, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(2));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates to contain good iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.VeryGood)), "Expected estimates to contain very good iron");
@@ -174,7 +174,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Nothing, Quality.Unknown));
             estimate.Add(detected);
 
-            Assert.AreEqual(0, estimate.Estimates.Count, "Expected 0 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(0));
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates not to contain iron");
 
             detected.Clear();
@@ -182,7 +182,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.VeryGood));
             estimate.Add(detected);
 
-            Assert.AreEqual(0, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(0));
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates not to contain iron");
         }
 
@@ -196,7 +196,7 @@ namespace AnalyzeTool
             detected.Add(new Detected(TileType.Iron, Quality.Poor));
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Poor)), "Expected estimates to contain poor iron");
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates not to contain goor iron");
@@ -205,7 +205,7 @@ namespace AnalyzeTool
             estimate = new TileEstimate();
             estimate.Add(detected);
 
-            Assert.AreEqual(1, estimate.Estimates.Count, "Expected 1 estimates");
+            Assert.That(estimate.Estimates.Count, Is.EqualTo(1));
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Expected estimates to contain iron");
             Assert.True(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Poor)), "Expected estimates to contain poor iron");
             Assert.False(estimate.Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Expected estimates not to contain goor iron");

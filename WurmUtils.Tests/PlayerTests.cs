@@ -21,7 +21,7 @@ namespace WurmUtils
 
             foreach (String[] test in teststrings) 
             {
-                Assert.AreEqual(test[1], Player.unescape(test[0]));
+                Assert.That(Player.unescape(test[0]), Is.EqualTo(test[1]));
             }
         }
     }
