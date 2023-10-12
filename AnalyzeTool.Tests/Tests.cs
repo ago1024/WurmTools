@@ -361,16 +361,32 @@ namespace AnalyzeTool
             AnalyzeResult result = new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "something", null, "northwest") }));
             map.SetResult(3, 3, result);
 
-            Assert.IsNotNull(map[new Tile(0, 0)].Estimates);
-            foreach (TileType tileType in resourceTypes)
-            {
-                Assert.IsTrue(map[new Tile(0, 0)].Estimates.Contains(new Detected(tileType, Quality.Unknown)), "Expected " + tileType);
-            }
-            foreach (TileType tileType in oreTypes)
-            {
-                Assert.IsTrue(map[new Tile(0, 0)].Estimates.Contains(new Detected(tileType, Quality.Unknown)), "Expected " + tileType);
-            }
+            Assert.That(map[new Tile(0, 0)].Estimates, Is.Not.Null.And.EquivalentTo(oreTypes.Union(resourceTypes).Select(tileType => new Detected(tileType, Quality.Unknown))).Using(new DetectedEqualityComparer()));
             Assert.IsNull(map[new Tile(0, 0)].Found);
+        }
+
+        [Test]
+        public void testRemove()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            map.SetResult(3, 3, new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "something", null, "northwest") })));
+            map.Remove(map[new Tile(3, 3)].Result);
+
+            Assert.That(map[new Tile(0, 0)].Estimates, Is.Null);
+            Assert.That(map[new Tile(0, 0)].Found, Is.Null);
+        }
+
+        [Test]
+        public void testReplace()
+        {
+            AnalyzeMap map = new AnalyzeMap(7, 7);
+            map.SetResult(3, 3, new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "something", null, "northwest") })));
+            map.SetResult(3, 3, new AnalyzeResult(new List<AnalyzeMatch>(new AnalyzeMatch[] { new AnalyzeMatch(3, "something", null, "northeast") })));
+
+            Assert.That(map[new Tile(0, 0)].Estimates, Is.Null);
+            Assert.That(map[new Tile(0, 0)].Found, Is.Not.Null.And.EqualTo(new Detected(TileType.Nothing, Quality.Unknown)).Using(new DetectedEqualityComparer()));
+            Assert.That(map[new Tile(6, 0)].Estimates, Is.Not.Null.And.EquivalentTo(oreTypes.Union(resourceTypes).Select(tileType => new Detected(tileType, Quality.Unknown))).Using(new DetectedEqualityComparer()));
+            Assert.That(map[new Tile(6, 0)].Found, Is.Null);
         }
 
     }

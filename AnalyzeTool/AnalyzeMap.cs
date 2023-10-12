@@ -1028,6 +1028,14 @@ namespace AnalyzeTool
             results.Clear();
         }
 
+        public void ClearResult(int x, int y)
+        {
+            if (tileStatus[x, y].Result != null)
+            {
+                Remove(tileStatus[x, y].Result);
+            }
+        }
+
         public void Refresh()
         {
             List<AnalyzeResult> temp = new List<AnalyzeResult>(results);

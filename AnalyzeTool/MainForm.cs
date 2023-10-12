@@ -398,6 +398,7 @@ namespace AnalyzeTool
             {
                 PopupTile = CellToTile(cell);
                 Rectangle rect = gridControl1.RectFromCell(cell.X, cell.Y);
+                removeAnalyzeInfoToolStripMenuItem.Enabled = map[PopupTile].Result != null;
                 gridContextMenu.Show(gridControl1, new Point(eventArgs.Location.X + rect.Left, eventArgs.Y + rect.Top));
             }
         }
@@ -980,6 +981,12 @@ namespace AnalyzeTool
                 map[PopupTile].Reset();
                 RepaintTile(PopupTile);
             }
+        }
+
+        private void removeAnalyzeInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            map.ClearResult(PopupTile.X, PopupTile.Y);
+            gridControl1.Redraw();
         }
 
         private void setToolStripMenuItem_Click(object sender, EventArgs e)
