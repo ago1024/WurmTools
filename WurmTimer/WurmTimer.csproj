@@ -1,71 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\ClickOnce.props" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D3356FD5-1A72-4A36-B3E8-BBF25B751EAC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WurmTimer</RootNamespace>
-    <AssemblyName>WurmTimer</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>w:\wurmtimer\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
+    <PublishDir>$(PublishRoot)\wurmtimer\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/wurmtimer/</InstallUrl>
-    <TargetCulture>en</TargetCulture>
-    <PublisherName>Wurm Online tools</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.5.9.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyTitle>WurmTimer</AssemblyTitle>
+    <Product>WurmTimer</Product>
+    <Copyright>Copyright ©  2011</Copyright>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <DebugType>portable</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>54BCC640D9A2F9157684EB2FE7161F5EC48CA625</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\wurm_icon.ico</ApplicationIcon>
@@ -74,59 +32,42 @@
     <StartupObject>WurmTimer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Debug|x86'">
-    <OutputPath>bin\x86\NUnit-Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NUnit-Release|x86'">
-    <OutputPath>bin\x86\NUnit-Release\</OutputPath>
+    <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CountDownTimer.cs">
+    <Compile Update="CountDownTimer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Update="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LabelProgressBar.cs">
+    <Compile Update="LabelProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Update="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Update="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -134,37 +75,9 @@
     <None Include="Wurm_Online_Tools.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\wurm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WurmUtils\WurmUtils.csproj">
-      <Project>{0DB81851-3679-4D56-85D3-F695514A32C4}</Project>
-      <Name>WurmUtils</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\WurmUtils\WurmUtils.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

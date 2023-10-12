@@ -19,7 +19,6 @@ namespace WurmTimer
     public partial class MainForm : Form
     {
         private NotifyIcon trayIcon;
-        private ContextMenu trayMenu;
 
         private List<Player> players;
         private LogWatcher logWatcher;
@@ -29,20 +28,21 @@ namespace WurmTimer
 
             InitializeComponent();
 
-            // Create a simple tray menu with only one item.
-            trayMenu = new ContextMenu();
-            trayMenu.MenuItems.Add("Exit", OnExit);
+            // creates a context menu with one Exit item.
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
+            ToolStripMenuItem exitMenuItem = new ToolStripMenuItem("Exit");
+            contextMenu.Items.Add(exitMenuItem);
+            exitMenuItem.Click += OnExit;
 
             // Create a tray icon. In this example we use a
             // standard system icon for simplicity, but you
             // can of course use your own custom icon too.
-            trayIcon = new NotifyIcon();
-            trayIcon.Text = "WurmTimer";
-            trayIcon.Icon = Properties.Resources.wurm_icon;
-
-            // Add menu to tray icon and show it.
-            trayIcon.ContextMenu = trayMenu;
-            trayIcon.Visible = true;
+            trayIcon = new NotifyIcon() {
+                Text = "WurmTimer",
+                Icon = Properties.Resources.wurm_icon,
+                ContextMenuStrip = contextMenu,
+                Visible = true,
+            };
 
             trayIcon.DoubleClick += new EventHandler(trayIcon_DoubleClick);
             trayIcon.BalloonTipClicked += new EventHandler(trayIcon_BalloonTipClicked);
@@ -87,6 +87,7 @@ namespace WurmTimer
 
         private void OnExit(object sender, EventArgs e)
         {
+            trayIcon.Visible = false;
             Application.Exit();
         }
 

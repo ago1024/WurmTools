@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup Condition="'$(PublishRoot)' != ''">
+    <PublishRoot>w:</PublishRoot>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <TargetCulture>en</TargetCulture>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <MapFileExtensions>true</MapFileExtensions>
+    <PublisherName>Wurm Online tools</PublisherName>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SignManifests>true</SignManifests>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>true</GenerateManifests>
+    <ManifestCertificateThumbprint>207C042038E37D4A6117AF49815E92D0166A5CFF</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
+  </PropertyGroup>
+</Project>

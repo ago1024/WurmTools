@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if NUNIT
 using NUnit.Framework;
-#endif
 
 namespace AnalyzeTool
 {
-#if NUNIT
     [TestFixture]
     public class DetectedTest
     {
@@ -113,7 +110,7 @@ namespace AnalyzeTool
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Silver, Quality.Unknown) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(2, map[tile].Estimates.Count);
+            Assert.That(map[tile].Estimates.Count, Is.EqualTo(2));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Silver, Quality.Unknown)));
         }
@@ -128,7 +125,7 @@ namespace AnalyzeTool
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Nothing, map[tile].Found.Type);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Nothing));
         }
 
         [Test]
@@ -141,7 +138,7 @@ namespace AnalyzeTool
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(1, map[tile].Estimates.Count);
+            Assert.That(map[tile].Estimates.Count, Is.EqualTo(1));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Good)));
         }
 
@@ -156,7 +153,7 @@ namespace AnalyzeTool
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Nothing, map[tile].Found.Type);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Nothing));
         }
 
         [Test]
@@ -169,7 +166,7 @@ namespace AnalyzeTool
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(1, map[tile].Estimates.Count);
+            Assert.That(map[tile].Estimates.Count, Is.EqualTo(1));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Good)));
         }
 
@@ -186,14 +183,14 @@ namespace AnalyzeTool
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Unknown), new Detected(TileType.Zinc, Quality.Unknown), new Detected(TileType.Something, Quality.Unknown) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(oreTypes.Length + resourceTypes.Length, map[tile].Estimates.Count);
+            Assert.That(map[tile].Estimates.Count, Is.EqualTo(oreTypes.Length + resourceTypes.Length));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Unknown)), "Does not contain Iron-Unknown");
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Zinc, Quality.Unknown)), "Does not contain Zinc-Unknown");
             
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good), new Detected(TileType.Iron, Quality.Acceptable), new Detected(TileType.Zinc, Quality.Unknown) }));
 
             Assert.IsNotNull(map[tile].Estimates);
-            Assert.AreEqual(3, map[tile].Estimates.Count);
+            Assert.That(map[tile].Estimates.Count, Is.EqualTo(3));
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Good)), "Does not contain Iron-Good");
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Iron, Quality.Acceptable)), "Does not contain Iron-Acceptable");
             Assert.IsTrue(map[tile].Estimates.Contains(new Detected(TileType.Zinc, Quality.Unknown)), "Does not contain Zinc-Unknown");
@@ -209,15 +206,15 @@ namespace AnalyzeTool
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Zinc, map[tile].Found.Type);
-            Assert.AreEqual(Quality.Unknown, map[tile].Found.Quality);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Zinc));
+            Assert.That(map[tile].Found.Quality, Is.EqualTo(Quality.Unknown));
 
             map[tile].Add(new List<Detected>(new Detected[] { new Detected(TileType.Iron, Quality.Good), new Detected(TileType.Zinc, Quality.Good) }));
 
             Assert.IsNull(map[tile].Estimates);
             Assert.IsNotNull(map[tile].Found);
-            Assert.AreEqual(TileType.Zinc, map[tile].Found.Type);
-            Assert.AreEqual(Quality.Good, map[tile].Found.Quality);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Zinc));
+            Assert.That(map[tile].Found.Quality, Is.EqualTo(Quality.Good));
         }
 
         [Test]
@@ -232,8 +229,8 @@ namespace AnalyzeTool
             Assert.IsNotNull(map[tile].Found);
             Assert.IsTrue(map[tile].HasSalt);
             Assert.IsFalse(map[tile].HasFlint);
-            Assert.AreEqual(TileType.Nothing, map[tile].Found.Type);
-            Assert.AreEqual(Quality.Unknown, map[tile].Found.Quality);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Nothing));
+            Assert.That(map[tile].Found.Quality, Is.EqualTo(Quality.Unknown));
             TileStatus status = map[tile];
             String text = status.ToString();
         }
@@ -250,8 +247,8 @@ namespace AnalyzeTool
             Assert.IsNotNull(map[tile].Found);
             Assert.IsTrue(map[tile].HasSalt);
             Assert.IsFalse(map[tile].HasFlint);
-            Assert.AreEqual(TileType.Iron, map[tile].Found.Type);
-            Assert.AreEqual(Quality.Utmost, map[tile].Found.Quality);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Iron));
+            Assert.That(map[tile].Found.Quality, Is.EqualTo(Quality.Utmost));
             TileStatus status = map[tile];
             String text = status.ToString();
         }
@@ -268,8 +265,8 @@ namespace AnalyzeTool
             Assert.IsNotNull(map[tile].Found);
             Assert.IsTrue(map[tile].HasSalt);
             Assert.IsTrue(map[tile].HasFlint);
-            Assert.AreEqual(TileType.Iron, map[tile].Found.Type);
-            Assert.AreEqual(Quality.Utmost, map[tile].Found.Quality);
+            Assert.That(map[tile].Found.Type, Is.EqualTo(TileType.Iron));
+            Assert.That(map[tile].Found.Quality, Is.EqualTo(Quality.Utmost));
             TileStatus status = map[tile];
             String text = status.ToString();
         }
@@ -291,10 +288,10 @@ namespace AnalyzeTool
             map.SetResult(3, 3, result);
 
             Assert.IsNull(map[new Tile(2, 0)].Estimates);
-            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
-            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.That(map[new Tile(2, 0)].Type, Is.EqualTo(TileType.Iron));
+            Assert.That(map[new Tile(2, 0)].Quality, Is.EqualTo(Quality.Utmost));
             Assert.IsNull(map[new Tile(1, 0)].Estimates);
-            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.That(map[new Tile(1, 0)].Type, Is.EqualTo(TileType.Tunnel));
         }
 
         [Test]
@@ -311,15 +308,15 @@ namespace AnalyzeTool
 
             map[new Tile(1, 0)].Set(new Detected(TileType.Tunnel, Quality.Unknown));
             Assert.IsNull(map[new Tile(1, 0)].Estimates);
-            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.That(map[new Tile(1, 0)].Type, Is.EqualTo(TileType.Tunnel));
 
             map.Refresh();
 
             Assert.IsNull(map[new Tile(2, 0)].Estimates);
-            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
-            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.That(map[new Tile(2, 0)].Type, Is.EqualTo(TileType.Iron));
+            Assert.That(map[new Tile(2, 0)].Quality, Is.EqualTo(Quality.Utmost));
             Assert.IsNull(map[new Tile(1, 0)].Estimates);
-            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.That(map[new Tile(1, 0)].Type, Is.EqualTo(TileType.Tunnel));
         }
 
         [Test]
@@ -340,19 +337,19 @@ namespace AnalyzeTool
 
             map[new Tile(1, 0)].Set(new Detected(TileType.Tunnel, Quality.Unknown));
             Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
-            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.That(map[new Tile(1, 0)].Type, Is.EqualTo(TileType.Tunnel));
             Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
             Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
 
             map.Refresh();
 
             Assert.IsNotNull(map[new Tile(2, 0)].Estimates);
-            Assert.AreEqual(TileType.Iron, map[new Tile(2, 0)].Type);
-            Assert.AreEqual(Quality.Utmost, map[new Tile(2, 0)].Quality);
+            Assert.That(map[new Tile(2, 0)].Type, Is.EqualTo(TileType.Iron));
+            Assert.That(map[new Tile(2, 0)].Quality, Is.EqualTo(Quality.Utmost));
             Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
             Assert.IsTrue(map[new Tile(2, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
             Assert.IsNotNull(map[new Tile(1, 0)].Estimates);
-            Assert.AreEqual(TileType.Tunnel, map[new Tile(1, 0)].Type);
+            Assert.That(map[new Tile(1, 0)].Type, Is.EqualTo(TileType.Tunnel));
             Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Flint, Quality.Unknown)));
             Assert.IsTrue(map[new Tile(1, 0)].Estimates.Contains(new Detected(TileType.Salt, Quality.Unknown)));
         }
@@ -375,6 +372,6 @@ namespace AnalyzeTool
             }
             Assert.IsNull(map[new Tile(0, 0)].Found);
         }
+
     }
-#endif
 }

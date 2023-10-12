@@ -1,4 +1,12 @@
+bin
+obj
+publish
+*.csproj.user
+
 *.suo
 *~
 MountDAV.bat
 *.pfx
+.vs
+*.VisualState.xml
+TestResult.xml

@@ -1,161 +1,71 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\ClickOnce.props" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{78C87060-536B-4C19-83BB-AA8AF68D8492}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AnalyzeTool</RootNamespace>
-    <AssemblyName>AnalyzeTool</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>w:\analyzetool\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
+    <PublishDir>$(PublishRoot)\analyzetool\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/analyzetool/</InstallUrl>
-    <TargetCulture>en</TargetCulture>
-    <PublisherName>Wurm Online tools</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.7.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyTitle>AnalyzeTool</AssemblyTitle>
+    <Product>AnalyzeTool</Product>
+    <Copyright>Copyright ©  2013</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NUnit-Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\NUnit-Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NUNIT</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NUnit-Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\NUnit-Release\</OutputPath>
-    <DefineConstants>TRACE;NUNIT</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>54BCC640D9A2F9157684EB2FE7161F5EC48CA625</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>Wurm_Online_Tools.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(Configuration)' == 'NUnit-Debug' or '$(Configuration)' == 'NUnit-Release' ">
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\NUnit 2.6.3\bin\framework\nunit.framework.dll</HintPath>
-    </Reference>
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnalyzeMap.cs" />
-    <Compile Include="AnalyzeResult.cs" />
-    <Compile Include="QualityInputForm.cs">
+    <Compile Update="QualityInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QualityInputForm.Designer.cs">
+    <Compile Update="QualityInputForm.Designer.cs">
       <DependentUpon>QualityInputForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ResizeMapForm.cs">
+    <Compile Update="ResizeMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ResizeMapForm.Designer.cs">
+    <Compile Update="ResizeMapForm.Designer.cs">
       <DependentUpon>ResizeMapForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridControl.cs">
+    <Compile Update="GridControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Update="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogParser.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests.cs" />
-    <Compile Include="TileEstimate.cs" />
-    <EmbeddedResource Include="QualityInputForm.resx">
+    <EmbeddedResource Update="QualityInputForm.resx">
       <DependentUpon>QualityInputForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResizeMapForm.resx">
+    <EmbeddedResource Update="ResizeMapForm.resx">
       <DependentUpon>ResizeMapForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Update="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -165,7 +75,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Update="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -173,10 +83,7 @@
     <None Include="Wurm_Online_Tools.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WurmUtils\WurmUtils.csproj">
-      <Project>{0DB81851-3679-4D56-85D3-F695514A32C4}</Project>
-      <Name>WurmUtils</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\WurmUtils\WurmUtils.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\copperore.jpg" />
@@ -209,28 +116,6 @@
     <None Include="resources\slab.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="resources\qualitygood.png" />
   </ItemGroup>
   <ItemGroup>
@@ -255,9 +140,6 @@
     <None Include="resources\flint.png" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="resources\adamatinevein_512.dds" />
   </ItemGroup>
   <ItemGroup>
@@ -275,12 +157,4 @@
   <ItemGroup>
     <None Include="resources\slatevein_512.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
