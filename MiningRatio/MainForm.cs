@@ -8,18 +8,17 @@ using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
 using WurmUtils;
-using CSScriptLibrary;
+
+public interface IMessageParser
+{
+    bool isActionStart(string message);
+    bool isActionEnd(string message);
+    bool isSkillGain(string message);
+    string getName();
+}
 
 namespace MiningRatio
 {
-    public interface IMessageParser
-    {
-        bool isActionStart(string message);
-        bool isActionEnd(string message);
-        bool isSkillGain(string message);
-        string getName();
-    }
-
     public partial class MiningRatioForm : Form
     {
         Player player;
@@ -314,15 +313,12 @@ namespace MiningRatio
                 return;
 
             String[] files = Directory.GetFiles(dirname, "*.cs");
+            var loader = new MessageParserLoader(dirname);
             foreach (String file in files)
             {
                 try
                 {
-                    CSScript.GlobalSettings.AddSearchDir(dirname);
-                    AsmHelper asmHelper = new AsmHelper(CSScript.LoadFile(file));
-                    asmHelper.ProbingDirs = CSScript.GlobalSettings.SearchDirs.Split(';');
-
-                    IMessageParser handler = asmHelper.CreateObject("*").AlignToInterface<IMessageParser>(true);
+                    var handler = loader.LoadFile(file);
                     int index = skillParser.Items.IndexOf(handler.getName());
                     if (index != -1)
                         skillParser.Items[index] = new CBWrapper(handler);
@@ -344,6 +340,31 @@ namespace MiningRatio
                 messageParser = wrapper.Parser;
                 Start();
             }
+        }
+    }
+
+    public class MessageParserLoader {
+
+        private readonly string dirname;
+
+        public MessageParserLoader() {
+            dirname = null;
+        }
+
+        public MessageParserLoader(string dirname) {
+            this.dirname = dirname;
+        }
+
+        public IMessageParser LoadFile(string file) {
+            return LoadCode(File.ReadAllText(file));
+        }
+
+        public IMessageParser LoadCode(string code) {
+            #if NETFRAMEWORK
+            return CSScriptLibrary.CSScript.CodeDomEvaluator.LoadCode<IMessageParser>(code);
+            #else
+            return CSScriptLib.CSScript.RoslynEvaluator.LoadCode<IMessageParser>(code);
+            #endif
         }
     }
 }

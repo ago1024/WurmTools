@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzeTool.Tests", "Analyz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WurmUtils.Tests", "WurmUtils.Tests\WurmUtils.Tests.csproj", "{EC5ABECD-A847-4A3C-AB4E-848D2A15C900}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningRatio.Tests", "MiningRatio.Tests\MiningRatio.Tests.csproj", "{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,18 @@ Global
 		{EC5ABECD-A847-4A3C-AB4E-848D2A15C900}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EC5ABECD-A847-4A3C-AB4E-848D2A15C900}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC5ABECD-A847-4A3C-AB4E-848D2A15C900}.Release|x86.Build.0 = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|x86.ActiveCfg = Release|Any CPU
+		{752EDC93-1175-4DAB-BEBE-50D32C29AAD1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
