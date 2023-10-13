@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net481</TargetFrameworks>
+    <TargetFrameworks>net481;net7.0-windows</TargetFrameworks>
     <PublishDir>$(PublishRoot)\miningratio\</PublishDir>
     <InstallUrl>http://gotti.no-ip.org/wurm/miningratio/</InstallUrl>
     <ProductName>Wurm skill ratio</ProductName>
@@ -62,9 +62,11 @@
   <ItemGroup>
     <ProjectReference Include="..\WurmUtils\WurmUtils.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <!-- <PackageReference Include="CS-Script" Version="4.8.3" /> -->
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net481'">
     <PackageReference Include="CS-Script.lib" Version="3.30.5.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net481'">
+    <PackageReference Include="CS-Script" Version="4.8.3" />
   </ItemGroup>
 </Project>
