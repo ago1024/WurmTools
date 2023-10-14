@@ -255,6 +255,7 @@ namespace ImproveTool
         private Entry[] entries = 
         {                                      
             new Entry("You will want to polish", Tools.Pelt),
+            new Entry("You need to polish", Tools.Pelt),
             new Entry("You must use a mallet"  , Tools.Mallet),
             new Entry("You must use a file", Tools.File),
             new Entry("You notice some notches", Tools.Carvingknife),
