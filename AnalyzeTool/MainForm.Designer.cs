@@ -85,6 +85,7 @@
             this.toolStripSlate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripZinc = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripReset = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1 = new AnalyzeTool.MouseScrollPanel();
             this.gridControl1 = new AnalyzeTool.GridControl();
@@ -119,7 +120,7 @@
             this.resetToolStripMenuItem,
             this.removeAnalyzeInfoToolStripMenuItem});
             this.gridContextMenu.Name = "gridContextMenu";
-            this.gridContextMenu.Size = new System.Drawing.Size(184, 180);
+            this.gridContextMenu.Size = new System.Drawing.Size(184, 158);
             // 
             // rockToolStripMenuItem
             // 
@@ -442,10 +443,12 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripReset,
             this.toolStripRock,
             this.toolStripTunnel,
             this.toolStripReinforced,
-            this.toolStripOre});
+            this.toolStripOre,
+            });
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(834, 25);
@@ -595,6 +598,16 @@
             this.toolStripZinc.Text = "Zinc";
             this.toolStripZinc.Click += new System.EventHandler(this.toolStripZinc_Click);
             // 
+            // toolStripReset
+            // 
+            this.toolStripReset.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripReset.Image = global::AnalyzeTool.Properties.Resources.reset;
+            this.toolStripReset.Name = "toolStripReset";
+            this.toolStripReset.Size = new System.Drawing.Size(23, 22);
+            this.toolStripReset.Text = "⦸";
+            this.toolStripReset.ToolTipText = "Reset";
+            this.toolStripReset.Click += new System.EventHandler(this.toolStripReset_Click);
+            // 
             // toolTip1
             // 
             this.toolTip1.ShowAlways = true;
@@ -729,6 +742,7 @@
         private System.Windows.Forms.ToolStripMenuItem rocksaltToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sandstoneToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem removeAnalyzeInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripReset;
     }
 }
 

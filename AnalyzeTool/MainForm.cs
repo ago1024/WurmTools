@@ -42,6 +42,17 @@ namespace AnalyzeTool
             public abstract bool UseTool(AnalyzeMap map, Tile tile);
         }
 
+        private class ResetTool : MapTool
+        {
+            public override bool UseTool(AnalyzeMap map, Tile tile)
+            {
+                map[tile].Type = TileType.Unknown;
+                map[tile].Quality = Quality.Unknown;
+                map[tile].Reset();
+                return true;
+            }
+        }
+
         private class TileTypeTool : MapTool
         {
             private TileType tileType;
@@ -731,6 +742,17 @@ namespace AnalyzeTool
         private void toolStripZinc_Click(object sender, EventArgs e)
         {
             setActiveTool(TileType.Zinc);
+            setCheckedTool(sender);
+        }
+
+        private void toolStripReset_Click(object sender, EventArgs e)
+        {
+            ResetTool active = activeTool as ResetTool;
+            if (active != null) {
+                activeTool = null;
+            } else {
+                activeTool = new ResetTool();
+            }
             setCheckedTool(sender);
         }
 
