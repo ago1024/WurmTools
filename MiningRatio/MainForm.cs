@@ -23,22 +23,8 @@ namespace MiningRatio
     {
         Player player;
         LogWatcher? logWatcher = null;
-        NumberFormatInfo numberFormat;
 
-
-        int ticks;
-        int actions;
-        int actionStart;
-        int actionEnd;
-        double totalSkill;
-        int totalTime;
-        int skillTime;
-        int actionDuration;
-        double rel;
-        double srel;
-        double trel;
-
-        List<String> deferred = new List<String>();
+        SkillTracker? skillTracker = null;
 
         public MiningRatioForm()
         {
@@ -47,9 +33,6 @@ namespace MiningRatio
             player = new Player();
             playerName.Text = player.PlayerName;
             wurmFolder.Text = player.WurmDir;
-
-            numberFormat = new NumberFormatInfo();
-            numberFormat.CurrencyDecimalSeparator = ".";
 
             loadMessageParsers();
 
@@ -84,22 +67,13 @@ namespace MiningRatio
 
         private void Start() 
         {
-            ticks = 0;
-            actions = 0;
-            actionStart = -1;
-            actionEnd = -1;
-            totalSkill = 0;
-            totalTime = 0;
-            skillTime = 0;
-            rel = 0;
-            srel = 0;
-            trel = 0;
-
             UpdateDisplay();
             if (logWatcher != null)
             {
                 logWatcher.Close();
             }
+
+            skillTracker?.Reset();
 
             logWatcher = new LogWatcher();
             logWatcher.Add(player.LogDir, "_Event.*.txt");
@@ -109,15 +83,6 @@ namespace MiningRatio
             logWatcher.Notify += new LogWatcher.NotificationEventHandler(logWatcher_Notify);
         }
 
-        private double getRatio()
-        {
-            if (actions > 0)
-                return ticks / (1.0 * actions);
-            else
-                return 0.0;
-        }
-
-
         delegate void UpdateDisplayCallback();
         private void UpdateDisplay()
         {
@@ -126,19 +91,18 @@ namespace MiningRatio
                 UpdateDisplayCallback d = new UpdateDisplayCallback(UpdateDisplay);
                 this.Invoke(d);
             }
-            else
+            else if (skillTracker != null)
             {
-                lblActions.Text = actions.ToString();
-                lblTicks.Text = ticks.ToString();
-                lblRatio.Text = getRatio().ToString("P");
-                lblSkillLast.Text = (rel * 3600).ToString("G5");
-                lblSkillTicks.Text = (srel * 3600).ToString("G5");
-                lblSkillActions.Text = (trel * 3600).ToString("G5");
-                lblTotalSkill.Text = totalSkill.ToString("G5");
+                lblActions.Text = skillTracker.Actions.ToString();
+                lblTicks.Text = skillTracker.Ticks.ToString();
+                lblRatio.Text = skillTracker.GetRatio().ToString("P");
+                lblSkillLast.Text = (skillTracker.LastActionRate * 3600).ToString("G5");
+                lblSkillTicks.Text = (skillTracker.SkillRate * 3600).ToString("G5");
+                lblSkillActions.Text = (skillTracker.TotalRate * 3600).ToString("G5");
+                lblTotalSkill.Text = skillTracker.TotalSkill.ToString("G5");
 
-                lblTotalTime.Text = new TimeSpan(0,0,totalTime).ToString();
-                lblSkillTime.Text = new TimeSpan(0,0,skillTime).ToString();
-
+                lblTotalTime.Text = skillTracker.TotalTime.ToString();
+                lblSkillTime.Text = skillTracker.SkillTime.ToString();
             }
         }
 
@@ -149,97 +113,8 @@ namespace MiningRatio
                 String? line = reader.ReadLine();
                 if (line == null)
                     break;
-                handleLine(line);
+                skillTracker?.HandleLine(line);
             };
-        }
-
-        private int GetMessageStamp(String message)
-        {
-            Match m = Regex.Match(message, @"\[(..):(..):(..)]");
-            return Int32.Parse(m.Groups[1].Value) * 3600 +
-                Int32.Parse(m.Groups[2].Value) * 60 +
-                Int32.Parse(m.Groups[3].Value);
-        }
-
-        IMessageParser messageParser = new MiningMessageParser();
-
-        private void handleLine(String message)
-        {
-            try
-            {
-                if (messageParser.isActionStart(message))
-                {
-                    actionStart = GetMessageStamp(message);
-                }
-                else if (messageParser.isActionEnd(message))
-                {
-                    actionEnd = GetMessageStamp(message);
-
-                    if (actionStart < 0)
-                    {
-                        /* The script started during a mining action. The start timestamp is not valid. ignore. */
-                    }
-                    else
-                    {
-                        /* Check for day wrap around */
-                        while (actionStart > actionEnd)
-                        {
-                            actionStart -= 24 * 3600;
-                        }
-                        /* Calculate the duration of the mining action */
-                        actionDuration = actionEnd - actionStart;
-                        /* Sum up total time spent in mining actions */
-                        totalTime += actionDuration;
-                    }
-                    actions++;
-
-                    AddLog(String.Format("{0,-55}:{1,4}:{2,4}:{3,-7:G5}\n", message, ticks, actions, getRatio()));
-                    UpdateDisplay();
-
-                    foreach (String line in deferred) {
-                        handleLine(line);
-                    }
-                    deferred.Clear();
-                }
-                else if (messageParser.isSkillGain(message))
-                {
-                    int stamp = GetMessageStamp(message);
-                    if (stamp > actionEnd)
-                    {
-                        deferred.Add(message);
-                    }
-                    else
-                    {
-                        /* Get amount of skill gained */
-                        Match m = Regex.Match(message, ".*increased by (.*) to.*");
-                        double skill = Double.Parse(m.Groups[1].Value.Replace(",","."), numberFormat);
-
-                        /* Sum up total skill gained */
-                        totalSkill += skill;
-                        /* Sum up total time spent in skill gaining actions */
-                        skillTime += actionDuration;
-
-                        /* Skill gain per hour of the last action */
-                        if (actionDuration == 0) { rel = 0.0; } else { rel = skill / actionDuration; }
-                        /* Skill gain per hour of skill gaining actions */
-                        if (skillTime == 0) { srel = 0.0; } else { srel = totalSkill / skillTime; }
-                        /* Skill gain per hour of all mining actions */
-                        if (totalTime == 0) { trel = 0.0; } else { trel = totalSkill / totalTime; }
-
-                        /* Print ratio, number of actions, skill gain per hour of the last action, skill gaining actions and all actions */
-                        ticks++;
-
-                        AddLog(String.Format("{0,-55}:{1,4}:{2,4}:{3,-7:G5}:{4,-7:G5}:{5,-7:G5}:{6,-7:G5}\n",
-                             message, ticks, actions, getRatio(),
-                             rel * 3600, srel * 3600, trel * 3600));
-                        UpdateDisplay();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                AddLog(e.Message + "\n");
-            }
         }
 
         delegate void AddLogCallback(string text);
@@ -258,7 +133,8 @@ namespace MiningRatio
 
         private class CBWrapper 
         {
-            private IMessageParser mParser;
+            private readonly IMessageParser mParser;
+            private readonly string mName;
 
             public IMessageParser Parser
             {
@@ -268,11 +144,17 @@ namespace MiningRatio
 
             public CBWrapper(IMessageParser parser) {
                 mParser = parser;
+                mName = parser.getName();
             }
 
-            public override String ToString()
+            public CBWrapper(IMessageParser parser, string name) {
+                mParser = parser;
+                mName = name;
+            }
+
+            public override string ToString()
             {
-                return mParser.getName();
+                return mName;
             }
         }
 
@@ -311,11 +193,7 @@ namespace MiningRatio
                 try
                 {
                     var handler = loader.LoadFile(file);
-                    int index = skillParser.Items.IndexOf(handler.getName());
-                    if (index != -1)
-                        skillParser.Items[index] = new CBWrapper(handler);
-                    else
-                        skillParser.Items.Add(new CBWrapper(handler));
+                    skillParser.Items.Add(new CBWrapper(handler, $"{handler.getName()} (Script)"));
                 }
                 catch (Exception e)
                 {
@@ -329,7 +207,9 @@ namespace MiningRatio
             CBWrapper? wrapper = skillParser.SelectedItem as CBWrapper;
             if (wrapper != null && wrapper.Parser != null)
             {
-                messageParser = wrapper.Parser;
+                skillTracker = new(wrapper.Parser);
+                skillTracker.UpdateDisplay += () => UpdateDisplay();
+                skillTracker.AddLog += (text) => AddLog(text);
                 Start();
             }
         }
