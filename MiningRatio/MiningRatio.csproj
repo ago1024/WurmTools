@@ -31,6 +31,7 @@
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="parsers/*.cs" CopyToOutputDirectory="Always" />
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

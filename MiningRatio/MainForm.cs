@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -161,30 +161,6 @@ namespace MiningRatio
                 Int32.Parse(m.Groups[3].Value);
         }
 
-        public class MiningMessageParser : IMessageParser
-        {
-            private Regex reMineSome = new Regex("You mine some ore|You mine some (rock|marble|slate) shards|You mine some shards");
-            private Regex reStartMine = new Regex("You start to mine");
-            private Regex reMiningIncreased = new Regex("Mining increased");
-
-            public bool isActionStart(String message)
-            {
-                return reStartMine.IsMatch(message);
-            }
-            public bool isActionEnd(String message)
-            {
-                return reMineSome.IsMatch(message);
-            }
-            public bool isSkillGain(String message)
-            {
-                return reMiningIncreased.IsMatch(message);
-            }
-            public String getName()
-            {
-                return "Mining";
-            }
-        }
-
         IMessageParser messageParser = new MiningMessageParser();
 
         private void handleLine(String message)
@@ -300,10 +276,26 @@ namespace MiningRatio
             }
         }
 
+        private IEnumerable<IMessageParser> loadPredefinedParsers()
+        {
+            yield return new MiningMessageParser();
+            yield return new BlacksmithingMessageParser();
+            yield return new CarpentryMessageParser();
+            yield return new CoalmakingMessageParser();
+            yield return new FineCarpentryMessageParser();
+            yield return new GroomingMessageParser();
+            yield return new MillingMessageParser();
+            yield return new ProspectingMessageParser();
+            yield return new RopemakingMessageParser();
+            yield return new WeaponsmithingMessageParser();
+            yield return new WoodcuttingMessageParser();
+        }
+
         private void loadMessageParsers()
         {
             skillParser.Items.Clear();
-            skillParser.Items.Add(new CBWrapper(new MiningMessageParser()));
+            foreach (var parser in loadPredefinedParsers())
+                skillParser.Items.Add(new CBWrapper(parser));
             skillParser.SelectedIndex = 0;
 
             String path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
