@@ -157,4 +157,7 @@
   <ItemGroup>
     <None Include="resources\slatevein_512.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\reset.png" />
+  </ItemGroup>
 </Project>
