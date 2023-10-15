@@ -15,20 +15,26 @@ $Starfalls_Omens = 10;
 $Starfalls_Silence = 11;
 
 $Seasons = Array(
-Array( "name" => "Oleander", "starfall" => $Starfalls_Leaf, "week" => 2, "duration" => 1 ),
-Array( "name" => "Maple", "starfall" => $Starfalls_Bears, "week" => 1, "duration" => 1 ),
-Array( "name" => "Rose", "starfall" => $Starfalls_Bears, "week" => 1, "duration" => 5 ),
-    //( "name" => "Rose", "starfall" => $Starfalls_Snakes, "week" => 1, "duration" => 1 ),
-Array( "name" => "Lavender", "starfall" => $Starfalls_Bears, "week" => 1, "duration" => 1 ),
-Array( "name" => "Camellia", "starfall" => $Starfalls_Bears, "week" => 1, "duration" => 2 ),
-Array( "name" => "Cherry", "starfall" => $Starfalls_WhiteShark, "week" => 2, "duration" => 3 ),
-Array( "name" => "Olive", "starfall" => $Starfalls_Fires, "week" => 2, "duration" => 3 ),
-Array( "name" => "Olive", "starfall" => $Starfalls_Leaf, "week" => 2, "duration" => 1 ),
-Array( "name" => "Grape", "starfall" => $Starfalls_Raven, "week" => 1, "duration" => 4 ),
-Array( "name" => "Apple", "starfall" => $Starfalls_Raven, "week" => 1, "duration" => 4 ),
-Array( "name" => "Lemon", "starfall" => $Starfalls_Omens, "week" => 2, "duration" => 3 ),
-Array( "name" => "Walnut", "starfall" => $Starfalls_Omens, "week" => 2, "duration" => 3 ),
-Array( "name" => "Chestnut", "starfall" => $Starfalls_Silence, "week" => 2, "duration" => 3 ),
+Array( "name" => "Olive", "starfall" => 7, "week" => 0, "duration" => 4 ),
+Array( "name" => "Grape", "starfall" => 8, "week" => 0, "duration" => 4 ),
+Array( "name" => "Cherry", "starfall" => 6, "week" => 0, "duration" => 4 ),
+Array( "name" => "Apple", "starfall" => 8, "week" => 2, "duration" => 4 ),
+Array( "name" => "Lemon", "starfall" => 8, "week" => 1, "duration" => 4 ),
+Array( "name" => "Oleander", "starfall" => 3, "week" => 1, "duration" => 4 ),
+Array( "name" => "Camellia", "starfall" => 3, "week" => 3, "duration" => 4 ),
+Array( "name" => "Lavender", "starfall" => 4, "week" => 1, "duration" => 4 ),
+Array( "name" => "Maple", "starfall" => 4, "week" => 3, "duration" => 4 ),
+Array( "name" => "Rose", "starfall" => 4, "week" => 2, "duration" => 4 ),
+Array( "name" => "Chestnut", "starfall" => 8, "week" => 3, "duration" => 4 ),
+Array( "name" => "Walnut", "starfall" => 9, "week" => 1, "duration" => 4 ),
+Array( "name" => "Pine", "starfall" => 0, "week" => 0, "duration" => 4 ),
+Array( "name" => "Hazel", "starfall" => 9, "week" => 2, "duration" => 4 ),
+Array( "name" => "Hops", "starfall" => 7, "week" => 2, "duration" => 4 ),
+Array( "name" => "Oak", "starfall" => 5, "week" => 1, "duration" => 4 ),
+Array( "name" => "Orange", "starfall" => 7, "week" => 3, "duration" => 4 ),
+Array( "name" => "Raspberry", "starfall" => 9, "week" => 0, "duration" => 4 ),
+Array( "name" => "Blueberry", "starfall" => 7, "week" => 1, "duration" => 4 ),
+Array( "name" => "Lingonberry", "starfall" => 9, "week" => 3, "duration" => 4 ),
 );
 
 /*
@@ -142,7 +148,7 @@ function Seasons_getUpcoming($gametime)
 	$upcoming = Array();
 	$currentDay = $gametime["starfall"] * 28 + $gametime["day"];
 	foreach ($Seasons as $season) {
-		$seasonStart = $season["starfall"] * 28 + 7;
+		$seasonStart = ($season["starfall"] * 28) + ($season["week"] * 7);
 		$remaining = $seasonStart - $currentDay;
 
 		$remaining += (86400 - $gametime["time"]) / 86400;
