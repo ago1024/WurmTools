@@ -4,20 +4,26 @@ function Seasons() {
 
 Starfalls = WurmTime.Starfalls;
 Seasons.seasons = [
-{ "name" : "Oleander", "starfall" : Starfalls.Leaf, "week" : 2, "duration" : 1 },
-{ "name" : "Maple", "starfall" : Starfalls.Bears, "week" : 1, "duration" : 1 },
-{ "name" : "Rose", "starfall" : Starfalls.Bears, "week" : 1, "duration" : 5 },
-    //{ "name" : "Rose", "starfall" : Starfalls.Snakes, "week" : 1, "duration" : 1 },
-{ "name" : "Lavender", "starfall" : Starfalls.Bears, "week" : 1, "duration" : 1 },
-{ "name" : "Camellia", "starfall" : Starfalls.Bears, "week" : 1, "duration" : 2 },
-{ "name" : "Cherry", "starfall" : Starfalls.WhiteShark, "week" : 2, "duration" : 3 },
-{ "name" : "Olive", "starfall" : Starfalls.Fires, "week" : 2, "duration" : 3 },
-{ "name" : "Olive", "starfall" : Starfalls.Leaf, "week" : 2, "duration" : 1 },
-{ "name" : "Grape", "starfall" : Starfalls.Raven, "week" : 1, "duration" : 4 },
-{ "name" : "Apple", "starfall" : Starfalls.Raven, "week" : 1, "duration" : 4 },
-{ "name" : "Lemon", "starfall" : Starfalls.Omens, "week" : 2, "duration" : 3 },
-{ "name" : "Walnut", "starfall" : Starfalls.Omens, "week" : 2, "duration" : 3 },
-{ "name" : "Chestnut", "starfall" : Starfalls.Silence, "week" : 2, "duration" : 3 },
+{ "name" : "Olive", "starfall" : 7, "week" : 0, "duration" : 4 },
+{ "name" : "Grape", "starfall" : 8, "week" : 0, "duration" : 4 },
+{ "name" : "Cherry", "starfall" : 6, "week" : 0, "duration" : 4 },
+{ "name" : "Apple", "starfall" : 8, "week" : 2, "duration" : 4 },
+{ "name" : "Lemon", "starfall" : 8, "week" : 1, "duration" : 4 },
+{ "name" : "Oleander", "starfall" : 3, "week" : 1, "duration" : 4 },
+{ "name" : "Camellia", "starfall" : 3, "week" : 3, "duration" : 4 },
+{ "name" : "Lavender", "starfall" : 4, "week" : 1, "duration" : 4 },
+{ "name" : "Maple", "starfall" : 4, "week" : 3, "duration" : 4 },
+{ "name" : "Rose", "starfall" : 4, "week" : 2, "duration" : 4 },
+{ "name" : "Chestnut", "starfall" : 8, "week" : 3, "duration" : 4 },
+{ "name" : "Walnut", "starfall" : 9, "week" : 1, "duration" : 4 },
+{ "name" : "Pine", "starfall" : 0, "week" : 0, "duration" : 4 },
+{ "name" : "Hazel", "starfall" : 9, "week" : 2, "duration" : 4 },
+{ "name" : "Hops", "starfall" : 7, "week" : 2, "duration" : 4 },
+{ "name" : "Oak", "starfall" : 5, "week" : 1, "duration" : 4 },
+{ "name" : "Orange", "starfall" : 7, "week" : 3, "duration" : 4 },
+{ "name" : "Raspberry", "starfall" : 9, "week" : 0, "duration" : 4 },
+{ "name" : "Blueberry", "starfall" : 7, "week" : 1, "duration" : 4 },
+{ "name" : "Lingonberry", "starfall" : 9, "week" : 3, "duration" : 4 },
 ];
 
 Seasons.getCurrent = function(gametime)
@@ -123,7 +129,7 @@ Seasons.getUpcoming = function(gametime)
     var currentDay = gametime.starfall * 28 + gametime.day;
     for (var i = 0; i < Seasons.seasons.length; i++) {
         var season = Seasons.seasons[i];
-        var seasonStart = season.starfall * 28 + 7;
+        var seasonStart = season.starfall * 28 + season.week * 7;
         var remaining = seasonStart - currentDay;
 
         remaining += (86400 - gametime.time) / 86400;
