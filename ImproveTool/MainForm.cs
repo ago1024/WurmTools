@@ -253,14 +253,15 @@ namespace ImproveTool
         }
 
         private Entry[] entries = 
-        {                                      
+        {
             new Entry("You will want to polish", Tools.Pelt),
+            new Entry("You need to polish", Tools.Pelt),
             new Entry("You must use a mallet"  , Tools.Mallet),
             new Entry("You must use a file", Tools.File),
             new Entry("You notice some notches", Tools.Carvingknife),
             new Entry("could be improved with (some more|a) log", Tools.Log),
             new Entry("has some irregularities that must be removed with a stone chisel", Tools.Chisel),
-            new Entry("could be improved with (some more|a) rock shards", Tools.Rockshards),
+            new Entry("could be improved with (some|some more|a) (rock|stone) shards", Tools.Rockshards),
             new Entry("could be improved with (some more|a) lump", Tools.Lump),
             new Entry("need to temper .* by dipping it in water while it's hot", Tools.Water),
             new Entry("has some dents that must be flattened by a hammer", Tools.Hammer),
