@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -22,7 +22,7 @@ namespace MiningRatio
     public partial class MiningRatioForm : Form
     {
         Player player;
-        LogWatcher logWatcher = null;
+        LogWatcher? logWatcher = null;
         NumberFormatInfo numberFormat;
 
 
@@ -146,7 +146,7 @@ namespace MiningRatio
         {
             StringReader reader = new StringReader(message);
             while (true) {
-                String line = reader.ReadLine();
+                String? line = reader.ReadLine();
                 if (line == null)
                     break;
                 handleLine(line);
@@ -334,7 +334,7 @@ namespace MiningRatio
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CBWrapper wrapper = skillParser.SelectedItem as CBWrapper;
+            CBWrapper? wrapper = skillParser.SelectedItem as CBWrapper;
             if (wrapper != null && wrapper.Parser != null)
             {
                 messageParser = wrapper.Parser;
@@ -345,7 +345,7 @@ namespace MiningRatio
 
     public class MessageParserLoader {
 
-        private readonly string dirname;
+        private readonly string? dirname;
 
         public MessageParserLoader() {
             dirname = null;
